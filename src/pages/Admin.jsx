@@ -31,12 +31,14 @@ function a11yProps(index) {
   };
 }
 
-function Admin() {
+function Admin({ Meta }) {
   const [Value, setValue] = useState(0);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
   };
+
+  console.log(Meta);
   return (
     <div>
       <Box

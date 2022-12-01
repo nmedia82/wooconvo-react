@@ -1,16 +1,19 @@
 import axios from "axios";
+// import { get_user_type } from "./auth";
 
+// New axio interceptor syntax from
+// source: https://stackoverflow.com/questions/68714143/how-can-i-use-axios-interceptors-to-add-some-headers-to-responses
 axios.interceptors.request.use(
-  function (request) {
-    request.headers.common["Content-Type"] =
-      "application/x-www-form-urlencoded";
-    // request.headers.common['Access-Control-Allow-Origin'] = '*';
-    request.headers.common["Accept"] = "application/json";
-    // request.headers.common['Authorization'] = '***';
-    return request;
+  (config) => {
+    // const token = localStorage.getItem('auth_token');
+    // if (token) {
+    //     config.headers['Authorization'] = 'Bearer ' + token;
+    // }
+    config.headers["Content-Type"] = "application/json";
+    return config;
   },
-  function (error) {
-    return Promise.reject(error);
+  (error) => {
+    Promise.reject(error);
   }
 );
 
