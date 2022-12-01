@@ -3,6 +3,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Input from "../fields/input";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -34,11 +35,15 @@ function a11yProps(index) {
 function Admin({ Meta }) {
   const [Value, setValue] = useState(0);
 
-  const handleChange = (e, newValue) => {
+  const handleTabChange = (e, newValue) => {
     setValue(newValue);
   };
 
-  console.log(Meta);
+  const handleMetaChange = (e, meta) => {
+    console.log(e, meta);
+  };
+
+  // console.log(Meta);
   return (
     <div>
       <Box
@@ -46,31 +51,35 @@ function Admin({ Meta }) {
           flexGrow: 1,
           bgcolor: "background.paper",
           display: "flex",
-          height: 224,
+          height: "auto",
         }}
       >
         <Tabs
           orientation="vertical"
           variant="scrollable"
           value={Value}
-          onChange={handleChange}
+          onChange={handleTabChange}
           aria-label="basic tabs example"
           sx={{ borderRight: 1, borderColor: "divider" }}
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          {Meta.map((meta, index) => (
+            <Tab key={index} label={meta.tab} {...a11yProps(index)} />
+          ))}
         </Tabs>
 
-        <TabPanel value={Value} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={Value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={Value} index={2}>
-          Item Threesss
-        </TabPanel>
+        {Meta.map((meta, index) => (
+          <TabPanel value={Value} index={index} key={index}>
+            {console.log(index)}
+            {meta.fields.map((field, index2) => (
+              <Input
+                key={index2}
+                meta={field}
+                test={index}
+                onMetaChange={handleMetaChange}
+              />
+            ))}
+          </TabPanel>
+        ))}
       </Box>
     </div>
   );

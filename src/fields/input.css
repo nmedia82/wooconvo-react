@@ -1,0 +1,30 @@
+input.wcmore-input {
+  width: 90%;
+  height: 1.6em;
+}
+
+.wcforce-field-wrapper {
+  margin: 5px 0;
+}
+/* select input */
+select.wcmore-input {
+  width: 90%;
+  height: 1.9em;
+}
+
+.wcforce-meta-option-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wcforce-option-single.id {
+  flex-shrink: 3;
+}
+
+.wcforce-option-wrapper {
+  background-color: aquamarine;
+  border: 1px solid;
+  padding: 2px;
+  margin: 1px 0;
+}
