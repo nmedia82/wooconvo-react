@@ -4,6 +4,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Input from "../fields/input";
+import Grid from "@mui/material/Unstable_Grid2";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -70,14 +71,17 @@ function Admin({ Meta }) {
         {Meta.map((meta, index) => (
           <TabPanel value={Value} index={index} key={index}>
             {console.log(index)}
-            {meta.fields.map((field, index2) => (
-              <Input
-                key={index2}
-                meta={field}
-                test={index}
-                onMetaChange={handleMetaChange}
-              />
-            ))}
+            <Grid container spacing={1}>
+              {meta.fields.map((field, index2) => (
+                <Grid xs={4} key={index2}>
+                  <Input
+                    meta={field}
+                    test={index}
+                    onMetaChange={handleMetaChange}
+                  />
+                </Grid>
+              ))}
+            </Grid>
           </TabPanel>
         ))}
       </Box>

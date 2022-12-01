@@ -5,48 +5,20 @@ import {
   InputAdornment,
   FormHelperText,
   Box,
-  Item
+  Item,
 } from "@mui/material";
-import Grid from '@mui/material/Unstable_Grid2';
-
+import Grid from "@mui/material/Unstable_Grid2";
 
 const Text = ({ meta, onMetaChange }) => {
   return (
     <div className="wooconvo-field-wrapper">
-    
-       <Box sx={{  flexGrow: 1 }}>
-       <Grid container spacing={2}>
-        <Grid xs={4}>
-        <TextField
+      <TextField
         name={meta.name}
         id={meta.name}
         label={meta.label}
         type="text"
         variant="outlined"
       />
-        </Grid>
-        <Grid xs={4}>
-        <TextField
-        name={meta.name}
-        id={meta.name}
-        label={meta.label}
-        type="text"
-        variant="outlined"
-      />
-        </Grid>
-        <Grid xs={4}>
-        <TextField
-        name={meta.name}
-        id={meta.name}
-        label={meta.label}
-        type="text"
-        variant="outlined"
-      />
-        </Grid>
-      </Grid>
-    </Box>
-    
-      
     </div>
   );
 };
