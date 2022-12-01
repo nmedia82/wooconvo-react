@@ -4,29 +4,49 @@ import {
   Tooltip,
   InputAdornment,
   FormHelperText,
+  Box,
+  Item
 } from "@mui/material";
+import Grid from '@mui/material/Unstable_Grid2';
+
 
 const Text = ({ meta, onMetaChange }) => {
   return (
     <div className="wooconvo-field-wrapper">
-      <TextField
+    
+       <Box sx={{  flexGrow: 1 }}>
+       <Grid container spacing={2}>
+        <Grid xs={4}>
+        <TextField
         name={meta.name}
         id={meta.name}
         label={meta.label}
         type="text"
         variant="outlined"
       />
-      {/* <input
-        type="text"
+        </Grid>
+        <Grid xs={4}>
+        <TextField
         name={meta.name}
         id={meta.name}
-        placeholder={meta.label}
-        className="wooconvo-input"
-        onChange={(e) => onMetaChange(e, meta)}
-        value={meta.value}
+        label={meta.label}
+        type="text"
+        variant="outlined"
       />
-      <br />
-      <small>{meta.desc}</small> */}
+        </Grid>
+        <Grid xs={4}>
+        <TextField
+        name={meta.name}
+        id={meta.name}
+        label={meta.label}
+        type="text"
+        variant="outlined"
+      />
+        </Grid>
+      </Grid>
+    </Box>
+    
+      
     </div>
   );
 };
