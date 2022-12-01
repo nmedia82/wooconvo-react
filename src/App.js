@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
+import { getAdminMeta } from "./common/modalService";
+import Admin from "./pages/Admin";
+
+window.WOOCONVO_API_URL = "https://code.najeebmedia.com/wp-json/wooconvo/v1";
 
 function App() {
+  const [Meta, setMeta] = useState([]);
+  useEffect(() => {
+    const loadData = async (params) => {
+      var { data: meta } = await getAdminMeta();
+
+      setMeta(meta);
+    };
+    loadData();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wooconvo-admin-wrapper">
+      <Admin />
     </div>
   );
 }
