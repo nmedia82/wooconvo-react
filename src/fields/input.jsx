@@ -11,8 +11,7 @@ const Input = ({ meta, onMetaChange }) => {
     case "boolean":
       return <Boolean meta={meta} onMetaChange={onMetaChange} />;
     case "select":
-      const options = _to_options(JSON.stringify(meta.options));
-      meta.oo = [...options];
+      meta.options2 = _to_options(meta.options);
       console.log(meta);
       return <Select meta={meta} onMetaChange={onMetaChange} />;
 
