@@ -10,8 +10,10 @@ function App() {
   useEffect(() => {
     const loadData = async () => {
       var { data: meta } = await getAdminMeta();
-
-      setMeta(JSON.parse(meta));
+      const { success, data } = meta;
+      if (!success) return alert("Error while loading admin settings");
+      console.log(JSON.parse(data));
+      setMeta(JSON.parse(data));
     };
     loadData();
   }, []);

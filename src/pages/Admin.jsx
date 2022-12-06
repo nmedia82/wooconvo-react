@@ -74,11 +74,7 @@ function Admin({ Meta }) {
             <Grid container spacing={1}>
               {meta.fields.map((field, index2) => (
                 <Grid xs={4} key={index2}>
-                  <Input
-                    meta={field}
-                    test={index}
-                    onMetaChange={handleMetaChange}
-                  />
+                  <Input meta={field} onMetaChange={handleMetaChange} />
                 </Grid>
               ))}
             </Grid>
