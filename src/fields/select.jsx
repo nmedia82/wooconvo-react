@@ -9,9 +9,9 @@ const Select = ({ meta, onMetaChange }) => {
         onChange={(e) => onMetaChange(e, meta)}
         value={meta.value}
       >
-        {meta.options.map((option) => (
-          <option key={option.toString()} value={option}>
-            {option}
+        {meta.options2.map((option) => (
+          <option key={option.key} value={option.key}>
+            {option.label}
           </option>
         ))}
       </select>

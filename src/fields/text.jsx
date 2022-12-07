@@ -7,7 +7,6 @@ import {
   Box,
   Item,
 } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
 
 const Text = ({ meta, onMetaChange }) => {
   return (
@@ -18,6 +17,7 @@ const Text = ({ meta, onMetaChange }) => {
         label={meta.label}
         type="text"
         variant="outlined"
+        onChange={(e) => onMetaChange(e, meta)}
       />
     </div>
   );

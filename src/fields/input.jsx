@@ -12,7 +12,6 @@ const Input = ({ meta, onMetaChange }) => {
       return <Boolean meta={meta} onMetaChange={onMetaChange} />;
     case "select":
       meta.options2 = _to_options(meta.options);
-      console.log(meta);
       return <Select meta={meta} onMetaChange={onMetaChange} />;
 
     default:
