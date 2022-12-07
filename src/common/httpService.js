@@ -1,5 +1,5 @@
 import axios from "axios";
-// import { get_user_type } from "./auth";
+import { token } from "./auth";
 
 // New axio interceptor syntax from
 // source: https://stackoverflow.com/questions/68714143/how-can-i-use-axios-interceptors-to-add-some-headers-to-responses
@@ -7,7 +7,7 @@ axios.interceptors.request.use(
   (config) => {
     // const token = localStorage.getItem('auth_token');
     // if (token) {
-    //     config.headers['Authorization'] = 'Bearer ' + token;
+    //   config.headers["Authorization"] = "Basic " + token;
     // }
     config.headers["Content-Type"] = "application/json";
     return config;
