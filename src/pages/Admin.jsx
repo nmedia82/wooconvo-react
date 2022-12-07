@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -31,19 +31,32 @@ function a11yProps(index) {
 
 function Admin({ Meta }) {
   const [TabData, setTabData] = useState(0);
-  const [AdminMeta, setAdminMeta] = useState(Meta);
+  const [AdminMeta, setAdminMeta] = useState([]);
+  const [Fields, setFields] = useState([]);
+  const [savedMeta, setSavedMeta] = useState({});
+
+  useEffect(() => {
+    let fields = [];
+    Meta.forEach((m) => {
+      fields = [...fields, ...m.fields];
+    });
+    setFields(fields);
+    setAdminMeta(Meta);
+  }, [Meta]);
 
   const handleTabChange = (e, newTabData) => {
     setTabData(newTabData);
   };
 
   const handleMetaChange = (e, field) => {
-    const admin_meta = [...AdminMeta];
-    const found = admin_meta.find((f) => f.id === field.id);
-    const index = admin_meta.indexOf(found);
-    console.log(admin_meta, found, index);
-    // admin_meta[index].value = e.target.value;
-    // setAdminMeta(admin_meta);
+    const saved_meta = { ...savedMeta, [field.id]: e.target.value };
+    setSavedMeta(saved_meta);
+    console.log(saved_meta);
+    // const fields = [...Fields];
+    // const found = fields.find((f) => f.id === field.id);
+    // const index = fields.indexOf(found);
+    // fields[index].value = e.target.value;
+    // setFields(fields);
   };
 
   // console.log(Meta);
@@ -77,7 +90,11 @@ function Admin({ Meta }) {
             <Grid container spacing={2}>
               {meta.fields.map((field, index2) => (
                 <Grid item md={4} key={index2}>
-                  <Input meta={field} onMetaChange={handleMetaChange} />
+                  <Input
+                    meta={field}
+                    onMetaChange={handleMetaChange}
+                    data={savedMeta}
+                  />
                 </Grid>
               ))}
             </Grid>

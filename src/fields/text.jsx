@@ -8,7 +8,7 @@ import {
   Item,
 } from "@mui/material";
 
-const Text = ({ meta, onMetaChange }) => {
+const Text = ({ meta, onMetaChange, value }) => {
   return (
     <div className="wooconvo-field-wrapper">
       <TextField
@@ -17,6 +17,7 @@ const Text = ({ meta, onMetaChange }) => {
         label={meta.label}
         type="text"
         variant="outlined"
+        value={value}
         onChange={(e) => onMetaChange(e, meta)}
       />
     </div>
