@@ -1,11 +1,26 @@
 import React from 'react'
+import { useState, useEffect } from "react";
 import DraftsIcon from '@mui/icons-material/Drafts';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import SettingsIcon from '@mui/icons-material/Settings';
-import {Avatar,ListItemButton,ListItemText,ListItemAvatar,Typography,Divider} from '@mui/material';
+import {Avatar,ListItemButton,ListItemText,ListItemAvatar,Typography,Divider,ListItem} from '@mui/material';
 import { pink,blue, lime,red } from "@mui/material/colors";
+import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
+import Fade from '@mui/material/Fade';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import App from '../App';
+
 
 function Grid_L() {
+  const [isShowing, setisShowing] = useState(false);
+  const [checked, setChecked] = React.useState(false);
+ 
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
+
+  
   return (
     <div>
 
@@ -72,7 +87,7 @@ function Grid_L() {
       <Divider />
       
       {/* Settings */}
-      <ListItemButton>
+      <ListItem>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: red[500] }}>
             <SettingsIcon />
@@ -88,8 +103,25 @@ function Grid_L() {
               Settings
             </Typography>
         </React.Fragment>
-        }  />
-      </ListItemButton>
+        } />
+         <FormControlLabel 
+         control={<Switch color="warning" checked={checked} onChange={handleChange} onClick={() => setisShowing(!isShowing)} />}
+          />
+      {isShowing &&(
+      <Box sx={{ display: 'inline' }}>
+        <Fade in={checked}><Typography
+              sx={{ display: "inline" }}
+              variant="h6"
+              color="text.primary"
+            >
+            <App />
+            </Typography></Fade>
+      </Box>
+      )}
+      </ListItem>
+      
+     
+    
     </div>
     
   )
