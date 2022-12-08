@@ -87,9 +87,9 @@ function Admin({ Meta }) {
 
         {AdminMeta.map((meta, index) => (
           <TabPanel value={TabData} index={index} key={index}>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               {meta.fields.map((field, index2) => (
-                <Grid item md={4} key={index2}>
+                <Grid item /* md={4} */ key={index2}>
                   <Input
                     meta={field}
                     onMetaChange={handleMetaChange}

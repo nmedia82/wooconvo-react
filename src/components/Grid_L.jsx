@@ -1,14 +1,16 @@
 import React from 'react'
 import DraftsIcon from '@mui/icons-material/Drafts';
-import StarBorder from '@mui/icons-material/StarBorder';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import SettingsIcon from '@mui/icons-material/Settings';
 import {Avatar,ListItemButton,ListItemText,ListItemAvatar,Typography,Divider} from '@mui/material';
-
-import { pink,blue, lime } from "@mui/material/colors";
+import { pink,blue, lime,red } from "@mui/material/colors";
 
 function Grid_L() {
   return (
     <div>
-         <ListItemButton>
+
+      {/* Unread */}
+         <ListItemButton sx={{pb:3 , mt:2}}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: pink[500] }}>
             <DraftsIcon />
@@ -28,7 +30,8 @@ function Grid_L() {
         } />
       </ListItemButton>
       
-      <ListItemButton>
+      {/* Orders */}
+      <ListItemButton  sx={{pb:2}}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: blue[500] }}>
             <DraftsIcon />
@@ -46,11 +49,12 @@ function Grid_L() {
         </React.Fragment>
         }  />
       </ListItemButton>
-
-      <ListItemButton>
+       
+       {/* Starred */}
+      <ListItemButton sx={{pb:3 , mt:2}}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: lime[500] }}>
-            <StarBorder />
+            <StarBorderIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={
@@ -64,10 +68,28 @@ function Grid_L() {
             </Typography>
         </React.Fragment>
         }  />
-      <Divider sx={{ height: 28}} />
-
       </ListItemButton>
-
+      <Divider />
+      
+      {/* Settings */}
+      <ListItemButton>
+        <ListItemAvatar>
+          <Avatar sx={{ bgcolor: red[500] }}>
+            <SettingsIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={
+            <React.Fragment>
+            <Typography
+              sx={{ display: "inline" }}
+              variant="h6"
+              color="text.primary"
+            >
+              Settings
+            </Typography>
+        </React.Fragment>
+        }  />
+      </ListItemButton>
     </div>
     
   )
