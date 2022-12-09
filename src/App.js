@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { getAdminMeta } from "./common/modalService";
 import Admin from "./pages/Admin";
+import Admin_react from './pages/Admin_React';
 
 window.WOOCONVO_API_URL = "https://code.najeebmedia.com/wp-json/wooconvo/v1";
 
@@ -19,7 +20,8 @@ function App() {
   }, []);
   return (
     <div className="wooconvo-admin-wrapper">
-      <Admin Meta={Meta} />
+      {/* <Admin Meta={Meta} /> */}
+      <Admin_react />
     </div>
   );
 }
