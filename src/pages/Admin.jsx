@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Input from "../fields/input";
 import Grid from "@mui/material/Grid";
+import { blue  } from "@mui/material/colors";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,21 +64,21 @@ function Admin({ Meta }) {
     <div>
       <Box
         sx={{
-          flexGrow: 1,
+          // flexGrow: 1,
           bgcolor: "background.paper",
-          display: "flex",
+          // display: "flex",
           height: "auto",
         }}
       >
         <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          scrollButtons
-          allowScrollButtonsMobile
+          // orientation="vertical"
+          variant="standard"
           value={TabData}
           onChange={handleTabChange}
           aria-label="basic tabs"
-          sx={{ borderRight: 1, borderColor: "divider" }}
+          indicatorColor="secondary"
+          textColor="inherit"
+          sx={{ borderRight: 1, borderColor: "divider",  bgcolor: blue[500] }}
         >
           {AdminMeta.map((meta, index) => (
             <Tab key={index} label={meta.tab} {...a11yProps(index)} />
@@ -89,7 +89,7 @@ function Admin({ Meta }) {
           <TabPanel value={TabData} index={index} key={index}>
             <Grid container spacing={1}>
               {meta.fields.map((field, index2) => (
-                <Grid item /* md={4} */ key={index2}>
+                <Grid item  md={3}  key={index2}>
                   <Input
                     meta={field}
                     onMetaChange={handleMetaChange}

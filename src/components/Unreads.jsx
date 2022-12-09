@@ -9,6 +9,14 @@ import SendIcon from '@mui/icons-material/Send';
 import { common, lime } from "@mui/material/colors";
 
 function Unreads() {
+  
+  
+  function stringAvatar(name) {
+    return {
+          children: `${name.split(' ')[0][0]}`,
+    };
+  }
+
   const [open, setOpen] = React.useState(true);
   const handleClick = () => {
     setOpen(!open);
@@ -20,7 +28,7 @@ function Unreads() {
             <Avatar
               alt="Travis Howard"
               sx={{ bgcolor: blue[500] }}
-              icon={<ImageIcon />}
+              {...stringAvatar("Najeeb Ahmad")}
             />
           </ListItemAvatar>
           <ListItemText
