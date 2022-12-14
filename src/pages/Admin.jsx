@@ -4,7 +4,10 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Input from "../fields/input";
 import Grid from "@mui/material/Grid";
-import { blue  } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -70,26 +73,29 @@ function Admin({ Meta }) {
           height: "auto",
         }}
       >
-        <Tabs
-          // orientation="vertical"
-          variant="standard"
-          value={TabData}
-          onChange={handleTabChange}
-          aria-label="basic tabs"
-          indicatorColor="secondary"
-          textColor="inherit"
-          sx={{ borderRight: 1, borderColor: "divider",  bgcolor: blue[500] }}
-        >
-          {AdminMeta.map((meta, index) => (
-            <Tab key={index} label={meta.tab} {...a11yProps(index)} />
-          ))}
-        </Tabs>
+        <AppBar position="static" color="secondary">
+          <Toolbar>
+            <Tabs
+              // orientation="vertical"
+              variant="standard"
+              value={TabData}
+              onChange={handleTabChange}
+              aria-label="basic tabs"
+              indicatorColor="secondary"
+              textColor="inherit"
+            >
+              {AdminMeta.map((meta, index) => (
+                <Tab key={index} label={meta.tab} {...a11yProps(index)} />
+              ))}
+            </Tabs>
+          </Toolbar>
+        </AppBar>
 
         {AdminMeta.map((meta, index) => (
           <TabPanel value={TabData} index={index} key={index}>
             <Grid container spacing={1}>
               {meta.fields.map((field, index2) => (
-                <Grid item  md={3}  key={index2}>
+                <Grid item md={3} key={index2}>
                   <Input
                     meta={field}
                     onMetaChange={handleMetaChange}

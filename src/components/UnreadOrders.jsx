@@ -8,11 +8,13 @@ import {
   ListItem,
   Rating,
   Badge,
+  IconButton,
 } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Send";
-import MailIcon from "@mui/icons-material/Mail";
-import { brown } from "@mui/material/colors";
-function Starred() {
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
+import { pink } from "@mui/material/colors";
+
+function UnreadOrders() {
   function stringAvatar(name) {
     return {
       children: `${name.split(" ")[0][0]}`,
@@ -23,10 +25,12 @@ function Starred() {
     <div>
       <ListItem>
         <ListItemAvatar>
-          <Avatar
-            sx={{ bgcolor: brown[500] }}
-            {...stringAvatar("Labeeb Ahmad")}
-          />
+          <Badge badgeContent={5} color="primary">
+            <Avatar
+              sx={{ bgcolor: pink[500] }}
+              {...stringAvatar("Najeeb Ahmad")}
+            />
+          </Badge>
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -36,27 +40,21 @@ function Starred() {
                 variant="h6"
                 color="text.primary"
               >
-                Labeeb Ahmad
+                Najeeb Ahmad
               </Typography>
             </React.Fragment>
           }
-          secondary="Oct 19, 2023"
+          secondary="Oct 9, 2023"
         />
-
-        <Box sx={{ pr: "50px" }}>
-          <Rating
-            name="customized-10"
-            defaultValue={1}
-            max={1}
-            sx={{ pr: "10px" }}
-          />
-          <Badge badgeContent={4} color="primary">
-            <MailIcon color="action" />
-          </Badge>
+        <Box>
+          <Rating name="customized-10" defaultValue={1} max={1} />
         </Box>
+        <IconButton>
+          <ArrowForwardIosOutlinedIcon color="primary" />
+        </IconButton>
       </ListItem>
     </div>
   );
 }
 
-export default Starred;
+export default UnreadOrders;

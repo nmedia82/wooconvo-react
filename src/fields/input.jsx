@@ -3,7 +3,7 @@ import Boolean from "./boolean";
 import "./input.css";
 import Select from "./select";
 import SelectMaterial from "./select-m";
-import { _to_options } from "../common/helper";
+import { _to_options } from "./../services/helper";
 
 const Input = ({ meta, onMetaChange, data }) => {
   const value = data[meta.id] || "";

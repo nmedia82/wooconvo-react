@@ -18,7 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import { common, lime } from "@mui/material/colors";
 
-function Unreads() {
+function UnreadOrders() {
   function stringAvatar(name) {
     return {
       children: `${name.split(" ")[0][0]}`,
@@ -77,4 +77,4 @@ function Unreads() {
   );
 }
 
-export default Unreads;
+export default UnreadOrders;

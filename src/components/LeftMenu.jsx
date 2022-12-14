@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 import SettingsIcon from "@mui/icons-material/Settings";
 import {
   Avatar,
@@ -58,7 +59,7 @@ function LeftMenu({ onMenuChange }) {
       <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("orders")}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: blue[500] }}>
-            <DraftsIcon />
+            <LocalMallIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { getAdminMeta } from "./common/modalService";
+import { getAdminMeta } from "./services/modalService";
 import { Box, Grid, Divider } from "@mui/material";
-import Unreads_Item from "./components/Unreads";
-import Orders_Item from "./components/Orders";
-import Starred_Item from "./components/Starred";
+import UnreadOrders from "./components/UnreadOrders";
+import Orders from "./components/Orders";
+import StarredOrders from "./components/StarredOrders";
 import LeftMenu from "./components/LeftMenu";
 import Admin from "./pages/Admin";
 import "./App.css";
+import { getOrders } from "./services/modalService";
 
 window.WOOCONVO_API_URL = "https://code.najeebmedia.com/wp-json/wooconvo/v1";
 
@@ -19,8 +20,10 @@ function App() {
       var { data: meta } = await getAdminMeta();
       const { success, data } = meta;
       if (!success) return alert("Error while loading admin settings");
-      console.log(JSON.parse(data));
+      // console.log(JSON.parse(data));
       setMeta(JSON.parse(data));
+
+      const { data: orders } = await getOrders("vendor");
     };
     loadData();
   }, []);
@@ -44,13 +47,14 @@ function App() {
           </Grid>
           <Grid xs={8}>
             {/* Unread ==> UnreadMessages */}
-            {MenuChecked === "unread" && <Unreads_Item />}
+
+            {MenuChecked === "unread" && <UnreadOrders />}
 
             {/* Orders ==> Orders*/}
-            {MenuChecked === "orders" && <Orders_Item />}
+            {MenuChecked === "orders" && <Orders />}
 
             {/* Starred ==> StarredOrders */}
-            {MenuChecked === "starred" && <Starred_Item />}
+            {MenuChecked === "starred" && <StarredOrders />}
             <Divider />
 
             {/*  Settings hardcode */}
