@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getAdminMeta } from "./services/modalService";
 import { Box, Grid, Divider } from "@mui/material";
 import UnreadOrders from "./components/UnreadOrders";
-import Orders from "./components/Orders";
+import AllOrders from "./components/AllOrders";
 import StarredOrders from "./components/StarredOrders";
 import LeftMenu from "./components/LeftMenu";
 import Admin from "./pages/Admin";
@@ -12,7 +12,9 @@ import { getOrders } from "./services/modalService";
 window.WOOCONVO_API_URL = "https://code.najeebmedia.com/wp-json/wooconvo/v1";
 
 function App() {
+  const [Orders, setOrders] = useState([]);
   const [Meta, setMeta] = useState([]);
+
   const [MenuChecked, setMenuChecked] = useState("unread");
 
   useEffect(() => {
@@ -24,6 +26,7 @@ function App() {
       setMeta(JSON.parse(data));
 
       const { data: orders } = await getOrders("vendor");
+      setOrders(orders.data);
     };
     loadData();
   }, []);
@@ -51,7 +54,7 @@ function App() {
             {MenuChecked === "unread" && <UnreadOrders />}
 
             {/* Orders ==> Orders*/}
-            {MenuChecked === "orders" && <Orders />}
+            {MenuChecked === "orders" && <AllOrders Orders={Orders} />}
 
             {/* Starred ==> StarredOrders */}
             {MenuChecked === "starred" && <StarredOrders />}

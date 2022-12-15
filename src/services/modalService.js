@@ -38,7 +38,7 @@ export function uploadFiles(file) {
 
 // get all orders for admin/vedor/customers
 export function getOrders(user_type) {
-  const { api_url, user_id } = pluginData;
+  const { api_url } = pluginData;
   const url = `${api_url}/get-orders`;
   return httpService.get(url);
 }
