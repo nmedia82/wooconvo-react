@@ -13,6 +13,8 @@ window.WOOCONVO_API_URL = "https://code.najeebmedia.com/wp-json/wooconvo/v1";
 
 function App() {
   const [Orders, setOrders] = useState([]);
+  const [Unreads, setUnreads] = useState([]);
+  const [Starred, setStarred] = useState([]);
   const [Meta, setMeta] = useState([]);
 
   const [MenuChecked, setMenuChecked] = useState("unread");
@@ -25,8 +27,15 @@ function App() {
       // console.log(JSON.parse(data));
       setMeta(JSON.parse(data));
 
-      const { data: orders } = await getOrders("vendor");
-      setOrders(orders.data);
+      let { data: orders } = await getOrders("vendor");
+      orders = orders.data;
+      setOrders(orders);
+      // undread
+      const unread_orders = orders.filter((order) => order.unread_vendor);
+      setUnreads(unread_orders);
+      // starred
+      const starred_orders = orders.filter((order) => order.is_starred);
+      setStarred(starred_orders);
     };
     loadData();
   }, []);
@@ -44,20 +53,20 @@ function App() {
         className="wooconvo-admin-wrapper"
       >
         <Grid container spacing={2}>
-          <Grid xs={4}>
+          <Grid item xs={4}>
             {/* Add Left list Items */}
             <LeftMenu onMenuChange={handleMenuChange} />
           </Grid>
-          <Grid xs={8}>
+          <Grid item xs={8}>
             {/* Unread ==> UnreadMessages */}
 
-            {MenuChecked === "unread" && <UnreadOrders />}
+            {MenuChecked === "unread" && <UnreadOrders Orders={Unreads} />}
 
             {/* Orders ==> Orders*/}
             {MenuChecked === "orders" && <AllOrders Orders={Orders} />}
 
             {/* Starred ==> StarredOrders */}
-            {MenuChecked === "starred" && <StarredOrders />}
+            {MenuChecked === "starred" && <StarredOrders Orders={Starred} />}
             <Divider />
 
             {/*  Settings hardcode */}

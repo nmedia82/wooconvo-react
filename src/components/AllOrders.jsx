@@ -30,6 +30,7 @@ function AllOrders({ Orders }) {
           first_name,
           last_name,
           order_date,
+          is_starred,
         }) => (
           <ListItem key={order_id}>
             <ListItemAvatar>
@@ -48,14 +49,14 @@ function AllOrders({ Orders }) {
                     variant="h6"
                     color="text.primary"
                   >
-                    {first_name + " " + last_name}
+                    {`#${order_id} ${first_name} ${last_name}`}
                   </Typography>
                 </React.Fragment>
               }
               secondary={order_date}
             />
             <Box>
-              <Rating name="customized-10" defaultValue={1} max={1} />
+              <Rating name="customized-10" defaultValue={is_starred} max={1} />
             </Box>
             <IconButton>
               <ArrowForwardIosOutlinedIcon color="primary" />
