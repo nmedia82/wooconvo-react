@@ -15,10 +15,10 @@ export function getOrderDetail(order_id) {
 }
 
 // add message in order
-export function addMessage(message) {
-  const { api_url, user_id, order_id } = pluginData;
+export function addMessage(order_id, message, attachments = []) {
+  const { api_url, user_id } = pluginData;
   const url = `${api_url}/add-message`;
-  const data = { message, user_id, order_id };
+  const data = { message, user_id, order_id, attachments };
   return httpService.post(url, data);
 }
 
