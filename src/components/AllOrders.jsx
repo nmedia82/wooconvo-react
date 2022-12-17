@@ -10,7 +10,6 @@ import {
   Badge,
   IconButton,
 } from "@mui/material";
-import ImageIcon from "@mui/icons-material/Send";
 import OrderThread from "./OrderThread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";

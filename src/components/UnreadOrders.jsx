@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Box,
   ListItemText,
@@ -10,11 +10,12 @@ import {
   Badge,
   IconButton,
 } from "@mui/material";
-import ImageIcon from "@mui/icons-material/Send";
+import OrderThread from "./OrderThread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";
 
 function UnreadOrders({ Orders }) {
+  const [selectedOrder, setselectedOrder] = useState(null);
   function stringAvatar(name) {
     return {
       children: `${name.split(" ")[0][0]}`,
@@ -23,47 +24,61 @@ function UnreadOrders({ Orders }) {
 
   return (
     <div>
-      {Orders.map(
-        ({
-          order_id,
-          thread,
-          unread_vendor,
-          first_name,
-          last_name,
-          order_date,
-          is_starred,
-        }) => (
-          <ListItem key={order_id}>
-            <ListItemAvatar>
-              <Badge badgeContent={unread_vendor} color="primary">
-                <Avatar
-                  sx={{ bgcolor: pink[500] }}
-                  {...stringAvatar(first_name)}
+      {!selectedOrder &&
+        Orders.map(
+          ({
+            order_id,
+            unread_vendor,
+            first_name,
+            last_name,
+            order_date,
+            is_starred,
+          }) => (
+            <ListItem key={order_id}>
+              <ListItemAvatar>
+                <Badge badgeContent={unread_vendor} color="primary">
+                  <Avatar
+                    sx={{ bgcolor: pink[500] }}
+                    {...stringAvatar(first_name)}
+                  />
+                </Badge>
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <>
+                    <Typography
+                      sx={{ display: "inline" }}
+                      variant="h6"
+                      color="text.primary"
+                    >
+                      {`#${order_id} ${first_name} ${last_name}`}
+                    </Typography>
+                  </>
+                }
+                secondary={order_date}
+              />
+              <Box>
+                <Rating
+                  name="customized-10"
+                  defaultValue={is_starred}
+                  max={1}
                 />
-              </Badge>
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    variant="h6"
-                    color="text.primary"
-                  >
-                    {`#${order_id} ${first_name} ${last_name}`}
-                  </Typography>
-                </React.Fragment>
-              }
-              secondary={order_date}
-            />
-            <Box>
-              <Rating name="customized-10" defaultValue={is_starred} max={1} />
-            </Box>
-            <IconButton>
-              <ArrowForwardIosOutlinedIcon color="primary" />
-            </IconButton>
-          </ListItem>
-        )
+              </Box>
+              <IconButton
+                onClick={() =>
+                  setselectedOrder(Orders.find((o) => o.order_id === order_id))
+                }
+              >
+                <ArrowForwardIosOutlinedIcon color="primary" />
+              </IconButton>
+            </ListItem>
+          )
+        )}
+      {selectedOrder && (
+        <OrderThread
+          Order={selectedOrder}
+          onBack={() => setselectedOrder(null)}
+        />
       )}
     </div>
   );
