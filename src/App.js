@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAdminMeta } from "./services/modalService";
-import { Box, Grid, Divider } from "@mui/material";
+import { Box, Grid, Divider, Backdrop, CircularProgress } from "@mui/material";
 import UnreadOrders from "./components/UnreadOrders";
 import AllOrders from "./components/AllOrders";
 import StarredOrders from "./components/StarredOrders";
@@ -8,19 +8,20 @@ import LeftMenu from "./components/LeftMenu";
 import Admin from "./pages/Admin";
 import "./App.css";
 import { getOrders } from "./services/modalService";
+import { setStarred, setUnStarred } from "./common/modalService";
 
 window.WOOCONVO_API_URL = "https://code.najeebmedia.com/wp-json/wooconvo/v1";
 
 function App() {
   const [Orders, setOrders] = useState([]);
-  const [Unreads, setUnreads] = useState([]);
-  const [Starred, setStarred] = useState([]);
   const [Meta, setMeta] = useState([]);
+  const [isWorking, setIsWorking] = useState(false);
 
-  const [MenuChecked, setMenuChecked] = useState("unread");
+  const [MenuChecked, setMenuChecked] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
+      setIsWorking(true);
       var { data: meta } = await getAdminMeta();
       const { success, data } = meta;
       if (!success) return alert("Error while loading admin settings");
@@ -30,15 +31,25 @@ function App() {
       let { data: orders } = await getOrders("vendor");
       orders = orders.data;
       setOrders(orders);
-      // undread
-      const unread_orders = orders.filter((order) => order.unread_vendor);
-      setUnreads(unread_orders);
-      // starred
-      const starred_orders = orders.filter((order) => order.is_starred);
-      setStarred(starred_orders);
+      setMenuChecked("unread");
+      setIsWorking(false);
     };
     loadData();
   }, []);
+
+  const handleStarred = async (order_id, is_starred) => {
+    setIsWorking(true);
+    var { data: order } = is_starred
+      ? await setUnStarred(order_id)
+      : await setStarred(order_id);
+    const orders = [...Orders];
+    const found = orders.find((order) => order.order_id === order_id);
+    const index = orders.indexOf(found);
+    orders[index] = order.data;
+    // console.log(found, order);
+    setOrders(orders);
+    setIsWorking(false);
+  };
 
   const handleMenuChange = (menu) => {
     setMenuChecked(menu);
@@ -60,19 +71,32 @@ function App() {
           <Grid item xs={8}>
             {/* Unread ==> UnreadMessages */}
 
-            {MenuChecked === "unread" && <UnreadOrders Orders={Unreads} />}
+            {MenuChecked === "unread" && (
+              <UnreadOrders Orders={Orders} onStarred={handleStarred} />
+            )}
 
             {/* Orders ==> Orders*/}
-            {MenuChecked === "orders" && <AllOrders Orders={Orders} />}
+            {MenuChecked === "orders" && (
+              <AllOrders Orders={Orders} onStarred={handleStarred} />
+            )}
 
             {/* Starred ==> StarredOrders */}
-            {MenuChecked === "starred" && <StarredOrders Orders={Starred} />}
+            {MenuChecked === "starred" && (
+              <StarredOrders Orders={Orders} onStarred={handleStarred} />
+            )}
             <Divider />
 
             {/*  Settings hardcode */}
             {MenuChecked === "settings" && <Admin Meta={Meta} />}
           </Grid>
         </Grid>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={isWorking}
+          onClick={() => setIsWorking(false)}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </Box>
     </div>
   );

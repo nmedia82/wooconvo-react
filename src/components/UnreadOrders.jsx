@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   ListItemText,
@@ -14,8 +14,14 @@ import OrderThread from "./OrderThread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";
 
-function UnreadOrders({ Orders }) {
+function UnreadOrders({ Orders, onStarred }) {
   const [selectedOrder, setselectedOrder] = useState(null);
+  const [Unreads, setUnreads] = useState([]);
+  useEffect(() => {
+    // undread
+    const unread_orders = Orders.filter((order) => order.unread_vendor);
+    setUnreads(unread_orders);
+  }, [Orders]);
   function stringAvatar(name) {
     return {
       children: `${name.split(" ")[0][0]}`,
@@ -25,7 +31,7 @@ function UnreadOrders({ Orders }) {
   return (
     <div>
       {!selectedOrder &&
-        Orders.map(
+        Unreads.map(
           ({
             order_id,
             unread_vendor,
@@ -58,11 +64,14 @@ function UnreadOrders({ Orders }) {
                 secondary={order_date}
               />
               <Box>
-                <Rating
-                  name="customized-10"
-                  defaultValue={is_starred}
-                  max={1}
-                />
+                <IconButton onClick={() => onStarred(order_id, is_starred)}>
+                  <Rating
+                    name="customized-10"
+                    value={is_starred}
+                    readOnly
+                    max={1}
+                  />
+                </IconButton>
               </Box>
               <IconButton
                 onClick={() =>

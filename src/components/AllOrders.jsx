@@ -13,7 +13,7 @@ import {
 import OrderThread from "./OrderThread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";
-function AllOrders({ Orders }) {
+function AllOrders({ Orders, onStarred }) {
   const [selectedOrder, setselectedOrder] = useState(null);
 
   function stringAvatar(name) {
@@ -58,11 +58,14 @@ function AllOrders({ Orders }) {
                 secondary={order_date}
               />
               <Box>
-                <Rating
-                  name="customized-10"
-                  defaultValue={is_starred}
-                  max={1}
-                />
+                <IconButton onClick={() => onStarred(order_id, is_starred)}>
+                  <Rating
+                    name="customized-10"
+                    value={is_starred}
+                    readOnly
+                    max={1}
+                  />
+                </IconButton>
               </Box>
               <IconButton
                 onClick={() =>

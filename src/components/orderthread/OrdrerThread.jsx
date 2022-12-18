@@ -23,7 +23,7 @@ export default function WooConvoThread({ Order, onBack }) {
   const handleReplySend = async (reply_text, files = []) => {
     setIsWorking(true);
     const attachments = await handleFileUpload(files);
-    console.log(attachments);
+    // console.log(attachments);
     const { data: response } = await addMessage(
       order_id,
       reply_text,
