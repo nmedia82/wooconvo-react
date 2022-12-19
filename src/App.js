@@ -28,7 +28,7 @@ function App() {
       // console.log(JSON.parse(data));
       setMeta(JSON.parse(data));
 
-      let { data: orders } = await getOrders("vendor");
+      let { data: orders } = await getOrders();
       orders = orders.data;
       setOrders(orders);
       setMenuChecked("unread");

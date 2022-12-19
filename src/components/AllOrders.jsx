@@ -13,6 +13,9 @@ import {
 import OrderThread from "./OrderThread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";
+import pluginData from "../services/pluginData";
+const { context } = pluginData;
+
 function AllOrders({ Orders, onStarred }) {
   const [selectedOrder, setselectedOrder] = useState(null);
 
@@ -29,6 +32,7 @@ function AllOrders({ Orders, onStarred }) {
           ({
             order_id,
             unread_vendor,
+            unread_customer,
             first_name,
             last_name,
             order_date,
@@ -36,7 +40,12 @@ function AllOrders({ Orders, onStarred }) {
           }) => (
             <ListItem key={order_id}>
               <ListItemAvatar>
-                <Badge badgeContent={unread_vendor} color="primary">
+                <Badge
+                  badgeContent={
+                    context === "myaccount" ? unread_customer : unread_vendor
+                  }
+                  color="primary"
+                >
                   <Avatar
                     sx={{ bgcolor: pink[500] }}
                     {...stringAvatar(first_name)}

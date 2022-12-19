@@ -6,19 +6,32 @@ import "./thread.css";
 import NavBar from "./NavBar";
 import { addMessage } from "../../services/modalService";
 import pluginData from "../../services/pluginData";
+import { resetUnread } from "../../common/modalService";
+const { api_url, context } = pluginData;
+
 export default function WooConvoThread({ Order, onBack }) {
   const [Thread, setThread] = useState([]);
+
   useEffect(() => {
     const thread = [...Order.thread];
     setFilterThread(thread);
     setThread(thread);
+
+    const markOrderAsRead = async () => {
+      const unread_count =
+        context === "myaccount" ? Order.unread_customer : Order.unread_vendor;
+      if (unread_count > 0) {
+        await resetUnread(Order.order_id);
+      }
+    };
+
+    markOrderAsRead();
   }, [Order]);
   const [showMore, setshowMore] = useState(true);
   const [isWorking, setIsWorking] = useState(false);
   const [FilterThread, setFilterThread] = useState([]);
 
   const { order_id, order_date } = Order;
-  const { api_url, context } = pluginData;
 
   const handleReplySend = async (reply_text, files = []) => {
     setIsWorking(true);
@@ -31,7 +44,7 @@ export default function WooConvoThread({ Order, onBack }) {
     );
     const { success, data: order } = response;
     const { thread } = order;
-    console.log(thread);
+    // console.log(thread);
     setIsWorking(false);
     if (success) {
       setThread(thread);
@@ -63,7 +76,6 @@ export default function WooConvoThread({ Order, onBack }) {
   };
 
   const handleSearch = (str) => {
-    console.log(str);
     let thread = [...Thread];
     thread = thread.filter((r) => matchSearch(str, r.message));
     console.log(thread);

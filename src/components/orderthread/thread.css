@@ -35,3 +35,12 @@
     margin: 0;
     text-align: center;
 }
+.preview-thumb-img-upload {
+    object-fit: contain;
+}
+
+.preview-thumb-tool-upload {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}

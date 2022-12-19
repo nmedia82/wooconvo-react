@@ -13,13 +13,21 @@ import {
 import OrderThread from "./OrderThread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";
+import pluginData from "../services/pluginData";
+const { context } = pluginData;
 
 function UnreadOrders({ Orders, onStarred }) {
   const [selectedOrder, setselectedOrder] = useState(null);
   const [Unreads, setUnreads] = useState([]);
+
+  const getUnreadCount = (order) => {
+    if (context === "myaccount") return order.unread_customer;
+    return order.unread_vendor;
+  };
+
   useEffect(() => {
     // undread
-    const unread_orders = Orders.filter((order) => order.unread_vendor);
+    const unread_orders = Orders.filter((order) => getUnreadCount(order));
     setUnreads(unread_orders);
   }, [Orders]);
   function stringAvatar(name) {
@@ -35,6 +43,7 @@ function UnreadOrders({ Orders, onStarred }) {
           ({
             order_id,
             unread_vendor,
+            unread_customer,
             first_name,
             last_name,
             order_date,
@@ -42,7 +51,12 @@ function UnreadOrders({ Orders, onStarred }) {
           }) => (
             <ListItem key={order_id}>
               <ListItemAvatar>
-                <Badge badgeContent={unread_vendor} color="primary">
+                <Badge
+                  badgeContent={
+                    context === "myaccount" ? unread_customer : unread_vendor
+                  }
+                  color="primary"
+                >
                   <Avatar
                     sx={{ bgcolor: pink[500] }}
                     {...stringAvatar(first_name)}

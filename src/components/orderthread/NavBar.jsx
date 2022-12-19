@@ -45,24 +45,20 @@ function NavBar({
               display: { xs: "none", sm: "block" },
             }}
           >
-            {Context === "order_wc" && (
-              <>
-                <IconButton
-                  size="large"
-                  edge="start"
-                  aria-label="open drawer"
-                  sx={{ mr: 2, color: "#fff" }}
-                  onClick={onBack}
-                >
-                  <ArrowBack />
-                </IconButton>
-                <Chip
-                  label={`#${OrderID}`}
-                  variant="outlined"
-                  sx={{ mr: 5, color: "#fff" }}
-                />
-              </>
-            )}
+            <IconButton
+              size="large"
+              edge="start"
+              aria-label="open drawer"
+              sx={{ mr: 2, color: "#fff" }}
+              onClick={onBack}
+            >
+              <ArrowBack />
+            </IconButton>
+            <Chip
+              label={`#${OrderID}`}
+              variant="outlined"
+              sx={{ mr: 5, color: "#fff" }}
+            />
             <Chip
               label={`Total Messages ${TotalCount}`}
               variant="outlined"

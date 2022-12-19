@@ -8,11 +8,14 @@ import {
   Collapse,
   ListItemButton,
   Divider,
+  IconButton,
+  Box,
 } from "@mui/material";
 //import InfoIcon from "@mui/icons-material/Info";
 import { blue, green } from "@mui/material/colors";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import { DownloadOutlined } from "@mui/icons-material";
 
 export default function CustomerMsg({ message, showMore }) {
   function stringAvatar(name) {
@@ -68,6 +71,31 @@ export default function CustomerMsg({ message, showMore }) {
           <Typography variant="body1" gutterBottom>
             {message.message}
           </Typography>
+
+          <Box
+            sx={{
+              flexDirection: "row",
+              display: "flex",
+            }}
+          >
+            {!message.attachments &&
+              message.attachments.map((att) => (
+                <Box className="preview-thumb-upload">
+                  <img
+                    src={att.thumbnail}
+                    className="preview-thumb-img-upload"
+                    height="50"
+                    width="100"
+                    alt={att.filename}
+                  />
+                  <p className="preview-thumb-tool-upload">
+                    <IconButton>
+                      <DownloadOutlined />
+                    </IconButton>
+                  </p>
+                </Box>
+              ))}
+          </Box>
         </ListItemText>
       </Collapse>
     </div>

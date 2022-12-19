@@ -2,17 +2,19 @@
 import httpService from "./httpService";
 import pluginData from "./pluginData";
 
+const { api_url, user_id, order_id, context } = pluginData;
+
 export function getAdminMeta() {
-  const url = `${pluginData.api_url}/get-admin-meta`;
+  const url = `${api_url}/get-admin-meta`;
   // console.log(url);
   return httpService.get(url);
 }
 
 // get order detail by id
-export function getOrderDetail(order_id) {
-  const url = `${pluginData.api_url}/get-order-detail?order_id=${order_id}`;
-  return httpService.get(url);
-}
+// export function getOrderDetail(order_id) {
+//   const url = `${api_url}/get-order-detail?order_id=${order_id}`;
+//   return httpService.get(url);
+// }
 
 // add message in order
 export function addMessage(order_id, message, attachments = []) {
@@ -25,7 +27,7 @@ export function addMessage(order_id, message, attachments = []) {
 // upload files to site
 export function uploadFiles(file) {
   // console.log(file);
-  const { api_url, user_id, order_id } = pluginData;
+
   const url = `${api_url}/upload-file`;
   const data = new FormData();
   data.append("file", file);
@@ -37,8 +39,9 @@ export function uploadFiles(file) {
 }
 
 // get all orders for admin/vedor/customers
-export function getOrders(user_type) {
+export function getOrders() {
   const { api_url } = pluginData;
-  const url = `${api_url}/get-orders`;
+  let url = `${api_url}/get-orders`;
+  if (context === "myaccount") url += `?customer_id=${user_id}`;
   return httpService.get(url);
 }
