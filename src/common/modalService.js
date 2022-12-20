@@ -4,7 +4,16 @@ import httpService from "./httpService";
 const { api_url, context } = pluginData;
 export function getAdminMeta() {
   const url = `${api_url}/get-admin-meta`;
-  // console.log(url);
+  return httpService.get(url);
+}
+
+export function saveSettings(data) {
+  const url = `${api_url}/save-settings`;
+  return httpService.post(url, data);
+}
+
+export function getSettings(data) {
+  const url = `${api_url}/get-settings`;
   return httpService.get(url);
 }
 

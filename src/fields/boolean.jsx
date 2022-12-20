@@ -1,17 +1,21 @@
-const Boolean = ({ meta, onMetaChange }) => {
+import { FormControlLabel, FormGroup, InputLabel, Switch } from "@mui/material";
+
+const Boolean = ({ meta, onMetaChange, value }) => {
+  value = value === "" ? false : value;
   return (
     <div className="wcforce-field-wrapper">
-      <label>
-        <input
-          type="checkbox"
-          name={meta.name}
-          id={meta.name}
+      <FormGroup>
+        <InputLabel id={`label-${meta.id}`}>{meta.label}</InputLabel>
+        <Switch
+          checked={value}
           onChange={(e) => onMetaChange(e, meta)}
-          checked={meta.value}
-        />{" "}
-        {meta.title} <br />
-        <small>{meta.detail}</small>
-      </label>
+          inputProps={{
+            "aria-label": "controlled",
+            name: meta.name,
+            id: meta.id,
+          }}
+        />
+      </FormGroup>
     </div>
   );
 };

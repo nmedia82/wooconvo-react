@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-const SelectMaterial = ({ meta, onMetaChange }) => {
+const SelectMaterial = ({ meta, onMetaChange, value }) => {
   return (
     <div className="wcforce-field-wrapper">
       <FormControl fullWidth>
@@ -10,9 +10,8 @@ const SelectMaterial = ({ meta, onMetaChange }) => {
           id={meta.name}
           className="wcmore-input"
           label={meta.label}
-          defaultValue={""}
           onChange={(e) => onMetaChange(e, meta)}
-          value={meta.value}
+          value={value}
         >
           {meta.options2.map((option) => (
             <MenuItem key={option.key} value={option.key}>

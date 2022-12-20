@@ -8,6 +8,8 @@ import { blue } from "@mui/material/colors";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import ShowAlert from "./../components/Alert";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,18 +34,12 @@ function a11yProps(index) {
   };
 }
 
-function Admin({ Meta }) {
+function Admin({ Meta, Settings, onSettingSave, openAlert, onCloseAlert }) {
   const [TabData, setTabData] = useState(0);
   const [AdminMeta, setAdminMeta] = useState([]);
-  const [Fields, setFields] = useState([]);
-  const [savedMeta, setSavedMeta] = useState({});
+  const [pluginSettings, setPluginSettings] = useState({ ...Settings });
 
   useEffect(() => {
-    let fields = [];
-    Meta.forEach((m) => {
-      fields = [...fields, ...m.fields];
-    });
-    setFields(fields);
     setAdminMeta(Meta);
   }, [Meta]);
 
@@ -52,17 +48,13 @@ function Admin({ Meta }) {
   };
 
   const handleMetaChange = (e, field) => {
-    const saved_meta = { ...savedMeta, [field.id]: e.target.value };
-    setSavedMeta(saved_meta);
+    const value = field.type === "boolean" ? e.target.checked : e.target.value;
+    const saved_meta = { ...pluginSettings, [field.id]: value };
+    setPluginSettings(saved_meta);
     console.log(saved_meta);
-    // const fields = [...Fields];
-    // const found = fields.find((f) => f.id === field.id);
-    // const index = fields.indexOf(found);
-    // fields[index].value = e.target.value;
-    // setFields(fields);
   };
 
-  // console.log(Meta);
+  console.log(Meta);
   return (
     <div>
       <Box
@@ -95,15 +87,30 @@ function Admin({ Meta }) {
           <TabPanel value={TabData} index={index} key={index}>
             <Grid container spacing={1}>
               {meta.fields.map((field, index2) => (
-                <Grid item md={3} key={index2}>
+                <Grid item md={field.width} key={index2}>
                   <Input
                     meta={field}
                     onMetaChange={handleMetaChange}
-                    data={savedMeta}
+                    data={pluginSettings}
                   />
                 </Grid>
               ))}
             </Grid>
+            <Button
+              sx={{ margin: "3px" }}
+              color="secondary"
+              variant="outlined"
+              onClick={() => onSettingSave(pluginSettings)}
+            >
+              Save
+            </Button>
+            {openAlert && (
+              <ShowAlert
+                message="Changes are saved"
+                type="success"
+                onCloseAlert={onCloseAlert}
+              />
+            )}
           </TabPanel>
         ))}
       </Box>

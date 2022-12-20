@@ -7,7 +7,7 @@ import { _to_options } from "./../services/helper";
 
 const Input = ({ meta, onMetaChange, data }) => {
   const value = data[meta.id] || "";
-  console.log(value);
+  // console.log(value);
   switch (meta.type) {
     case "text":
       return <Text meta={meta} onMetaChange={onMetaChange} value={value} />;
