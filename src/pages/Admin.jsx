@@ -97,9 +97,14 @@ function Admin({ Meta, Settings, onSettingSave, openAlert, onCloseAlert }) {
               ))}
             </Grid>
             <Button
-              sx={{ margin: "3px" }}
-              color="secondary"
-              variant="outlined"
+              sx={{
+                textAlign: "center",
+                width: "80px",
+                mt: 5,
+                marginLeft: "400px",
+              }}
+              color="primary"
+              variant="contained"
               onClick={() => onSettingSave(pluginSettings)}
             >
               Save

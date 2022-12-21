@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { pink } from "@mui/material/colors";
-import OrderThread from "./OrderThread/OrdrerThread";
+import OrderThread from "./orderthread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 function Starred({ Orders, onStarred }) {
   const [selectedOrder, setselectedOrder] = useState(null);
