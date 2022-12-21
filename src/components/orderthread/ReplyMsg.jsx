@@ -8,7 +8,7 @@ import { common } from "@mui/material/colors";
 import Attachments from "./Attachments";
 import { DeleteOutline, SendOutlined } from "@mui/icons-material";
 
-import { wooconvo_makeid } from "../../services/helper";
+import { get_setting, wooconvo_makeid } from "../../services/helper";
 
 export default function ReplyMsg({ onReplySend }) {
   //Emoji
@@ -62,8 +62,7 @@ export default function ReplyMsg({ onReplySend }) {
         <Divider sx={{ height: "auto" }} orientation="vertical" />
 
         <IconButton
-          color="primary"
-          sx={{ p: 1 }}
+          sx={{ p: 1, color: get_setting("icon_color_send_button") }}
           aria-label="Send"
           onClick={() => onReplySend(ReplyText, Files)}
           disabled={ReplyText === ""}

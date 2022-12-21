@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { alpha, styled } from "@mui/material/styles";
-
 import {
   Chip,
   Box,
@@ -8,7 +5,6 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  InputBase,
   TextField,
 } from "@mui/material";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
@@ -19,7 +15,7 @@ import { get_setting } from "../../services/helper";
 const darkTheme = createTheme({
   palette: {
     primary: {
-      main: get_setting("bg_color_message_header"),
+      main: get_setting("bg_color_message_header", "#000"),
     },
   },
 });
@@ -71,7 +67,8 @@ function NavBar({
             )}
           </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <TextField
+            
+            {get_setting("enable_msg_search")&& (<TextField
               sx={{ bgcolor: "white" }}
               label="Search"
               size="small"
@@ -79,7 +76,7 @@ function NavBar({
               id="margin-none"
               onChange={(e) => onSearchThread(e.target.value)}
             />
-
+            )}
             <IconButton
               onClick={() => onCollapsed(!showMore)}
               size="small"

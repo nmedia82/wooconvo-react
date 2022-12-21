@@ -16,6 +16,7 @@ import { blue, green } from "@mui/material/colors";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { DownloadOutlined } from "@mui/icons-material";
+import { get_setting } from "../../services/helper";
 
 export default function CustomerMsg({ message, showMore }) {
   function stringAvatar(name) {
@@ -64,10 +65,14 @@ export default function CustomerMsg({ message, showMore }) {
             </>
           }
         />
+
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
+
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <ListItemText sx={{ backgroundColor: "lightgray", p: 2 }}>
+        <ListItemText
+          sx={{ backgroundColor: get_setting("bg_color_order_messages"), p: 2 }}
+        >
           <Typography variant="body1" gutterBottom>
             {message.message}
           </Typography>
