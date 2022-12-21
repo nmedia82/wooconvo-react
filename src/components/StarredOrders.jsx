@@ -9,6 +9,7 @@ import {
   Rating,
   Badge,
   IconButton,
+  Divider,
 } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import OrderThread from "./orderthread/OrdrerThread";
@@ -39,47 +40,52 @@ function Starred({ Orders, onStarred }) {
             order_date,
             is_starred,
           }) => (
-            <ListItem key={order_id}>
-              <ListItemAvatar>
-                <Badge badgeContent={unread_vendor} color="primary">
-                  <Avatar
-                    sx={{ bgcolor: pink[500] }}
-                    {...stringAvatar(first_name)}
-                  />
-                </Badge>
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      variant="h6"
-                      color="text.primary"
-                    >
-                      {`#${order_id} ${first_name} ${last_name}`}
-                    </Typography>
-                  </>
-                }
-                secondary={order_date}
-              />
-              <Box>
-                <IconButton onClick={() => onStarred(order_id, is_starred)}>
-                  <Rating
-                    name="customized-10"
-                    value={is_starred}
-                    readOnly
-                    max={1}
-                  />
+            <div key={order_id}>
+              <ListItem>
+                <ListItemAvatar>
+                  <Badge badgeContent={unread_vendor} color="primary">
+                    <Avatar
+                      sx={{ bgcolor: pink[500] }}
+                      {...stringAvatar(first_name)}
+                    />
+                  </Badge>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        variant="h6"
+                        color="text.primary"
+                      >
+                        {`#${order_id} ${first_name} ${last_name}`}
+                      </Typography>
+                    </>
+                  }
+                  secondary={order_date}
+                />
+                <Box>
+                  <IconButton onClick={() => onStarred(order_id, is_starred)}>
+                    <Rating
+                      name="customized-10"
+                      value={is_starred}
+                      readOnly
+                      max={1}
+                    />
+                  </IconButton>
+                </Box>
+                <IconButton
+                  onClick={() =>
+                    setselectedOrder(
+                      Orders.find((o) => o.order_id === order_id)
+                    )
+                  }
+                >
+                  <ArrowForwardIosOutlinedIcon color="primary" />
                 </IconButton>
-              </Box>
-              <IconButton
-                onClick={() =>
-                  setselectedOrder(Orders.find((o) => o.order_id === order_id))
-                }
-              >
-                <ArrowForwardIosOutlinedIcon color="primary" />
-              </IconButton>
-            </ListItem>
+              </ListItem>
+              <Divider />
+            </div>
           )
         )}
       {selectedOrder && (
@@ -87,6 +93,11 @@ function Starred({ Orders, onStarred }) {
           Order={selectedOrder}
           onBack={() => setselectedOrder(null)}
         />
+      )}
+      {Starred.length === 0 && (
+        <Typography variant="h4" component="h3">
+          No orders founds
+        </Typography>
       )}
     </div>
   );

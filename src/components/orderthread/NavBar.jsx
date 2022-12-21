@@ -14,10 +14,12 @@ import {
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { ArrowBack, UnfoldLess } from "@mui/icons-material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { get_setting } from "../../services/helper";
+
 const darkTheme = createTheme({
   palette: {
     primary: {
-      main: "#000",
+      main: get_setting("bg_color_message_header"),
     },
   },
 });
@@ -59,11 +61,14 @@ function NavBar({
               variant="outlined"
               sx={{ mr: 5, color: "#fff" }}
             />
-            <Chip
-              label={`Total Messages ${TotalCount}`}
-              variant="outlined"
-              sx={{ color: "white" }}
-            />
+
+            {get_setting("enable_msg_count_display") && (
+              <Chip
+                label={`Total Messages ${TotalCount}`}
+                variant="outlined"
+                sx={{ color: "white" }}
+              />
+            )}
           </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <TextField

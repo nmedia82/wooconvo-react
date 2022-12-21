@@ -4,6 +4,7 @@ import "./input.css";
 import Select from "./select";
 import SelectMaterial from "./select-m";
 import { _to_options } from "./../services/helper";
+import ColorPicker from "./color";
 
 const Input = ({ meta, onMetaChange, data }) => {
   const value = data[meta.id] || "";
@@ -11,6 +12,10 @@ const Input = ({ meta, onMetaChange, data }) => {
   switch (meta.type) {
     case "text":
       return <Text meta={meta} onMetaChange={onMetaChange} value={value} />;
+    case "color":
+      return (
+        <ColorPicker meta={meta} onMetaChange={onMetaChange} value={value} />
+      );
     case "boolean":
       return <Boolean meta={meta} onMetaChange={onMetaChange} value={value} />;
     case "select":

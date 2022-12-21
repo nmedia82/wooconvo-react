@@ -15,3 +15,11 @@ export const wooconvo_makeid = (length = 6) => {
   }
   return result;
 };
+
+export const get_setting = (key, defaultValue = "") => {
+  var settings = localStorage.getItem("wooconvo_settings");
+  if (!settings) return defaultValue;
+  settings = JSON.parse(settings);
+  if (!settings[key]) return defaultValue;
+  return settings[key];
+};

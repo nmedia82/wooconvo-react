@@ -9,6 +9,7 @@ import {
   Rating,
   Badge,
   IconButton,
+  Divider,
 } from "@mui/material";
 import OrderThread from "./orderthread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
@@ -49,52 +50,57 @@ function UnreadOrders({ Orders, onStarred }) {
             order_date,
             is_starred,
           }) => (
-            <ListItem key={order_id}>
-              <ListItemAvatar>
-                <Badge
-                  badgeContent={
-                    context === "myaccount" ? unread_customer : unread_vendor
+            <div key={order_id}>
+              <ListItem>
+                <ListItemAvatar>
+                  <Badge
+                    badgeContent={
+                      context === "myaccount" ? unread_customer : unread_vendor
+                    }
+                    color="primary"
+                  >
+                    <Avatar
+                      sx={{ bgcolor: pink[500] }}
+                      {...stringAvatar(first_name)}
+                    />
+                  </Badge>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        variant="h6"
+                        color="text.primary"
+                      >
+                        {`#${order_id} ${first_name} ${last_name}`}
+                      </Typography>
+                    </>
                   }
-                  color="primary"
+                  secondary={order_date}
+                />
+                <Box>
+                  <IconButton onClick={() => onStarred(order_id, is_starred)}>
+                    <Rating
+                      name="customized-10"
+                      value={is_starred}
+                      readOnly
+                      max={1}
+                    />
+                  </IconButton>
+                </Box>
+                <IconButton
+                  onClick={() =>
+                    setselectedOrder(
+                      Orders.find((o) => o.order_id === order_id)
+                    )
+                  }
                 >
-                  <Avatar
-                    sx={{ bgcolor: pink[500] }}
-                    {...stringAvatar(first_name)}
-                  />
-                </Badge>
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      variant="h6"
-                      color="text.primary"
-                    >
-                      {`#${order_id} ${first_name} ${last_name}`}
-                    </Typography>
-                  </>
-                }
-                secondary={order_date}
-              />
-              <Box>
-                <IconButton onClick={() => onStarred(order_id, is_starred)}>
-                  <Rating
-                    name="customized-10"
-                    value={is_starred}
-                    readOnly
-                    max={1}
-                  />
+                  <ArrowForwardIosOutlinedIcon color="primary" />
                 </IconButton>
-              </Box>
-              <IconButton
-                onClick={() =>
-                  setselectedOrder(Orders.find((o) => o.order_id === order_id))
-                }
-              >
-                <ArrowForwardIosOutlinedIcon color="primary" />
-              </IconButton>
-            </ListItem>
+              </ListItem>
+              <Divider />
+            </div>
           )
         )}
       {selectedOrder && (
@@ -102,6 +108,11 @@ function UnreadOrders({ Orders, onStarred }) {
           Order={selectedOrder}
           onBack={() => setselectedOrder(null)}
         />
+      )}
+      {Unreads.length === 0 && (
+        <Typography variant="h4" component="h3">
+          No orders founds
+        </Typography>
       )}
     </div>
   );

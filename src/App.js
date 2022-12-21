@@ -14,15 +14,20 @@ import {
   setStarred,
   setUnStarred,
 } from "./common/modalService";
+import useLocalStorage from "./services/useLocalStorage";
 
 window.WOOCONVO_API_URL = "https://code.najeebmedia.com/wp-json/wooconvo/v1";
 
 function App() {
   const [Orders, setOrders] = useState([]);
   const [Meta, setMeta] = useState([]);
-  const [pluginSettings, setPluginSettings] = useState({});
+  const [pluginSettings, setPluginSettings] = useLocalStorage(
+    "wooconvo_settings",
+    {}
+  );
   const [isWorking, setIsWorking] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  // const [, set] = useState();
 
   const [MenuChecked, setMenuChecked] = useState(null);
 
@@ -37,7 +42,7 @@ function App() {
       let { data: orders } = await getOrders();
       orders = orders.data;
       setOrders(orders);
-      setMenuChecked("unread");
+      setMenuChecked("orders");
 
       // plugin settings
       const { data: settings } = await getSettings();
@@ -103,7 +108,6 @@ function App() {
             {MenuChecked === "starred" && (
               <StarredOrders Orders={Orders} onStarred={handleStarred} />
             )}
-            <Divider />
 
             {/*  Settings hardcode */}
             {MenuChecked === "settings" && (

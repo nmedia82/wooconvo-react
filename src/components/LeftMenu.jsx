@@ -30,6 +30,28 @@ function LeftMenu({ onMenuChange }) {
 
   return (
     <div>
+      {/* Orders */}
+      <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("orders")}>
+        <ListItemAvatar>
+          <Avatar sx={{ bgcolor: blue[500] }}>
+            <LocalMallIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: "inline" }}
+                variant="h6"
+                color="text.primary"
+              >
+                Orders
+              </Typography>
+            </React.Fragment>
+          }
+        />
+      </ListItemButton>
+
       {/* Unread */}
       <ListItemButton
         sx={{ pb: 3, mt: 2 }}
@@ -49,28 +71,6 @@ function LeftMenu({ onMenuChange }) {
                 color="text.primary"
               >
                 Unread
-              </Typography>
-            </React.Fragment>
-          }
-        />
-      </ListItemButton>
-
-      {/* Orders */}
-      <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("orders")}>
-        <ListItemAvatar>
-          <Avatar sx={{ bgcolor: blue[500] }}>
-            <LocalMallIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                variant="h6"
-                color="text.primary"
-              >
-                Orders
               </Typography>
             </React.Fragment>
           }
