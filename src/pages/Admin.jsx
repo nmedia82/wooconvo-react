@@ -101,6 +101,7 @@ function Admin({ Meta, Settings, onSettingSave, openAlert, onCloseAlert }) {
                 textAlign: "center",
                 width: "80px",
                 mt: 5,
+                mb: 3,
                 marginLeft: "400px",
               }}
               color="primary"
