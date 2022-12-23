@@ -1,8 +1,8 @@
-window.WOOCONVO_Data = JSON.stringify({
-  api_url: "https://code.najeebmedia.com/wp-json/wooconvo/v1",
-  user_id: 1,
-  context: "order_wc",
-});
+// window.WOOCONVO_Data = JSON.stringify({
+//   api_url: "https://code.najeebmedia.com/wp-json/wooconvo/v1",
+//   user_id: 1,
+//   context: "order_wc",
+// });
 
 // window.WOOCONVO_Data = JSON.stringify({
 //   api_url: "https://code.najeebmedia.com/wp-json/wooconvo/v1",
