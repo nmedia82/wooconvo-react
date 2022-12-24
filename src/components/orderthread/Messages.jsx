@@ -3,7 +3,7 @@ import { Divider } from "@mui/material";
 import NoticeMsg from "./NoticeMsg";
 import CustomerMsg from "./CustomerMsg";
 
-function MessagesBody({ Thread, showMore }) {
+function MessagesBody({ Thread, showMore, onDownload }) {
   return (
     <div>
       {Thread.map((msg, index) => (
@@ -18,7 +18,11 @@ function MessagesBody({ Thread, showMore }) {
 
           {/* Customer Message */}
           {msg.type === "message" && (
-            <CustomerMsg message={msg} showMore={showMore} />
+            <CustomerMsg
+              message={msg}
+              showMore={showMore}
+              onDownload={onDownload}
+            />
           )}
         </div>
       ))}

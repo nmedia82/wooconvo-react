@@ -18,14 +18,13 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { DownloadOutlined } from "@mui/icons-material";
 import { get_setting } from "../../services/helper";
 
-export default function CustomerMsg({ message, showMore }) {
+export default function CustomerMsg({ message, showMore, onDownload }) {
   function stringAvatar(name) {
     return {
       children: `${name.split(" ")[0][0]}`,
     };
   }
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
     setOpen(showMore);
   }, [showMore]);
@@ -83,7 +82,7 @@ export default function CustomerMsg({ message, showMore }) {
               display: "flex",
             }}
           >
-            {!message.attachments &&
+            {message.attachments &&
               message.attachments.map((att) => (
                 <Box className="preview-thumb-upload">
                   <img
@@ -94,7 +93,7 @@ export default function CustomerMsg({ message, showMore }) {
                     alt={att.filename}
                   />
                   <p className="preview-thumb-tool-upload">
-                    <IconButton>
+                    <IconButton onClick={() => onDownload(att.filename)}>
                       <DownloadOutlined />
                     </IconButton>
                   </p>

@@ -35,3 +35,10 @@ export function resetUnread(order_id) {
   const data = { order_id, user_type };
   return httpService.post(url, data);
 }
+
+// export function downloadFile(order_id, filename) {
+//   const url = `${api_url}/download-file`;
+//   const user_type = context === "order_wc" ? "vendor" : "customer";
+//   const data = { order_id, filename };
+//   return httpService.post(url, data);
+// }

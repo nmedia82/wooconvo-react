@@ -9,7 +9,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
-import ShowAlert from "./../components/Alert";
+import ShowAlert from "./Alert";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

@@ -110,9 +110,18 @@ function UnreadOrders({ Orders, onStarred }) {
         />
       )}
       {Unreads.length === 0 && (
-        <Typography variant="h4" component="h3">
-          No orders founds
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            minHeight: "25vh",
+            justifyContent: "center",
+            alignItems: "end",
+          }}
+        >
+          <Typography variant="h4" component="h3">
+            No orders found
+          </Typography>
+        </Box>
       )}
     </div>
   );

@@ -87,6 +87,11 @@ export default function WooConvoThread({ Order, onBack }) {
     return regex.test(testwith);
   };
 
+  const handleDownload = (filename) => {
+    const download_url = `${api_url}/download-file?filename=${filename}&order_id=${order_id}`;
+    window.location = download_url;
+  };
+
   return (
     <>
       <NavBar
@@ -101,7 +106,11 @@ export default function WooConvoThread({ Order, onBack }) {
         onSearchThread={handleSearch}
         onBack={onBack}
       />
-      <MessagesBody Thread={FilterThread} showMore={showMore} />
+      <MessagesBody
+        Thread={FilterThread}
+        showMore={showMore}
+        onDownload={handleDownload}
+      />
 
       <Divider variant="inset" component="h2" sx={{ height: 10 }} />
 

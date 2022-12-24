@@ -98,6 +98,20 @@ function AllOrders({ Orders, onStarred }) {
           onBack={() => setselectedOrder(null)}
         />
       )}
+      {Orders.length === 0 && (
+        <Box
+          sx={{
+            display: "flex",
+            minHeight: "25vh",
+            justifyContent: "center",
+            alignItems: "end",
+          }}
+        >
+          <Typography variant="h4" component="h3">
+            No orders found
+          </Typography>
+        </Box>
+      )}
     </div>
   );
 }

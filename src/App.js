@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAdminMeta } from "./services/modalService";
-import { Box, Grid, Divider, Backdrop, CircularProgress } from "@mui/material";
-import UnreadOrders from "./components/UnreadOrders";
-import AllOrders from "./components/AllOrders";
-import StarredOrders from "./components/StarredOrders";
-import LeftMenu from "./components/LeftMenu";
-import Admin from "./pages/Admin";
+import { Box, Backdrop, CircularProgress } from "@mui/material";
 import "./App.css";
 import { getOrders } from "./services/modalService";
 import {
@@ -15,8 +10,11 @@ import {
   setUnStarred,
 } from "./common/modalService";
 import useLocalStorage from "./services/useLocalStorage";
+import VendorView from "./pages/VendorView";
+import CustomerView from "./pages/CustomerView";
+import pluginData from "./services/pluginData";
 
-window.WOOCONVO_API_URL = "https://code.najeebmedia.com/wp-json/wooconvo/v1";
+const { context, settings } = pluginData;
 
 function App() {
   const [Orders, setOrders] = useState([]);
@@ -27,9 +25,9 @@ function App() {
   );
   const [isWorking, setIsWorking] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  // const [, set] = useState();
-
   const [MenuChecked, setMenuChecked] = useState(null);
+
+  const IsCustomerView = context === "myaccount" ? true : false;
 
   useEffect(() => {
     const loadData = async () => {
@@ -45,8 +43,10 @@ function App() {
       setMenuChecked("orders");
 
       // plugin settings
-      const { data: settings } = await getSettings();
-      setPluginSettings(settings.data);
+      // const { data: settings } = await getSettings();
+      // setPluginSettings(settings.data);
+      console.log(settings);
+      setPluginSettings(settings);
       setIsWorking(false);
     };
     loadData();
@@ -83,45 +83,23 @@ function App() {
       {/* <Admin Meta={Meta} /> */}
       {/* <Admin_react /> */}
 
-      <Box
-        sx={{ flexGrow: 1, mt: 2, ml: 2 }}
-        className="wooconvo-admin-wrapper"
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            {/* Add Left list Items */}
-            <LeftMenu onMenuChange={handleMenuChange} />
-          </Grid>
-          <Grid item xs={9}>
-            {/* Unread ==> UnreadMessages */}
-
-            {MenuChecked === "unread" && (
-              <UnreadOrders Orders={Orders} onStarred={handleStarred} />
-            )}
-
-            {/* Orders ==> Orders*/}
-            {MenuChecked === "orders" && (
-              <AllOrders Orders={Orders} onStarred={handleStarred} />
-            )}
-
-            {/* Starred ==> StarredOrders */}
-            {MenuChecked === "starred" && (
-              <StarredOrders Orders={Orders} onStarred={handleStarred} />
-            )}
-
-            {/*  Settings hardcode */}
-            {MenuChecked === "settings" && (
-              <Admin
-                Meta={Meta}
-                Settings={pluginSettings}
-                onSettingSave={handleSettingSave}
-                openAlert={showAlert}
-                onCloseAlert={() => setShowAlert(false)}
-              />
-            )}
-          </Grid>
-        </Grid>
-
+      <Box sx={{ flexGrow: 1 }} className="wooconvo-admin-wrapper">
+        {IsCustomerView && (
+          <CustomerView Orders={Orders} onStarred={handleStarred} />
+        )}
+        {!IsCustomerView && (
+          <VendorView
+            Meta={Meta}
+            Orders={Orders}
+            showAlert={showAlert}
+            MenuChecked={MenuChecked}
+            onCloseAlert={() => setShowAlert(false)}
+            onSettingSave={handleSettingSave}
+            onStarred={handleStarred}
+            onMenuChange={handleMenuChange}
+            pluginSettings={pluginSettings}
+          />
+        )}
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={isWorking}
