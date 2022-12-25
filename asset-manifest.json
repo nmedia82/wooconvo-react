@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/wooconvo-react/static/css/main.b2dd7f29.css",
-    "main.js": "/wooconvo-react/static/js/main.9f11a8e9.js",
+    "main.css": "/wooconvo-react/static/css/main.a624d17d.css",
+    "main.js": "/wooconvo-react/static/js/main.1eec864d.js",
     "static/js/787.aaca877a.chunk.js": "/wooconvo-react/static/js/787.aaca877a.chunk.js",
     "index.html": "/wooconvo-react/index.html",
-    "main.b2dd7f29.css.map": "/wooconvo-react/static/css/main.b2dd7f29.css.map",
-    "main.9f11a8e9.js.map": "/wooconvo-react/static/js/main.9f11a8e9.js.map",
+    "main.a624d17d.css.map": "/wooconvo-react/static/css/main.a624d17d.css.map",
+    "main.1eec864d.js.map": "/wooconvo-react/static/js/main.1eec864d.js.map",
     "787.aaca877a.chunk.js.map": "/wooconvo-react/static/js/787.aaca877a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b2dd7f29.css",
-    "static/js/main.9f11a8e9.js"
+    "static/css/main.a624d17d.css",
+    "static/js/main.1eec864d.js"
   ]
 }
