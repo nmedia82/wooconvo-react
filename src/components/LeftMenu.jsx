@@ -4,6 +4,7 @@ import DraftsIcon from "@mui/icons-material/Drafts";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import SettingsIcon from "@mui/icons-material/Settings";
+import ExtensionIcon from '@mui/icons-material/Extension';
 import {
   Avatar,
   ListItemButton,
@@ -125,11 +126,11 @@ function LeftMenu({ onMenuChange }) {
         />
       </ListItemButton>
 
-      {/* Settings */}
+      {/* Add-ons Settings */}
       <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("addons")}>
         <ListItemAvatar>
-          <Avatar sx={{ bgcolor: red[500] }}>
-            <SettingsIcon />
+          <Avatar sx={{ bgcolor: blue[500] }}>
+            <ExtensionIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText
@@ -140,7 +141,7 @@ function LeftMenu({ onMenuChange }) {
                 variant="h6"
                 color="text.primary"
               >
-                Addons Setting
+                Addons Settings
               </Typography>
             </React.Fragment>
           }
