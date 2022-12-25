@@ -25,9 +25,11 @@ export default function QuickReplyPopup() {
 
   return (
     <div>
-      <IconButton color="primary" sx={{ p: 1 }} onClick={handleClickOpen}>
-        <QuickreplyIcon />
-      </IconButton>
+      <Tooltip title="Quick Reply">
+        <IconButton color="primary" sx={{ p: 1 }} onClick={handleClickOpen}>
+          <QuickreplyIcon />
+        </IconButton>
+      </Tooltip>
       <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
         <AppBar color="secondary" sx={{ position: "relative" }}>
           <Toolbar>
