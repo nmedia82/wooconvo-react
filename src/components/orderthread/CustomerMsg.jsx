@@ -83,8 +83,8 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
             }}
           >
             {message.attachments &&
-              message.attachments.map((att) => (
-                <Box className="preview-thumb-upload">
+              message.attachments.map((att, index) => (
+                <Box className="preview-thumb-upload" key={index}>
                   <img
                     src={att.thumbnail}
                     className="preview-thumb-img-upload"

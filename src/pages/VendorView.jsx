@@ -4,6 +4,7 @@ import StarredOrders from "./../components/StarredOrders";
 import LeftMenu from "./../components/LeftMenu";
 import Admin from "./../components/Admin";
 import { Grid, Divider } from "@mui/material";
+import AddonSettings from "../components/AddonSettings";
 function VendorView({
   Orders,
   Meta,
@@ -38,9 +39,20 @@ function VendorView({
           <StarredOrders Orders={Orders} onStarred={onStarred} />
         )}
 
-        {/*  Settings hardcode */}
+        {/*  Main Settings hardcode */}
         {MenuChecked === "settings" && (
           <Admin
+            Meta={Meta}
+            Settings={pluginSettings}
+            onSettingSave={onSettingSave}
+            openAlert={showAlert}
+            onCloseAlert={onCloseAlert}
+          />
+        )}
+
+        {/*  Addon Settings hardcode */}
+        {MenuChecked === "addons" && (
+          <AddonSettings
             Meta={Meta}
             Settings={pluginSettings}
             onSettingSave={onSettingSave}

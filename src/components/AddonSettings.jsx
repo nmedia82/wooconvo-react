@@ -34,13 +34,19 @@ function a11yProps(index) {
   };
 }
 
-function Admin({ Meta, Settings, onSettingSave, openAlert, onCloseAlert }) {
+function AddonSettings({
+  Meta,
+  Settings,
+  onSettingSave,
+  openAlert,
+  onCloseAlert,
+}) {
   const [TabData, setTabData] = useState(0);
   const [AdminMeta, setAdminMeta] = useState([]);
   const [pluginSettings, setPluginSettings] = useState({ ...Settings });
 
   useEffect(() => {
-    const meta = Meta.filter((m) => !m.is_addon);
+    const meta = Meta.filter((m) => m.is_addon);
     setAdminMeta(meta);
   }, [Meta]);
 
@@ -55,7 +61,6 @@ function Admin({ Meta, Settings, onSettingSave, openAlert, onCloseAlert }) {
     console.log(saved_meta);
   };
 
-  console.log(Meta);
   return (
     <div>
       <Box
@@ -125,4 +130,4 @@ function Admin({ Meta, Settings, onSettingSave, openAlert, onCloseAlert }) {
   );
 }
 
-export default Admin;
+export default AddonSettings;

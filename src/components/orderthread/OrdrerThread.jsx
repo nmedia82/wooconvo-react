@@ -89,7 +89,8 @@ export default function WooConvoThread({ Order, onBack }) {
 
   const handleDownload = (filename) => {
     const download_url = `${api_url}/download-file?filename=${filename}&order_id=${order_id}`;
-    window.location = download_url;
+    // window.location = download_url;
+    window.open(download_url);
   };
 
   return (

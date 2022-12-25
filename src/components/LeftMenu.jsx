@@ -124,6 +124,28 @@ function LeftMenu({ onMenuChange }) {
           }
         />
       </ListItemButton>
+
+      {/* Settings */}
+      <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("addons")}>
+        <ListItemAvatar>
+          <Avatar sx={{ bgcolor: red[500] }}>
+            <SettingsIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: "inline" }}
+                variant="h6"
+                color="text.primary"
+              >
+                Addons Setting
+              </Typography>
+            </React.Fragment>
+          }
+        />
+      </ListItemButton>
     </div>
   );
 }
