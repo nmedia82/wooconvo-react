@@ -73,7 +73,7 @@ export default function Quickreply() {
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText primary="ok admin now you see." />
-                      
+
                       {/* Remove icon With tooltip */}
                       <ListItemIcon>
                         <Tooltip title="remove" arrow placement="top-start">
@@ -85,6 +85,7 @@ export default function Quickreply() {
                     </ListItem>
                   )}
                 </Draggable>
+                <Divider />
               </List>
             )}
           </Droppable>
