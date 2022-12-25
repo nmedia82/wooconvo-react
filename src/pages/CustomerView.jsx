@@ -5,6 +5,7 @@ import StarredOrders from "./../components/StarredOrders";
 import LeftMenu from "./../components/LeftMenu";
 import Admin from "./../components/Admin";
 import { Box, Tabs, Tab, Typography, AppBar, Toolbar } from "@mui/material";
+import { get_setting } from "../services/helper";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -37,14 +38,17 @@ function CustomerView({ Orders, onStarred }) {
 
   return (
     <Box sx={{ bgcolor: "background.paper", height: "auto", width: "100%" }}>
-      <AppBar position="static" color="secondary">
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: get_setting("bg_color_top_header") }}
+      >
         <Toolbar>
           <Tabs
             variant="standard"
             value={TabData}
             onChange={handleTabChange}
             aria-label="basic tabs"
-            indicatorColor="secondary"
+            indicatorColor={{ color: get_setting("bg_color_top_header") }}
             textColor="inherit"
           >
             <Tab label="All Orders" {...a11yProps(0)} />
