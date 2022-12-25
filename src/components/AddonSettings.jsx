@@ -71,7 +71,7 @@ function AddonSettings({
           height: "auto",
         }}
       >
-        <AppBar position="static" color="secondary">
+        <AppBar position="static" color="primary">
           <Toolbar>
             <Tabs
               // orientation="vertical"
@@ -79,12 +79,14 @@ function AddonSettings({
               value={TabData}
               onChange={handleTabChange}
               aria-label="basic tabs"
-              indicatorColor="secondary"
+              indicatorColor="primary"
               textColor="inherit"
             >
               {AdminMeta.map((meta, index) => (
                 <Tab key={index} label={meta.tab} {...a11yProps(index)} />
               ))}
+              <Tab value="addon2" label="Addon Two" />
+              <Tab value="addon3" label="Addon Three" />
             </Tabs>
           </Toolbar>
         </AppBar>
@@ -102,27 +104,6 @@ function AddonSettings({
                 </Grid>
               ))}
             </Grid>
-            <Button
-              sx={{
-                textAlign: "center",
-                width: "80px",
-                mt: 5,
-                mb: 3,
-                marginLeft: "400px",
-              }}
-              color="primary"
-              variant="contained"
-              onClick={() => onSettingSave(pluginSettings)}
-            >
-              Save
-            </Button>
-            {openAlert && (
-              <ShowAlert
-                message="Changes are saved"
-                type="success"
-                onCloseAlert={onCloseAlert}
-              />
-            )}
           </TabPanel>
         ))}
       </Box>
