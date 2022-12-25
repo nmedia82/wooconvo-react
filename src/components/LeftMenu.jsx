@@ -1,10 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import SettingsIcon from "@mui/icons-material/Settings";
-import ExtensionIcon from '@mui/icons-material/Extension';
+import ExtensionIcon from "@mui/icons-material/Extension";
 import {
   Avatar,
   ListItemButton,
@@ -15,18 +14,15 @@ import {
   ListItem,
 } from "@mui/material";
 import { pink, blue, lime, red } from "@mui/material/colors";
-import Box from "@mui/material/Box";
-import Switch from "@mui/material/Switch";
-import Fade from "@mui/material/Fade";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import App from "../App";
+import pluginData from "../services/pluginData";
+
+const { context } = pluginData;
 
 function LeftMenu({ onMenuChange }) {
-  const [isShowing, setisShowing] = useState(false);
   const [checked, setChecked] = React.useState(false);
 
-  const handleChange = () => {
-    setChecked((prev) => !prev);
+  const canSeeSettings = () => {
+    return context === "wp_admin";
   };
 
   return (
@@ -105,48 +101,52 @@ function LeftMenu({ onMenuChange }) {
       <Divider />
 
       {/* Settings */}
-      <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("settings")}>
-        <ListItemAvatar>
-          <Avatar sx={{ bgcolor: red[500] }}>
-            <SettingsIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                variant="h6"
-                color="text.primary"
-              >
-                Settings
-              </Typography>
-            </React.Fragment>
-          }
-        />
-      </ListItemButton>
+      {canSeeSettings() && (
+        <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("settings")}>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: red[500] }}>
+              <SettingsIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <React.Fragment>
+                <Typography
+                  sx={{ display: "inline" }}
+                  variant="h6"
+                  color="text.primary"
+                >
+                  Settings
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </ListItemButton>
+      )}
 
       {/* Add-ons Settings */}
-      <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("addons")}>
-        <ListItemAvatar>
-          <Avatar sx={{ bgcolor: blue[500] }}>
-            <ExtensionIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                variant="h6"
-                color="text.primary"
-              >
-                Addons Settings
-              </Typography>
-            </React.Fragment>
-          }
-        />
-      </ListItemButton>
+      {canSeeSettings() && (
+        <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("addons")}>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: blue[500] }}>
+              <ExtensionIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <React.Fragment>
+                <Typography
+                  sx={{ display: "inline" }}
+                  variant="h6"
+                  color="text.primary"
+                >
+                  Addons Settings
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </ListItemButton>
+      )}
     </div>
   );
 }

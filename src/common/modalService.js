@@ -31,14 +31,14 @@ export function setUnStarred(order_id) {
 
 export function resetUnread(order_id) {
   const url = `${api_url}/reset-unread`;
-  const user_type = context === "order_wc" ? "vendor" : "customer";
+  const user_type = context === "wp_admin" ? "vendor" : "customer";
   const data = { order_id, user_type };
   return httpService.post(url, data);
 }
 
 // export function downloadFile(order_id, filename) {
 //   const url = `${api_url}/download-file`;
-//   const user_type = context === "order_wc" ? "vendor" : "customer";
+//   const user_type = context === "wp_admin" ? "vendor" : "customer";
 //   const data = { order_id, filename };
 //   return httpService.post(url, data);
 // }

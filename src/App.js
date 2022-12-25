@@ -28,6 +28,7 @@ function App() {
   const [MenuChecked, setMenuChecked] = useState(null);
 
   const IsCustomerView = context === "myaccount" ? true : false;
+  // console.log(context, IsCustomerView);
 
   useEffect(() => {
     const loadData = async () => {
@@ -84,10 +85,10 @@ function App() {
       {/* <Admin_react /> */}
 
       <Box sx={{ flexGrow: 1 }} className="wooconvo-admin-wrapper">
-        {!IsCustomerView && (
+        {IsCustomerView && (
           <CustomerView Orders={Orders} onStarred={handleStarred} />
         )}
-        {IsCustomerView && (
+        {!IsCustomerView && (
           <VendorView
             Meta={Meta}
             Orders={Orders}
