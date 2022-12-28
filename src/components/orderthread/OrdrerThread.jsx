@@ -4,9 +4,9 @@ import ReplyMsg from "./ReplyMsg";
 import MessagesBody from "./Messages";
 import "./thread.css";
 import NavBar from "./NavBar";
-import { addMessage } from "../../services/modalService";
+import { addMessage, resetUnread } from "../../services/modalService";
 import pluginData from "../../services/pluginData";
-import { resetUnread } from "../../common/modalService";
+// import { resetUnread } from "../../common/modalService";
 const { api_url, context } = pluginData;
 
 export default function WooConvoThread({ Order, onBack }) {

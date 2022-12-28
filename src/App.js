@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import { getAdminMeta } from "./services/modalService";
 import { Box, Backdrop, CircularProgress } from "@mui/material";
 import "./App.css";
-import { getOrders } from "./services/modalService";
 import {
+  getAdminMeta,
+  getOrders,
   getSettings,
   saveSettings,
   setStarred,
   setUnStarred,
-} from "./common/modalService";
+} from "./services/modalService";
+
 import useLocalStorage from "./services/useLocalStorage";
 import VendorView from "./pages/VendorView";
 import CustomerView from "./pages/CustomerView";
@@ -46,7 +47,7 @@ function App() {
       // plugin settings
       // const { data: settings } = await getSettings();
       // setPluginSettings(settings.data);
-      console.log(settings);
+      console.log(JSON.parse(data));
       setPluginSettings(settings);
       setIsWorking(false);
     };

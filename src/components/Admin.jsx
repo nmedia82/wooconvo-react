@@ -55,7 +55,6 @@ function Admin({ Meta, Settings, onSettingSave, openAlert, onCloseAlert }) {
     console.log(saved_meta);
   };
 
-  console.log(Meta);
   return (
     <div>
       <Box
