@@ -11,8 +11,8 @@ import {
 } from "./services/modalService";
 
 import useLocalStorage from "./services/useLocalStorage";
-import VendorView from "./pages/VendorView";
-import CustomerView from "./pages/CustomerView";
+import AdminView from "./pages/AdminView";
+import FrontendView from "./pages/FrontendView";
 import pluginData from "./services/pluginData";
 
 const { context, settings } = pluginData;
@@ -28,8 +28,8 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
   const [MenuChecked, setMenuChecked] = useState(null);
 
-  const IsCustomerView = context === "myaccount" ? true : false;
-  // console.log(context, IsCustomerView);
+  const IsAdminView = context === "wp_admin" ? true : false;
+  // console.log(context, IsAdminView);
 
   useEffect(() => {
     const loadData = async () => {
@@ -47,12 +47,12 @@ function App() {
       // plugin settings
       // const { data: settings } = await getSettings();
       // setPluginSettings(settings.data);
-      console.log(JSON.parse(data));
+      // console.log(JSON.parse(data));
       setPluginSettings(settings);
       setIsWorking(false);
     };
     loadData();
-  }, []);
+  }, [setPluginSettings]);
 
   const handleStarred = async (order_id, is_starred) => {
     setIsWorking(true);
@@ -86,11 +86,11 @@ function App() {
       {/* <Admin_react /> */}
 
       <Box sx={{ flexGrow: 1 }} className="wooconvo-admin-wrapper">
-        {IsCustomerView && (
-          <CustomerView Orders={Orders} onStarred={handleStarred} />
+        {!IsAdminView && (
+          <FrontendView Orders={Orders} onStarred={handleStarred} />
         )}
-        {!IsCustomerView && (
-          <VendorView
+        {IsAdminView && (
+          <AdminView
             Meta={Meta}
             Orders={Orders}
             showAlert={showAlert}

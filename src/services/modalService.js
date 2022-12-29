@@ -34,7 +34,7 @@ export function setUnStarred(order_id) {
 
 export function resetUnread(order_id) {
   const url = `${api_url}/reset-unread`;
-  const user_type = context === "wp_admin" ? "vendor" : "customer";
+  const user_type = context === "myaccount" ? "customer" : "vendor";
   const data = { order_id, user_type };
   return httpService.post(url, data);
 }

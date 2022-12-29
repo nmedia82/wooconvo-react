@@ -1,7 +1,10 @@
 import React from "react";
 import DraftsIcon from "@mui/icons-material/Drafts";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import LocalMallIcon from "@mui/icons-material/LocalMall";
+import {
+  InboxOutlined,
+  MarkEmailUnreadOutlined,
+  StarRateOutlined,
+} from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import {
@@ -11,28 +14,45 @@ import {
   ListItemAvatar,
   Typography,
   Divider,
-  ListItem,
+  Badge,
 } from "@mui/material";
 import { pink, blue, lime, red } from "@mui/material/colors";
 import pluginData from "../services/pluginData";
 
 const { context } = pluginData;
 
-function LeftMenu({ onMenuChange }) {
-  const [checked, setChecked] = React.useState(false);
-
+function LeftMenu({ onMenuChange, Orders }) {
   const canSeeSettings = () => {
     return context === "wp_admin";
   };
+
+  const TotalOrders = Orders.length;
+  // total undread
+  var TotalUnread = 0;
+  if (context === "myaccount") {
+    TotalUnread = Orders.reduce(
+      (accum, item) => accum + item.unread_customer,
+      0
+    );
+  } else {
+    TotalUnread = Orders.reduce((accum, item) => accum + item.unread_vendor, 0);
+  }
+  // total starrted
+  const TotalStarred = Orders.reduce(
+    (accum, item) => accum + item.is_starred,
+    0
+  );
 
   return (
     <div>
       {/* Orders */}
       <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("orders")}>
         <ListItemAvatar>
-          <Avatar sx={{ bgcolor: blue[500] }}>
-            <LocalMallIcon />
-          </Avatar>
+          <Badge badgeContent={TotalOrders} color="secondary">
+            <Avatar sx={{ bgcolor: blue[500] }}>
+              <InboxOutlined />
+            </Avatar>
+          </Badge>
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -42,7 +62,7 @@ function LeftMenu({ onMenuChange }) {
                 variant="h6"
                 color="text.primary"
               >
-                Orders
+                All
               </Typography>
             </React.Fragment>
           }
@@ -55,9 +75,11 @@ function LeftMenu({ onMenuChange }) {
         onClick={() => onMenuChange("unread")}
       >
         <ListItemAvatar>
-          <Avatar sx={{ bgcolor: pink[500] }}>
-            <DraftsIcon />
-          </Avatar>
+          <Badge badgeContent={TotalUnread} color="secondary">
+            <Avatar sx={{ bgcolor: pink[500] }}>
+              <MarkEmailUnreadOutlined />
+            </Avatar>
+          </Badge>
         </ListItemAvatar>
         <ListItemText
           primary={
@@ -80,9 +102,11 @@ function LeftMenu({ onMenuChange }) {
         onClick={() => onMenuChange("starred")}
       >
         <ListItemAvatar>
-          <Avatar sx={{ bgcolor: lime[500] }}>
-            <StarBorderIcon />
-          </Avatar>
+          <Badge badgeContent={TotalStarred} color="secondary">
+            <Avatar sx={{ bgcolor: lime[500] }}>
+              <StarRateOutlined />
+            </Avatar>
+          </Badge>
         </ListItemAvatar>
         <ListItemText
           primary={
