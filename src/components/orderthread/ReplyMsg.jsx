@@ -86,6 +86,10 @@ export default function ReplyMsg({ onReplySend }) {
     return thum_size;
   };
 
+  const handleQuickReplySend = (reply) => {
+    onReplySend(reply, Files);
+  };
+
   return (
     <Box>
       <Paper
@@ -105,7 +109,8 @@ export default function ReplyMsg({ onReplySend }) {
 
         <Divider sx={{ height: "auto" }} orientation="vertical" />
 
-        <QuickReplyPopup />
+        <QuickReplyPopup onQuickReplySend={handleQuickReplySend} />
+
         <IconButton
           sx={{ p: 1, color: get_setting("icon_color_send_button") }}
           aria-label="Send"
