@@ -55,7 +55,15 @@ function AddonSettings({
   };
 
   const handleMetaChange = (e, field) => {
-    const value = field.type === "boolean" ? e.target.checked : e.target.value;
+    var value = "";
+    const { type } = field;
+    if (type === "boolean") {
+      value = e.target.checked;
+    } else if (type === "quickreply") {
+      value = e;
+    } else {
+      value = e.target.value;
+    }
     const saved_meta = { ...pluginSettings, [field.id]: value };
     setPluginSettings(saved_meta);
     console.log(saved_meta);

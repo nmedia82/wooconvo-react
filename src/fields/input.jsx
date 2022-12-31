@@ -26,7 +26,9 @@ const Input = ({ meta, onMetaChange, data }) => {
         <SelectMaterial meta={meta} onMetaChange={onMetaChange} value={value} />
       );
     case "quickreply":
-      return <QuickReply />;
+      return (
+        <QuickReply meta={meta} onMetaChange={onMetaChange} value={value} />
+      );
 
     default:
       return "";
