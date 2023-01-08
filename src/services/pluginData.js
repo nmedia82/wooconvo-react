@@ -29,12 +29,10 @@ window.WOOCONVO_Data = JSON.stringify({
     image_open_click: true,
     enable_quickreply: false,
     enable_aws: true,
-    aws_apikey: "AKIAIPMSOTXTBGJUYSFA",
-    aws_secret: "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",
+    aws_accesskey: "xxxxxxx",
+    aws_secret: "xxxxx/xs6CUf",
     aws_region: "us-east-1",
     aws_bucket: "nmedia-public",
-    aws_url_expire: 3,
-    aws_acl: true,
   },
 });
 

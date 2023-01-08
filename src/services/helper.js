@@ -28,7 +28,7 @@ export const is_aws_ready = () => {
   var settings = localStorage.getItem("wooconvo_settings");
   const {
     enable_aws,
-    aws_apikey,
+    aws_accesskey,
     aws_secret,
     aws_bucket,
     aws_region,
@@ -38,7 +38,7 @@ export const is_aws_ready = () => {
 
   if (
     !enable_aws ||
-    aws_apikey === "" ||
+    aws_accesskey === "" ||
     aws_secret === "" ||
     aws_bucket === "" ||
     aws_region === ""
@@ -47,7 +47,7 @@ export const is_aws_ready = () => {
 
   return {
     enable_aws,
-    aws_apikey,
+    aws_accesskey,
     aws_secret,
     aws_bucket,
     aws_region,

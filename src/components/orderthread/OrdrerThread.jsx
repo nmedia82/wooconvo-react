@@ -74,16 +74,9 @@ export default function WooConvoThread({ Order, onBack }) {
   // upload to aws
   const handleFileUploadAWS = async (files) => {
     var promises = [];
-    const {
-      aws_apikey,
-      aws_secret,
-      aws_bucket,
-      aws_region,
-      aws_url_expire,
-      aws_acl,
-    } = IsAWSReady;
+    const { aws_accesskey, aws_secret, aws_bucket, aws_region } = IsAWSReady;
     const credentials = {
-      accessKeyId: aws_apikey,
+      accessKeyId: aws_accesskey,
       secretAccessKey: aws_secret,
     };
     const client = new S3Client({ region: aws_region, credentials });
@@ -139,7 +132,7 @@ export default function WooConvoThread({ Order, onBack }) {
   // upload to aws server
   const uploadFileAWS = (file_name, file_data) => {
     // console.log(file_data);
-    const { aws_bucket, aws_region, aws_acl, aws_url_expire } = IsAWSReady;
+    const { aws_bucket, aws_region, aws_acl } = IsAWSReady;
     const url = `${api_url}/upload-images-thumb`;
     const data = new FormData();
     data.append("file_data", file_data);
@@ -148,8 +141,6 @@ export default function WooConvoThread({ Order, onBack }) {
     data.append("key", file_name);
     data.append("bucket", aws_bucket);
     data.append("region", aws_region);
-    data.append("acl", aws_acl);
-    data.append("expire", aws_url_expire);
     return fetch(url, { method: "POST", body: data });
   };
 
@@ -169,23 +160,16 @@ export default function WooConvoThread({ Order, onBack }) {
     const { filename, location, bucket, key } = file;
 
     if (location === "aws") {
-      const {
-        aws_apikey,
-        aws_secret,
-        aws_bucket,
-        aws_region,
-        aws_url_expire,
-        aws_acl,
-      } = IsAWSReady;
+      const { aws_accesskey, aws_secret, aws_bucket, aws_region } = IsAWSReady;
       const credentials = {
-        accessKeyId: aws_apikey,
+        accessKeyId: aws_accesskey,
         secretAccessKey: aws_secret,
       };
       const client = new S3Client({ region: aws_region, credentials });
       const params = { Bucket: bucket, Key: key };
       const command = new GetObjectCommand(params);
-      const expires = aws_url_expire ? Number(aws_url_expire) * 60 : 3600;
-      const url = await getSignedUrl(client, command, { expiresIn: expires });
+
+      const url = await getSignedUrl(client, command, { expiresIn: 3600 });
       window.open(url);
       return;
     }
