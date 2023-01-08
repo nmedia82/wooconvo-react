@@ -2,7 +2,7 @@
 import httpService from "./httpService";
 import pluginData from "./pluginData";
 
-const { api_url, user_id, context } = pluginData;
+const { plugin_url, api_url, user_id, context } = pluginData;
 
 export function getAdminMeta() {
   const url = `${api_url}/get-admin-meta`;
@@ -54,9 +54,6 @@ export function uploadFiles(file) {
   const url = `${api_url}/upload-file`;
   const data = new FormData();
   data.append("file", file);
-  // data.append("order_id", order_id);
-  // data.append("user_id", user_id);
-  // const data = { order_id, file };
   const headers = { headers: { "content-type": "multipart/form-data" } };
   return httpService.post(url, data, headers);
 }
@@ -66,4 +63,9 @@ export function getOrders() {
   const { api_url } = pluginData;
   let url = `${api_url}/get-orders?user_id=${user_id}&context=${context}`;
   return httpService.get(url);
+}
+
+export function getDefaultThumbURL(file_name) {
+  const file_type = file_name.split(".").pop();
+  return `${plugin_url}/images/ext/${file_type}.png`;
 }

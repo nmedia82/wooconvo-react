@@ -20,7 +20,7 @@ import QuickreplyIcon from "@mui/icons-material/Quickreply";
 import SendIcon from "@mui/icons-material/Send";
 import { get_setting } from "../../services/helper";
 
-const quick_replies = get_setting("quick_replies");
+const quick_replies = get_setting("quick_replies") || [];
 
 export default function QuickReplyPopup({ onQuickReplySend }) {
   const [open, setOpen] = React.useState(false);

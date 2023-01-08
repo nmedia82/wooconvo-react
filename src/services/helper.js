@@ -23,3 +23,39 @@ export const get_setting = (key, defaultValue = "") => {
   if (!settings[key]) return defaultValue;
   return settings[key];
 };
+
+export const is_aws_ready = () => {
+  var settings = localStorage.getItem("wooconvo_settings");
+  const {
+    enable_aws,
+    aws_apikey,
+    aws_secret,
+    aws_bucket,
+    aws_region,
+    aws_url_expire,
+    aws_acl,
+  } = JSON.parse(settings);
+
+  if (
+    !enable_aws ||
+    aws_apikey === "" ||
+    aws_secret === "" ||
+    aws_bucket === "" ||
+    aws_region === ""
+  )
+    return false;
+
+  return {
+    enable_aws,
+    aws_apikey,
+    aws_secret,
+    aws_bucket,
+    aws_region,
+    aws_url_expire,
+    aws_acl,
+  };
+};
+
+export const sanitize_filename = (file_name) => {
+  return file_name.replace(/[^a-zA-Z0-9\-\.]/gi, "_").toLowerCase();
+};

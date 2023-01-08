@@ -6,8 +6,22 @@ import "./thread.css";
 import NavBar from "./NavBar";
 import { addMessage, resetUnread } from "../../services/modalService";
 import pluginData from "../../services/pluginData";
+import {
+  get_setting,
+  is_aws_ready,
+  sanitize_filename,
+  wooconvo_makeid,
+} from "../../services/helper";
+import RevisionsAddon from "./RevisionsAddons";
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 // import { resetUnread } from "../../common/modalService";
 const { api_url, context } = pluginData;
+const IsAWSReady = is_aws_ready();
 
 export default function WooConvoThread({ Order, onBack }) {
   const [Thread, setThread] = useState([]);
@@ -31,12 +45,19 @@ export default function WooConvoThread({ Order, onBack }) {
   const [isWorking, setIsWorking] = useState(false);
   const [FilterThread, setFilterThread] = useState([]);
 
-  const { order_id, order_date } = Order;
+  const { order_id, order_date, revisions_limit } = Order;
 
   const handleReplySend = async (reply_text, files = []) => {
     setIsWorking(true);
-    const attachments = await handleFileUpload(files);
-    // console.log(attachments);
+    var attachments = [];
+    // console.log(IsAWSReady);
+    if (IsAWSReady === false) {
+      attachments = await handleFileUpload(files);
+    } else {
+      attachments = await handleFileUploadAWS(files);
+    }
+
+    console.log(attachments);
     const { data: response } = await addMessage(
       order_id,
       reply_text,
@@ -44,12 +65,51 @@ export default function WooConvoThread({ Order, onBack }) {
     );
     const { success, data: order } = response;
     const { thread } = order;
-    // console.log(thread);
     setIsWorking(false);
     if (success) {
       setThread(thread);
       setFilterThread(thread);
     }
+  };
+  // upload to aws
+  const handleFileUploadAWS = async (files) => {
+    var promises = [];
+    const {
+      aws_apikey,
+      aws_secret,
+      aws_bucket,
+      aws_region,
+      aws_url_expire,
+      aws_acl,
+    } = IsAWSReady;
+    const credentials = {
+      accessKeyId: aws_apikey,
+      secretAccessKey: aws_secret,
+    };
+    const client = new S3Client({ region: aws_region, credentials });
+
+    files.forEach(async (file) => {
+      const safe_filename = sanitize_filename(file.name);
+      const p = new Promise(async (resolve, reject) => {
+        let params = {
+          Bucket: aws_bucket,
+          Body: file,
+          Key: safe_filename,
+        };
+        // console.log(params);
+        const command = new PutObjectCommand(params);
+        const aws_response = await client.send(command);
+        let reader = new FileReader();
+        reader.onload = async () => {
+          const resp = await uploadFileAWS(safe_filename, reader.result);
+          const { data: attachment } = await resp.json();
+          resolve(attachment);
+        };
+        reader.readAsDataURL(file);
+      });
+      promises.push(p);
+    });
+    return Promise.all(promises);
   };
 
   // upload to server
@@ -66,12 +126,30 @@ export default function WooConvoThread({ Order, onBack }) {
     return Promise.all(promises);
   };
 
+  // upload to local server
   const uploadFile = (file) => {
     // console.log(file);
     const url = `${api_url}/upload-file`;
     const data = new FormData();
     data.append("file", file);
     data.append("order_id", order_id);
+    return fetch(url, { method: "POST", body: data });
+  };
+
+  // upload to aws server
+  const uploadFileAWS = (file_name, file_data) => {
+    // console.log(file_data);
+    const { aws_bucket, aws_region, aws_acl, aws_url_expire } = IsAWSReady;
+    const url = `${api_url}/upload-images-thumb`;
+    const data = new FormData();
+    data.append("file_data", file_data);
+    data.append("file_name", file_name);
+    data.append("order_id", order_id);
+    data.append("key", file_name);
+    data.append("bucket", aws_bucket);
+    data.append("region", aws_region);
+    data.append("acl", aws_acl);
+    data.append("expire", aws_url_expire);
     return fetch(url, { method: "POST", body: data });
   };
 
@@ -87,9 +165,32 @@ export default function WooConvoThread({ Order, onBack }) {
     return regex.test(testwith);
   };
 
-  const handleDownload = (filename) => {
+  const handleDownload = async (file) => {
+    const { filename, location, bucket, key } = file;
+
+    if (location === "aws") {
+      const {
+        aws_apikey,
+        aws_secret,
+        aws_bucket,
+        aws_region,
+        aws_url_expire,
+        aws_acl,
+      } = IsAWSReady;
+      const credentials = {
+        accessKeyId: aws_apikey,
+        secretAccessKey: aws_secret,
+      };
+      const client = new S3Client({ region: aws_region, credentials });
+      const params = { Bucket: bucket, Key: key };
+      const command = new GetObjectCommand(params);
+      const expires = aws_url_expire ? Number(aws_url_expire) * 60 : 3600;
+      const url = await getSignedUrl(client, command, { expiresIn: expires });
+      window.open(url);
+      return;
+    }
+
     const download_url = `${api_url}/download-file?filename=${filename}&order_id=${order_id}`;
-    // window.location = download_url;
     window.open(download_url);
   };
 
@@ -117,6 +218,12 @@ export default function WooConvoThread({ Order, onBack }) {
 
       {/* Reply to --- */}
       <ReplyMsg onReplySend={handleReplySend} />
+
+      {/* Revision Addons */}
+      {get_setting("enable_revisions") && (
+        <RevisionsAddon RevisionsLimit={revisions_limit} Thread={Thread} />
+      )}
+
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isWorking}

@@ -8,7 +8,12 @@ import { common } from "@mui/material/colors";
 import Attachments from "./Attachments";
 import { DeleteOutline, SendOutlined } from "@mui/icons-material";
 import QuickReplyPopup from "./QuickReply";
-import { get_setting, wooconvo_makeid } from "../../services/helper";
+import {
+  get_setting,
+  sanitize_filename,
+  wooconvo_makeid,
+} from "../../services/helper";
+import { getDefaultThumbURL } from "../../services/modalService";
 
 export default function ReplyMsg({ onReplySend }) {
   //Emoji
@@ -59,11 +64,21 @@ export default function ReplyMsg({ onReplySend }) {
     setFiles(files);
   };
 
+  const isImage = (file_type) => {
+    const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    return validImageTypes.includes(file_type);
+  };
+
   const previewFile = (files) => {
     files.forEach((file) => {
+      const filename = sanitize_filename(file.name);
       var reader = new FileReader();
       reader.onloadend = function () {
-        document.getElementById(`preview-${file.name}`).src = reader.result;
+        console.log(isImage(file.type), getDefaultThumbURL(filename));
+        const thumb_url = isImage(file.type)
+          ? reader.result
+          : getDefaultThumbURL(filename);
+        document.getElementById(`preview-${filename}`).src = thumb_url;
       };
       reader.readAsDataURL(file);
     });
@@ -71,7 +86,9 @@ export default function ReplyMsg({ onReplySend }) {
 
   const hanldeImageRemove = (file_id) => {
     const files = [...Files];
-    const filter = files.filter((file) => file.name !== file_id);
+    const filter = files.filter(
+      (file) => sanitize_filename(file.name) !== file_id
+    );
     setFiles(filter);
   };
 
@@ -81,8 +98,8 @@ export default function ReplyMsg({ onReplySend }) {
     return false;
   };
 
-  const getThumbSize = () => {
-    const thum_size = get_setting("thumb_size", 150);
+  const getThumbSize = (file) => {
+    const thum_size = isImage(file.type) ? get_setting("thumb_size", 150) : 50;
     return thum_size;
   };
 
@@ -109,7 +126,9 @@ export default function ReplyMsg({ onReplySend }) {
 
         <Divider sx={{ height: "auto" }} orientation="vertical" />
 
-        <QuickReplyPopup onQuickReplySend={handleQuickReplySend} />
+        {get_setting("enable_quickreply") && (
+          <QuickReplyPopup onQuickReplySend={handleQuickReplySend} />
+        )}
 
         <IconButton
           sx={{ p: 1, color: get_setting("icon_color_send_button") }}
@@ -132,26 +151,30 @@ export default function ReplyMsg({ onReplySend }) {
           </Typography>
         )}
         {Files.map((file) => (
-          <Box className="preview-thumb" key={file.name}>
+          <Box
+            className="preview-thumb"
+            key={sanitize_filename(file.name)}
+            minWidth="150px"
+          >
             <img
               className="preview-thumb-img"
-              height={getThumbSize()}
-              width={getThumbSize()}
-              id={`preview-${file.name}`}
-              alt={file.name}
+              height={getThumbSize(file)}
+              width={getThumbSize(file)}
+              id={`preview-${sanitize_filename(file.name)}`}
+              alt={sanitize_filename(file.name)}
             />
             <p className="preview-thumb-tool">
               <IconButton
                 color="primary"
                 sx={{ p: 1 }}
                 aria-label="Send"
-                onClick={() => hanldeImageRemove(file.name)}
+                onClick={() => hanldeImageRemove(sanitize_filename(file.name))}
               >
                 <DeleteOutline />
               </IconButton>
-              <Typography variant="span" display={"block"}>
-                {file.name}
-              </Typography>
+              {/* <Typography variant="span" display={"block"}>
+                {sanitize_filename(file.name)}
+              </Typography> */}
             </p>
           </Box>
         ))}
