@@ -26,6 +26,7 @@ export const get_setting = (key, defaultValue = "") => {
 
 export const is_aws_ready = () => {
   var settings = localStorage.getItem("wooconvo_settings");
+  if (!settings) return false;
   const {
     enable_aws,
     aws_accesskey,

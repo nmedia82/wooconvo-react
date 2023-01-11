@@ -201,7 +201,7 @@ export default function WooConvoThread({ Order, onBack }) {
       <Divider variant="inset" component="h2" sx={{ height: 10 }} />
 
       {/* Reply to --- */}
-      <ReplyMsg onReplySend={handleReplySend} />
+      <ReplyMsg onReplySend={handleReplySend} context={context} />
 
       {/* Revision Addons */}
       {get_setting("enable_revisions") && (

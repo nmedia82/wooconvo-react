@@ -61,7 +61,7 @@
 //     attachments_required: false,
 //     attachments_in_email: true,
 //     image_open_click: true,
-//     enable_quickreply: false,
+//     enable_quickreply: true,
 //     quick_replies: ["Hi", "Well done man."],
 //     enable_revisions: true,
 //     revisions_note: "Please request max 5 revisions",

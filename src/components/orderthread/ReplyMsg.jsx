@@ -15,7 +15,7 @@ import {
 } from "../../services/helper";
 import { getDefaultThumbURL } from "../../services/modalService";
 
-export default function ReplyMsg({ onReplySend }) {
+export default function ReplyMsg({ onReplySend, context }) {
   //Emoji
   const [ReplyText, setReplyText] = useState("");
   const [Files, setFiles] = useState([]);
@@ -126,7 +126,7 @@ export default function ReplyMsg({ onReplySend }) {
 
         <Divider sx={{ height: "auto" }} orientation="vertical" />
 
-        {get_setting("enable_quickreply") && (
+        {get_setting("enable_quickreply") && context !== "myaccount" && (
           <QuickReplyPopup onQuickReplySend={handleQuickReplySend} />
         )}
 
