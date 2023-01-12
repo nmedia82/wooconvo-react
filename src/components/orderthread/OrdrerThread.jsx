@@ -57,7 +57,6 @@ export default function WooConvoThread({ Order, onBack }) {
       attachments = await handleFileUploadAWS(files);
     }
 
-    console.log(attachments);
     const { data: response } = await addMessage(
       order_id,
       reply_text,
@@ -178,6 +177,16 @@ export default function WooConvoThread({ Order, onBack }) {
     window.open(download_url);
   };
 
+  const canReply = () => {
+    const disable_on_complete = get_setting("disable_on_completed");
+    return disable_on_complete ? false : true;
+  };
+
+  const canRevise = () => {
+    const enable_revisions = get_setting("enable_revisions");
+    return canReply() && enable_revisions;
+  };
+
   return (
     <>
       <NavBar
@@ -201,10 +210,12 @@ export default function WooConvoThread({ Order, onBack }) {
       <Divider variant="inset" component="h2" sx={{ height: 10 }} />
 
       {/* Reply to --- */}
-      <ReplyMsg onReplySend={handleReplySend} context={context} />
+      {canReply() && (
+        <ReplyMsg onReplySend={handleReplySend} context={context} />
+      )}
 
       {/* Revision Addons */}
-      {get_setting("enable_revisions") && (
+      {canRevise() && (
         <RevisionsAddon RevisionsLimit={revisions_limit} Thread={Thread} />
       )}
 

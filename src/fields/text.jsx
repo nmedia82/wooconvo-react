@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 const Text = ({ meta, onMetaChange, value }) => {
+  value = value ? value : meta.default;
   return (
     <div className="wooconvo-field-wrapper">
       <FormControl fullWidth>
