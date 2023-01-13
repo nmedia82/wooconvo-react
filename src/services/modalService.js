@@ -2,7 +2,7 @@
 import httpService from "./httpService";
 import pluginData from "./pluginData";
 
-const { plugin_url, api_url, user_id, context } = pluginData;
+const { is_pro, plugin_url, api_url, user_id, context } = pluginData;
 
 export function getAdminMeta() {
   const url = `${api_url}/get-admin-meta`;
@@ -68,4 +68,9 @@ export function getOrders() {
 export function getDefaultThumbURL(file_name) {
   const file_type = file_name.split(".").pop();
   return `${plugin_url}/images/ext/${file_type}.png`;
+}
+
+export function isProInstalled() {
+  console.log(is_pro);
+  return is_pro;
 }

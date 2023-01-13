@@ -10,7 +10,7 @@ const Select = ({ meta, onMetaChange }) => {
         secondary={
           <Tooltip
             sx={{ marginTop: "-8px" }}
-            title="More Info"
+            title={meta.desc}
             placement="right-start"
           >
             <IconButton>

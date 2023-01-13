@@ -4,9 +4,6 @@ import {
   Tooltip,
   IconButton,
   ListItemText,
-  FormHelperText,
-  Box,
-  Item,
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 const Text = ({ meta, onMetaChange, value }) => {
@@ -20,7 +17,7 @@ const Text = ({ meta, onMetaChange, value }) => {
           secondary={
             <Tooltip
               sx={{ marginTop: "-8px" }}
-              title="More Info"
+              title={meta.desc}
               placement="right-start"
             >
               <IconButton>
@@ -37,6 +34,7 @@ const Text = ({ meta, onMetaChange, value }) => {
           variant="outlined"
           value={value}
           onChange={(e) => onMetaChange(e, meta)}
+          disabled={meta.is_disabled}
         />
       </FormControl>
     </div>

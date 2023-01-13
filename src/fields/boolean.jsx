@@ -21,7 +21,7 @@ const Boolean = ({ meta, onMetaChange, value }) => {
           secondary={
             <Tooltip
               sx={{ marginTop: "-8px" }}
-              title="More Info"
+              title={meta.desc}
               placement="right-start"
             >
               <IconButton>
@@ -39,6 +39,7 @@ const Boolean = ({ meta, onMetaChange, value }) => {
             name: meta.name,
             id: meta.id,
           }}
+          disabled={meta.is_disabled}
         />
       </FormGroup>
     </div>

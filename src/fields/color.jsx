@@ -5,11 +5,6 @@ import {
   Tooltip,
   IconButton,
   ListItemText,
-  InputAdornment,
-  FormHelperText,
-  Box,
-  Item,
-  FormLabel,
 } from "@mui/material";
 
 import HelpIcon from "@mui/icons-material/Help";
@@ -23,7 +18,7 @@ const ColorPicker = ({ meta, onMetaChange, value }) => {
           secondary={
             <Tooltip
               sx={{ marginTop: "-8px" }}
-              title="More Info"
+              title={meta.desc}
               placement="right-start"
             >
               <IconButton>
@@ -40,6 +35,7 @@ const ColorPicker = ({ meta, onMetaChange, value }) => {
           variant="standard"
           value={value}
           onChange={(e) => onMetaChange(e, meta)}
+          disabled={meta.is_disabled}
         />
       </FormControl>
     </div>

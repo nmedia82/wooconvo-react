@@ -11,6 +11,7 @@ window.WOOCONVO_Data = JSON.stringify({
   api_url: "https://wooconvo.najeebmedia.com/wp-json/wooconvo/v1",
   user_id: 1,
   context: "wp_admin",
+  is_pro: false,
   settings: {
     message_vs_order_status: "wc-pending",
     enable_msg_count_display: true,
@@ -71,10 +72,11 @@ window.WOOCONVO_Data = JSON.stringify({
 //   },
 // });
 
-const { plugin_url, user_id, order_date, api_url, context, settings } =
+const { is_pro, plugin_url, user_id, order_date, api_url, context, settings } =
   JSON.parse(window.WOOCONVO_Data);
 
 export default {
+  is_pro,
   plugin_url,
   order_date,
   user_id,
