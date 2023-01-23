@@ -47,6 +47,13 @@ export function addMessage(order_id, message, attachments = []) {
   return httpService.post(url, data);
 }
 
+// get order details by id
+export function getOrderById(order_id) {
+  const { api_url } = pluginData;
+  const url = `${api_url}/get-order-detail?order_id=${order_id}`;
+  return httpService.get(url);
+}
+
 // upload files to site
 export function uploadFiles(file) {
   // console.log(file);

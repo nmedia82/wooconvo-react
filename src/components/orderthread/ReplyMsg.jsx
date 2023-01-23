@@ -74,7 +74,6 @@ export default function ReplyMsg({ onReplySend, context }) {
       const filename = sanitize_filename(file.name);
       var reader = new FileReader();
       reader.onloadend = function () {
-        console.log(isImage(file.type), getDefaultThumbURL(filename));
         const thumb_url = isImage(file.type)
           ? reader.result
           : getDefaultThumbURL(filename);
@@ -101,6 +100,11 @@ export default function ReplyMsg({ onReplySend, context }) {
   const getThumbSize = (file) => {
     const thum_size = isImage(file.type) ? get_setting("thumb_size", 150) : 50;
     return thum_size;
+  };
+
+  const handleReplySend = () => {
+    onReplySend(ReplyText, Files);
+    setReplyText("");
   };
 
   const handleQuickReplySend = (reply) => {
@@ -133,7 +137,7 @@ export default function ReplyMsg({ onReplySend, context }) {
         <IconButton
           sx={{ p: 1, color: get_setting("icon_color_send_button") }}
           aria-label="Send"
-          onClick={() => onReplySend(ReplyText, Files)}
+          onClick={handleReplySend}
           disabled={ReplyText === "" || validateAttachments()}
         >
           <SendOutlined />

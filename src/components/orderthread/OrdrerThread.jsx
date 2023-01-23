@@ -4,13 +4,17 @@ import ReplyMsg from "./ReplyMsg";
 import MessagesBody from "./Messages";
 import "./thread.css";
 import NavBar from "./NavBar";
-import { addMessage, resetUnread } from "../../services/modalService";
+import {
+  addMessage,
+  getOrderById,
+  resetUnread,
+} from "../../services/modalService";
 import pluginData from "../../services/pluginData";
 import {
   get_setting,
   is_aws_ready,
   sanitize_filename,
-  wooconvo_makeid,
+  is_livechat_read,
 } from "../../services/helper";
 import RevisionsAddon from "./RevisionsAddons";
 import {
@@ -19,17 +23,43 @@ import {
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { NfcRounded } from "@mui/icons-material";
-// import { resetUnread } from "../../common/modalService";
-import { Pusher, PusherEvent } from "@pusher/pusher-websocket-react-native";
-// import {Pusher} from "/pu"
-
+import Pusher from "pusher-js";
 const { api_url, context } = pluginData;
 // check is AWS Addon is ready to use
 const IsAWSReady = is_aws_ready();
+// check LiveChat Addon is ready
+const isLiveChatReady = is_livechat_read();
+// console.log(isLiveChatReady);
 
 export default function WooConvoThread({ Order, onBack }) {
   const [Thread, setThread] = useState([]);
+  const [showMore, setshowMore] = useState(true);
+  const [isWorking, setIsWorking] = useState(false);
+  const [FilterThread, setFilterThread] = useState([]);
+
+  // when message sent successfully
+  const OnLiveChatReceived = async (order) => {
+    const { pusher_key, pusher_cluster } = isLiveChatReady;
+    const pusher = new Pusher(pusher_key, {
+      cluster: pusher_cluster,
+      encrypted: true,
+    });
+
+    const channel = pusher.subscribe(`channel-order-${order.order_id}`);
+    channel.bind("on-reply", async (data) => {
+      const { order_id } = data;
+      if (order_id !== order.order_id) return;
+      const { data: response } = await getOrderById(order.order_id);
+      const { success, data: order_fresh } = response;
+      if (!success)
+        return alert(
+          "Error while receiving the live chat, please contact admin"
+        );
+      const order_thread = [...order_fresh.thread];
+      setFilterThread(order_thread);
+      setThread(order_thread);
+    });
+  };
 
   useEffect(() => {
     const thread = [...Order.thread];
@@ -45,31 +75,10 @@ export default function WooConvoThread({ Order, onBack }) {
     };
 
     markOrderAsRead();
+    isLiveChatReady !== false && OnLiveChatReceived(Order);
   }, [Order]);
-  const [showMore, setshowMore] = useState(true);
-  const [isWorking, setIsWorking] = useState(false);
-  const [FilterThread, setFilterThread] = useState([]);
 
   const { order_id, order_date, revisions_limit } = Order;
-
-  // when message sent successfully
-  const onMessagSent = async (thread) => {
-    const pusher = Pusher.getInstance();
-
-    await pusher.init({
-      apiKey: '9349806d721644f75463',
-      cluster: 'ap2'
-    });
-
-    await pusher.connect();
-
-    let myChannel = await pusher.subscribe({
-      channelName: "my-channel",
-      onEvent: (event: PusherEvent) => {
-        console.log(`onEvent: ${event}`);
-      }
-    })
-  }
 
   const handleReplySend = async (reply_text, files = []) => {
     setIsWorking(true);
@@ -81,18 +90,22 @@ export default function WooConvoThread({ Order, onBack }) {
       attachments = await handleFileUploadAWS(files);
     }
 
-    const { data: response } = await addMessage(
-      order_id,
-      reply_text,
-      attachments
-    );
-    const { success, data: order } = response;
-    const { thread } = order;
-    setIsWorking(false);
-    if (success) {
-      setThread(thread);
-      setFilterThread(thread);
-      onMessagSent(thread);
+    try {
+      const { data: response } = await addMessage(
+        order_id,
+        reply_text,
+        attachments
+      );
+      const { success, data: order } = response;
+      console.log(order);
+      const { thread } = order;
+      setIsWorking(false);
+      if (success && isLiveChatReady === false) {
+        setThread(thread);
+        setFilterThread(thread);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   // upload to aws

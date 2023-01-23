@@ -34,6 +34,7 @@ window.WOOCONVO_Data = JSON.stringify({
     aws_secret: "xxxxx/xs6CUf",
     aws_region: "us-east-1",
     aws_bucket: "nmedia-public",
+    firstname_display: true,
   },
 });
 

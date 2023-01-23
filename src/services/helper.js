@@ -57,6 +57,35 @@ export const is_aws_ready = () => {
   };
 };
 
+export const is_livechat_read = () => {
+  var settings = localStorage.getItem("wooconvo_settings");
+  if (!settings) return false;
+  const {
+    enable_livechat,
+    pusher_app_id,
+    pusher_secret,
+    pusher_key,
+    pusher_cluster,
+  } = JSON.parse(settings);
+
+  if (
+    !enable_livechat ||
+    pusher_app_id === "" ||
+    pusher_secret === "" ||
+    pusher_key === "" ||
+    pusher_cluster === ""
+  )
+    return false;
+
+  return {
+    enable_livechat,
+    pusher_app_id,
+    pusher_secret,
+    pusher_key,
+    pusher_cluster,
+  };
+};
+
 export const sanitize_filename = (file_name) => {
   return file_name.replace(/[^a-zA-Z0-9\-\.]/gi, "_").toLowerCase();
 };

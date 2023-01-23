@@ -32,6 +32,13 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
   const handleClick = () => {
     setOpen(!open);
   };
+
+  const getDisplayName = (msg) => {
+    const firstname_only = get_setting("firstname_display");
+    const { user_name, first_name } = msg;
+    if (firstname_only && first_name) return first_name;
+    return user_name;
+  };
   return (
     <div>
       <ListItemButton onClick={handleClick}>
@@ -52,7 +59,7 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
                 variant="span"
                 color="text.primary"
               >
-                {message.user_name}
+                {getDisplayName(message)}
               </Typography>
               <Typography
                 sx={{ display: "inline", ml: 2 }}
