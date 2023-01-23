@@ -65,7 +65,7 @@ export default function WooConvoThread({ Order, onBack }) {
 
     let myChannel = await pusher.subscribe({
       channelName: "my-channel",
-      onEvent: (event: PusherEvent) => {
+      onEvent: (event) => {
         console.log(`onEvent: ${event}`);
       }
     })
@@ -204,7 +204,7 @@ export default function WooConvoThread({ Order, onBack }) {
 
   const canReply = () => {
     const disable_on_complete = get_setting("disable_on_completed");
-    return disable_on_complete ? false : true;
+    return disable_on_complete && Order.status === 'wc-completed' ? false : true;
   };
 
   const canRevise = () => {
