@@ -217,7 +217,7 @@ export default function WooConvoThread({ Order, onBack }) {
 
   const canReply = () => {
     const disable_on_complete = get_setting("disable_on_completed");
-    return disable_on_complete ? false : true;
+    return disable_on_complete && Order.status === 'wc-completed' ? false : true;
   };
 
   const canRevise = () => {
