@@ -215,9 +215,21 @@ export default function WooConvoThread({ Order, onBack }) {
     window.open(download_url);
   };
 
+  const totalCustomerMessages = Thread.filter(
+    (msg) => msg.type === "message" && msg.context === "myaccount"
+  ).length;
+
   const canReply = () => {
+    let can_reply = true;
     const disable_on_complete = get_setting("disable_on_completed");
-    return disable_on_complete && Order.status === 'wc-completed' ? false : true;
+    can_reply =
+      disable_on_complete && Order.status === "wc-completed" ? false : true;
+    const enable_revisions = get_setting("enable_revisions");
+    if (enable_revisions) {
+      const revisions_limit = get_setting("revisions_limit");
+      can_reply = revisions_limit > totalCustomerMessages;
+    }
+    return can_reply;
   };
 
   const canRevise = () => {
@@ -254,7 +266,10 @@ export default function WooConvoThread({ Order, onBack }) {
 
       {/* Revision Addons */}
       {canRevise() && (
-        <RevisionsAddon RevisionsLimit={revisions_limit} Thread={Thread} />
+        <RevisionsAddon
+          RevisionsLimit={revisions_limit}
+          totalCustomerMessages={totalCustomerMessages}
+        />
       )}
 
       <Backdrop

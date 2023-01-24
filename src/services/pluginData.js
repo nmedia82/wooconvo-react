@@ -97,7 +97,7 @@ window.WOOCONVO_Data = JSON.stringify({
     image_open_click: true,
     enable_quickreply: true,
     quick_replies: ["Hi", "Well done man."],
-    enable_revisions: true,
+    enable_revisions: false,
     revisions_note: "Please request max 5 revisions",
     revisions_limit: 5,
     revisions_orderchange: "wc-completed",

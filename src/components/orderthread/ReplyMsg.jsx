@@ -97,6 +97,12 @@ export default function ReplyMsg({ onReplySend, context }) {
     return false;
   };
 
+  const handleEnterKey = (event) => {
+    if (event.key === "Enter") {
+      handleReplySend();
+    }
+  };
+
   const getThumbSize = (file) => {
     const thum_size = isImage(file.type) ? get_setting("thumb_size", 150) : 50;
     return thum_size;
@@ -115,7 +121,7 @@ export default function ReplyMsg({ onReplySend, context }) {
     <Box>
       <Paper
         className="reply"
-        component="form"
+        component="div"
         sx={{ p: "2px 4px", display: "flex", bgcolor: common }}
       >
         <Attachments onFileSelected={handleFileSelected} />
@@ -126,6 +132,7 @@ export default function ReplyMsg({ onReplySend, context }) {
           fullWidth
           id="standard-basic"
           variant="standard"
+          onKeyPress={handleEnterKey}
         />
 
         <Divider sx={{ height: "auto" }} orientation="vertical" />
