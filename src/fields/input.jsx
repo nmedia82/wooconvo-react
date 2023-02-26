@@ -6,10 +6,11 @@ import SelectMaterial from "./select-m";
 import { _to_options } from "./../services/helper";
 import ColorPicker from "./color";
 import QuickReply from "./quickreply.addon";
+import { isProInstalled } from "../services/modalService";
 
 const Input = ({ meta, onMetaChange, data }) => {
   const value = data[meta.id] || "";
-  // console.log(value);
+  meta.is_disabled = !meta.is_pro || isProInstalled() ? false : true;
   switch (meta.type) {
     case "text":
       return <Text meta={meta} onMetaChange={onMetaChange} value={value} />;
@@ -26,7 +27,9 @@ const Input = ({ meta, onMetaChange, data }) => {
         <SelectMaterial meta={meta} onMetaChange={onMetaChange} value={value} />
       );
     case "quickreply":
-      return <QuickReply />;
+      return (
+        <QuickReply meta={meta} onMetaChange={onMetaChange} value={value} />
+      );
 
     default:
       return "";

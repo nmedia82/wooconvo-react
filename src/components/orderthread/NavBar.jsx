@@ -26,8 +26,6 @@ function NavBar({
   showMore,
   onSearchThread,
   OrderID,
-  OrderDate,
-  Context,
   onBack,
 }) {
   return (

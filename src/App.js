@@ -48,6 +48,7 @@ function App() {
       // const { data: settings } = await getSettings();
       // setPluginSettings(settings.data);
       // console.log(JSON.parse(data));
+
       setPluginSettings(settings);
       setIsWorking(false);
     };

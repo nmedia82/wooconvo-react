@@ -8,8 +8,9 @@ import { blue } from "@mui/material/colors";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import { Alert, Button, Link } from "@mui/material";
 import ShowAlert from "./Alert";
+import { isProInstalled } from "../services/modalService";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -116,6 +117,12 @@ function Admin({ Meta, Settings, onSettingSave, openAlert, onCloseAlert }) {
                 type="success"
                 onCloseAlert={onCloseAlert}
               />
+            )}
+            {!isProInstalled() && (
+              <Alert severity="info">
+                Please install OrderConvo PRO version to unlock disabled fields.{" "}
+                <Link href="https://najeebmedia.com/wooconvo">Get PRO</Link>
+              </Alert>
             )}
           </TabPanel>
         ))}

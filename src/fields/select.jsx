@@ -1,6 +1,24 @@
+import { Tooltip, IconButton, ListItemText } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+
 const Select = ({ meta, onMetaChange }) => {
   return (
     <div className="wcforce-field-wrapper">
+      <ListItemText
+        sx={{ display: "inline-flex" }}
+        primary={meta.title}
+        secondary={
+          <Tooltip
+            sx={{ marginTop: "-8px" }}
+            title={meta.desc}
+            placement="right-start"
+          >
+            <IconButton>
+              <HelpIcon color="primary" fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        }
+      />
       <select
         name={meta.name}
         id={meta.name}
