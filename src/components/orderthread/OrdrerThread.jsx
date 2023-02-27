@@ -36,6 +36,34 @@ export default function WooConvoThread({ Order, onBack }) {
   const [showMore, setshowMore] = useState(true);
   const [isWorking, setIsWorking] = useState(false);
   const [FilterThread, setFilterThread] = useState([]);
+  const [RevisionLimit, setRevisionLimit] = useState(0);
+
+  const { order_id, order_date } = Order;
+
+  useEffect(() => {
+    const thread = [...Order.thread];
+    setFilterThread(thread);
+    setThread(thread);
+
+    const revisions_limit_order = Order.revisions_limit;
+    const revisions_limit_global = get_setting("revisions_limit");
+    if (revisions_limit_order > 0) {
+      setRevisionLimit(revisions_limit_order);
+    } else if (revisions_limit_global > 0) {
+      setRevisionLimit(revisions_limit_global);
+    }
+
+    const markOrderAsRead = async () => {
+      const unread_count =
+        context === "myaccount" ? Order.unread_customer : Order.unread_vendor;
+      if (unread_count > 0) {
+        await resetUnread(Order.order_id);
+      }
+    };
+
+    markOrderAsRead();
+    isLiveChatReady !== false && OnLiveChatReceived(Order);
+  }, [Order]);
 
   // when message sent successfully
   const OnLiveChatReceived = async (order) => {
@@ -61,25 +89,6 @@ export default function WooConvoThread({ Order, onBack }) {
     });
   };
 
-  useEffect(() => {
-    const thread = [...Order.thread];
-    setFilterThread(thread);
-    setThread(thread);
-
-    const markOrderAsRead = async () => {
-      const unread_count =
-        context === "myaccount" ? Order.unread_customer : Order.unread_vendor;
-      if (unread_count > 0) {
-        await resetUnread(Order.order_id);
-      }
-    };
-
-    markOrderAsRead();
-    isLiveChatReady !== false && OnLiveChatReceived(Order);
-  }, [Order]);
-
-  const { order_id, order_date, revisions_limit } = Order;
-
   const handleReplySend = async (reply_text, files = []) => {
     setIsWorking(true);
     var attachments = [];
@@ -97,7 +106,6 @@ export default function WooConvoThread({ Order, onBack }) {
         attachments
       );
       const { success, data: order } = response;
-      console.log(order);
       const { thread } = order;
       setIsWorking(false);
       if (success && isLiveChatReady === false) {
@@ -226,8 +234,7 @@ export default function WooConvoThread({ Order, onBack }) {
       disable_on_complete && Order.status === "wc-completed" ? false : true;
     const enable_revisions = get_setting("enable_revisions");
     if (enable_revisions) {
-      const revisions_limit = get_setting("revisions_limit");
-      can_reply = revisions_limit > totalCustomerMessages;
+      can_reply = RevisionLimit > totalCustomerMessages;
     }
     return can_reply;
   };
@@ -267,7 +274,7 @@ export default function WooConvoThread({ Order, onBack }) {
       {/* Revision Addons */}
       {canRevise() && (
         <RevisionsAddon
-          RevisionsLimit={revisions_limit}
+          RevisionsLimit={RevisionLimit}
           totalCustomerMessages={totalCustomerMessages}
         />
       )}

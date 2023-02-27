@@ -2,7 +2,7 @@ import { Box, Stepper, Step, StepLabel, Typography } from "@mui/material";
 import { get_setting } from "../../services/helper";
 function RevisionsAddon({ RevisionsLimit, totalCustomerMessages }) {
   const RevisionSteps = Array.from({ length: RevisionsLimit }, (_, i) => i + 1);
-
+  console.log(RevisionsLimit);
   return (
     <Box sx={{ width: "100%" }}>
       <Stepper activeStep={totalCustomerMessages - 1} alternativeLabel>
