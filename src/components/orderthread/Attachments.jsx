@@ -27,7 +27,7 @@ function Attachments({ onFileSelected }) {
           aria-label="Send"
           onClick={handleClick}
         >
-          {get_setting("enable_file_attachments") && <AttachFileOutlined />}
+          <AttachFileOutlined />
         </IconButton>
       </Tooltip>
 

@@ -92,6 +92,8 @@ export default function ReplyMsg({ onReplySend, context }) {
   };
 
   const validateAttachments = () => {
+    const attachment_enabled = get_setting("enable_file_attachments");
+    if (!attachment_enabled) return false;
     const attach_required = get_setting("attachments_required");
     if (attach_required && !Files.length) return true;
     return false;
@@ -126,7 +128,9 @@ export default function ReplyMsg({ onReplySend, context }) {
         component="div"
         sx={{ p: "2px 4px", display: "flex", bgcolor: common }}
       >
-        <Attachments onFileSelected={handleFileSelected} />
+        {get_setting("enable_file_attachments") && (
+          <Attachments onFileSelected={handleFileSelected} />
+        )}
 
         <TextField
           value={ReplyText}
