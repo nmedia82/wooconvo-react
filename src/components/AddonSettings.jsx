@@ -66,7 +66,6 @@ function AddonSettings({
     }
     const saved_meta = { ...pluginSettings, [field.id]: value };
     setPluginSettings(saved_meta);
-    console.log(saved_meta);
   };
 
   return (

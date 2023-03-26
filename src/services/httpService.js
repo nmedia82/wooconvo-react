@@ -6,7 +6,6 @@ const { wooconvo_rest_nonce } = pluginData;
 // source: https://stackoverflow.com/questions/68714143/how-can-i-use-axios-interceptors-to-add-some-headers-to-responses
 axios.interceptors.request.use(
   (config) => {
-    console.log(wooconvo_rest_nonce);
     if (wooconvo_rest_nonce) {
       config.headers["X-WP-Nonce"] = wooconvo_rest_nonce;
     }
@@ -18,17 +17,25 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(null, (error) => {
-  //   console.log("Error", error);
-  const expectedErrors =
-    error.response && error.respons.status >= 400 && error.respons.status < 500;
+axios.interceptors.response.use(
+  (response) => {
+    // Handle successful response
+    return response;
+  },
+  (error) => {
+    // Handle error
+    console.log(error);
+    const expectedErrors =
+      error.response &&
+      error.respons.status >= 400 &&
+      error.respons.status < 500;
 
-  if (!expectedErrors) {
-    alert("An unexpected error occurred!");
+    if (!expectedErrors) {
+      alert("An unexpected error occurred!");
+    }
+    return Promise.reject(error);
   }
-
-  return Promise.reject(error);
-});
+);
 
 export default {
   get: axios.get,

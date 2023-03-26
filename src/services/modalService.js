@@ -78,6 +78,5 @@ export function getDefaultThumbURL(file_name) {
 }
 
 export function isProInstalled() {
-  console.log(is_pro);
   return is_pro;
 }

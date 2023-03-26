@@ -14,7 +14,7 @@ import {
   get_setting,
   is_aws_ready,
   sanitize_filename,
-  is_livechat_read,
+  is_livechat_ready,
 } from "../../services/helper";
 import RevisionsAddon from "./RevisionsAddons";
 import {
@@ -28,8 +28,7 @@ const { api_url, context } = pluginData;
 // check is AWS Addon is ready to use
 const IsAWSReady = is_aws_ready();
 // check LiveChat Addon is ready
-const isLiveChatReady = is_livechat_read();
-// console.log(isLiveChatReady);
+const isLiveChatReady = is_livechat_ready();
 
 export default function WooConvoThread({ Order, onBack }) {
   const [Thread, setThread] = useState([]);
@@ -97,7 +96,7 @@ export default function WooConvoThread({ Order, onBack }) {
         attachments
       );
       const { success, data: order } = response;
-      console.log(order);
+      // console.log(isLiveChatReady);
       const { thread } = order;
       setIsWorking(false);
       if (success && isLiveChatReady === false) {
@@ -221,12 +220,13 @@ export default function WooConvoThread({ Order, onBack }) {
 
   const canReply = () => {
     let can_reply = true;
+    // if order status is cancelled
+    if (Order.status === "wc-cancelled") return false;
     const disable_on_complete = get_setting("disable_on_completed");
     can_reply =
       disable_on_complete && Order.status === "wc-completed" ? false : true;
     const enable_revisions = get_setting("enable_revisions");
     if (enable_revisions) {
-      const revisions_limit = get_setting("revisions_limit");
       can_reply = revisions_limit > totalCustomerMessages;
     }
     return can_reply;

@@ -98,6 +98,8 @@ export default function ReplyMsg({ onReplySend, context }) {
   };
 
   const handleEnterKey = (event) => {
+    if (ReplyText === "" || get_setting("show_textarea_reply")) return;
+
     if (event.key === "Enter") {
       handleReplySend();
     }
@@ -133,6 +135,8 @@ export default function ReplyMsg({ onReplySend, context }) {
           id="standard-basic"
           variant="standard"
           onKeyPress={handleEnterKey}
+          multiline={get_setting("show_textarea_reply", false)} // Add this prop to enable multiline
+          rows={4} // Set the number of rows to show
         />
 
         <Divider sx={{ height: "auto" }} orientation="vertical" />
