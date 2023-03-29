@@ -17,7 +17,7 @@ function MessagesBody({ Thread, showMore, onDownload }) {
         <div key={index}>
           {/* Notice Message */}
           {(msg.type === "order_note" ||
-            msg.type === "order_change" ||
+            msg.type === "order_status_change" ||
             msg.type === "order_created") &&
             get_setting("enable_order_notices") && (
               <>

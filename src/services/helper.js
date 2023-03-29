@@ -108,7 +108,7 @@ export function orderconvo_date(dateString) {
   ];
   const monthName = months[date.getMonth()];
   const day = date.getDate();
-  const year = date.getFullYear().toString().substr(-2);
+  const year = date.getFullYear().toString().substr(-4);
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const ampm = hours >= 12 ? "PM" : "AM";
