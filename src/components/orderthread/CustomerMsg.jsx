@@ -7,7 +7,6 @@ import {
   Avatar,
   Collapse,
   ListItemButton,
-  Divider,
   IconButton,
   Box,
 } from "@mui/material";
@@ -16,7 +15,7 @@ import { blue, green } from "@mui/material/colors";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { DownloadOutlined } from "@mui/icons-material";
-import { get_setting, orderconvo_date } from "../../services/helper";
+import { get_setting, nl2br, orderconvo_date } from "../../services/helper";
 
 export default function CustomerMsg({ message, showMore, onDownload }) {
   function stringAvatar(name) {
@@ -80,7 +79,7 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
           sx={{ backgroundColor: get_setting("bg_color_order_messages"), p: 2 }}
         >
           <Typography variant="body1" gutterBottom>
-            {message.message}
+            <div dangerouslySetInnerHTML={{ __html: nl2br(message.message) }} />
           </Typography>
 
           <Box

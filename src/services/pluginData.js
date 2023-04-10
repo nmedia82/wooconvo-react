@@ -71,7 +71,7 @@
 //     revisions_limit: 5,
 //     revisions_orderchange: "wc-completed",
 //     disable_on_completed: true,
-//     show_textarea_reply: true,
+//     show_textarea_reply: false,
 //   },
 // });
 

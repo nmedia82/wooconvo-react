@@ -117,3 +117,7 @@ export function orderconvo_date(dateString) {
 
   return `${monthName} ${day}, ${year} ${formattedHours}:${formattedMinutes}${ampm}`;
 }
+
+export function nl2br(str) {
+  return str.replace(/(?:\r\n|\r|\n)/g, "<br>");
+}
