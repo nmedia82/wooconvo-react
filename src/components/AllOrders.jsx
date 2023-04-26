@@ -22,9 +22,8 @@ function AllOrders({ Orders, onStarred }) {
   const [selectedOrder, setselectedOrder] = useState(null);
 
   function stringAvatar(name) {
-    return {
-      children: `${name.split(" ")[0][0]}`,
-    };
+    const firstInitial = name ? name.trim().split(" ")[0][0] : "-";
+    return { children: firstInitial };
   }
 
   return (
