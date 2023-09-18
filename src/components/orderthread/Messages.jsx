@@ -9,7 +9,10 @@ function MessagesBody({ Thread, showMore, onDownload }) {
   if (order_reverse) {
     thread.reverse();
   }
-  // console.log(get_setting("enable_order_notices"));
+
+  // hot fix, if user data is not present remove those messages
+  thread = thread.filter((t) => t.user_id);
+
   return (
     <div>
       {thread.map((msg, index) => (
