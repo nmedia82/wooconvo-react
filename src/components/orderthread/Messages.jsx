@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 import NoticeMsg from "./NoticeMsg";
 import CustomerMsg from "./CustomerMsg";

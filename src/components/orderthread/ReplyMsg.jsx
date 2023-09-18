@@ -115,10 +115,14 @@ export default function ReplyMsg({ onReplySend, context }) {
   const handleReplySend = () => {
     onReplySend(ReplyText, Files);
     setReplyText("");
+    previewFile([]);
+    setFiles([]);
   };
 
   const handleQuickReplySend = (reply) => {
     onReplySend(reply, Files);
+    previewFile([]);
+    setFiles([]);
   };
 
   return (
