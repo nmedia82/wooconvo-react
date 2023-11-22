@@ -4,14 +4,14 @@
  * 2. yith_vendor, wcvendors
  * 3. myaccount
  * 4. dokan_vendor
+ * 5. wcfm_vendor
  */
 
 // window.WOOCONVO_Data = JSON.stringify({
-//   plugin_url:
-//     "https://plugin.nmdevteam.com/wp-content/plugins/nm-wooconvo-v8",
-//   api_url: "https://plugin.nmdevteam.com/wp-json/wooconvo/v1",
-//   user_id: 1,
-//   context: "wp_admin",
+//   plugin_url: "https://plugins.nmdevteam.com/wp-content/plugins/nm-wooconvo",
+//   api_url: "https://plugins.nmdevteam.com/wp-json/wooconvo/v1",
+//   user_id: 94,
+//   context: "wcfm_vendor",
 //   is_pro: false,
 //   wooconvo_rest_nonce: null,
 //   settings: {
@@ -40,7 +40,7 @@
 // });
 
 // window.WOOCONVO_Data = JSON.stringify({
-//   plugin_url: "https://plugins.nmdevteam.com/wp-content/plugins/nm-wooconvo-v8",
+//   plugin_url: "https://plugins.nmdevteam.com/wp-content/plugins/nm-wooconvo",
 //   api_url: "https://plugins.nmdevteam.com/wp-json/wooconvo/v1",
 //   user_id: 28,
 //   context: "myaccount",

@@ -26,6 +26,8 @@ function AllOrders({ Orders, onStarred }) {
     return { children: firstInitial };
   }
 
+  console.log(Orders);
+
   return (
     <div>
       {!selectedOrder &&

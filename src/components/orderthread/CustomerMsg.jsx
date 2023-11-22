@@ -79,7 +79,10 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
           sx={{ backgroundColor: get_setting("bg_color_order_messages"), p: 2 }}
         >
           <Typography variant="body1" gutterBottom>
-            <div dangerouslySetInnerHTML={{ __html: nl2br(message.message) }} />
+            <div
+              style={{ textAlign: "left" }}
+              dangerouslySetInnerHTML={{ __html: nl2br(message.message) }}
+            />
           </Typography>
 
           <Box
