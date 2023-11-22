@@ -79,7 +79,11 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
         <ListItemText
           sx={{ backgroundColor: get_setting("bg_color_order_messages"), p: 2 }}
         >
-          <Typography variant="body1" gutterBottom>
+          <Typography
+            variant="body1"
+            gutterBottom
+            style={{ whiteSpace: "pre-wrap" }}
+          >
             {message.message}
           </Typography>
 
