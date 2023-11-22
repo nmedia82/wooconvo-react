@@ -15,16 +15,15 @@ import OrderThread from "./orderthread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";
 import pluginData from "../services/pluginData";
-import Pusher from "pusher-js";
+import { orderconvo_date } from "../services/helper";
 const { context } = pluginData;
 
 function AllOrders({ Orders, onStarred }) {
   const [selectedOrder, setselectedOrder] = useState(null);
 
   function stringAvatar(name) {
-    return {
-      children: `${name.split(" ")[0][0]}`,
-    };
+    const firstInitial = name ? name.trim().split(" ")[0][0] : "-";
+    return { children: firstInitial };
   }
 
   return (
@@ -67,7 +66,7 @@ function AllOrders({ Orders, onStarred }) {
                       </Typography>
                     </>
                   }
-                  secondary={order_date}
+                  secondary={orderconvo_date(order_date)}
                 />
                 <Box>
                   <IconButton onClick={() => onStarred(order_id, is_starred)}>

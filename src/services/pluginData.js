@@ -8,8 +8,8 @@
 
 // window.WOOCONVO_Data = JSON.stringify({
 //   plugin_url:
-//     "https://wooconvo.najeebmedia.com/wp-content/plugins/nm-wooconvo-v8",
-//   api_url: "https://wooconvo.najeebmedia.com/wp-json/wooconvo/v1",
+//     "https://plugin.nmdevteam.com/wp-content/plugins/nm-wooconvo-v8",
+//   api_url: "https://plugin.nmdevteam.com/wp-json/wooconvo/v1",
 //   user_id: 1,
 //   context: "wp_admin",
 //   is_pro: false,
@@ -40,10 +40,9 @@
 // });
 
 // window.WOOCONVO_Data = JSON.stringify({
-//   plugin_url:
-//     "https://wooconvo.najeebmedia.com/wp-content/plugins/nm-wooconvo-v8",
-//   api_url: "https://wooconvo.najeebmedia.com/wp-json/wooconvo/v1",
-//   user_id: 3,
+//   plugin_url: "https://plugins.nmdevteam.com/wp-content/plugins/nm-wooconvo-v8",
+//   api_url: "https://plugins.nmdevteam.com/wp-json/wooconvo/v1",
+//   user_id: 28,
 //   context: "myaccount",
 //   settings: {
 //     message_vs_order_status: "wc-pending",
@@ -66,12 +65,12 @@
 //     image_open_click: true,
 //     enable_quickreply: true,
 //     quick_replies: ["Hi", "Well done man."],
-//     enable_revisions: true,
+//     enable_revisions: false,
 //     revisions_note: "Please request max 5 revisions",
 //     revisions_limit: 5,
 //     revisions_orderchange: "wc-completed",
 //     disable_on_completed: true,
-//     show_textarea_reply: true,
+//     show_textarea_reply: false,
 //   },
 // });
 

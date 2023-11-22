@@ -259,6 +259,7 @@ export default function WooConvoThread({ Order, onBack }) {
         showMore={showMore}
         onSearchThread={handleSearch}
         onBack={onBack}
+        RevisionLimit={RevisionLimit}
       />
       <MessagesBody
         Thread={FilterThread}

@@ -20,6 +20,8 @@ const darkTheme = createTheme({
   },
 });
 
+const enable_revisions = get_setting("enable_revisions");
+
 function NavBar({
   TotalCount,
   onCollapsed,
@@ -27,6 +29,7 @@ function NavBar({
   onSearchThread,
   OrderID,
   onBack,
+  RevisionLimit,
 }) {
   return (
     <ThemeProvider theme={darkTheme}>
@@ -51,29 +54,39 @@ function NavBar({
               <ArrowBack />
             </IconButton>
             <Chip
-              label={`#${OrderID}`}
+              label={`Order #${OrderID}`}
               variant="outlined"
               sx={{ mr: 5, color: "#fff" }}
             />
 
             {get_setting("enable_msg_count_display") && (
               <Chip
-                label={`Total Messages ${TotalCount}`}
+                label={`Total Messages: ${TotalCount}`}
                 variant="outlined"
                 sx={{ color: "white" }}
               />
             )}
+
+            {enable_revisions && (
+              <Chip
+                label={`Revisions Left: ${
+                  RevisionLimit - TotalCount
+                }/${RevisionLimit}`}
+                variant="outlined"
+                sx={{ color: "white", marginLeft: "5px" }}
+              />
+            )}
           </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            
-            {get_setting("enable_msg_search")&& (<TextField
-              sx={{ bgcolor: "white" }}
-              label="Search"
-              size="small"
-              variant="filled"
-              id="margin-none"
-              onChange={(e) => onSearchThread(e.target.value)}
-            />
+            {get_setting("enable_msg_search") && (
+              <TextField
+                sx={{ bgcolor: "white" }}
+                label="Search"
+                size="small"
+                variant="filled"
+                id="margin-none"
+                onChange={(e) => onSearchThread(e.target.value)}
+              />
             )}
             <IconButton
               onClick={() => onCollapsed(!showMore)}

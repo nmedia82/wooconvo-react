@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 import NoticeMsg from "./NoticeMsg";
 import CustomerMsg from "./CustomerMsg";
@@ -10,14 +9,17 @@ function MessagesBody({ Thread, showMore, onDownload }) {
   if (order_reverse) {
     thread.reverse();
   }
-  // console.log(get_setting("enable_order_notices"));
+
+  // hot fix, if user data is not present remove those messages
+  thread = thread.filter((t) => t.user_id);
+
   return (
     <div>
       {thread.map((msg, index) => (
         <div key={index}>
           {/* Notice Message */}
           {(msg.type === "order_note" ||
-            msg.type === "order_change" ||
+            msg.type === "order_status_change" ||
             msg.type === "order_created") &&
             get_setting("enable_order_notices") && (
               <>

@@ -108,7 +108,7 @@ export function orderconvo_date(dateString) {
   ];
   const monthName = months[date.getMonth()];
   const day = date.getDate();
-  const year = date.getFullYear().toString().substr(-2);
+  const year = date.getFullYear().toString().substr(-4);
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const ampm = hours >= 12 ? "PM" : "AM";
@@ -116,4 +116,8 @@ export function orderconvo_date(dateString) {
   const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
   return `${monthName} ${day}, ${year} ${formattedHours}:${formattedMinutes}${ampm}`;
+}
+
+export function nl2br(str) {
+  return str.replace(/(?:\r\n|\r|\n)/g, "<br>");
 }
