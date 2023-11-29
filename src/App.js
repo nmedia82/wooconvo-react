@@ -4,7 +4,8 @@ import "./App.css";
 import {
   getAdminMeta,
   getOrders,
-  getSettings,
+  markMessageRead,
+  markMessageUnRead,
   saveSettings,
   setStarred,
   setUnStarred,
@@ -16,6 +17,9 @@ import FrontendView from "./pages/FrontendView";
 import pluginData from "./services/pluginData";
 
 const { context, settings } = pluginData;
+
+let root = document.documentElement;
+root.style.setProperty("font-size", "16px");
 
 function App() {
   const [Orders, setOrders] = useState([]);
@@ -68,6 +72,28 @@ function App() {
     setIsWorking(false);
   };
 
+  const handleRead = async (order_id) => {
+    setIsWorking(true);
+    const { data: order } = await markMessageRead(order_id);
+    const orders = [...Orders];
+    const found = orders.find((order) => order.order_id === order_id);
+    const index = orders.indexOf(found);
+    orders[index] = order.data;
+    setOrders(orders);
+    setIsWorking(false);
+  };
+
+  const handleUnRead = async (order_id) => {
+    setIsWorking(true);
+    const { data: order } = await markMessageUnRead(order_id);
+    const orders = [...Orders];
+    const found = orders.find((order) => order.order_id === order_id);
+    const index = orders.indexOf(found);
+    orders[index] = order.data;
+    setOrders(orders);
+    setIsWorking(false);
+  };
+
   const handleMenuChange = (menu) => {
     setShowAlert(false);
     setMenuChecked(menu);
@@ -99,6 +125,8 @@ function App() {
             onCloseAlert={() => setShowAlert(false)}
             onSettingSave={handleSettingSave}
             onStarred={handleStarred}
+            onRead={handleRead}
+            onUnRead={handleUnRead}
             onMenuChange={handleMenuChange}
             pluginSettings={pluginSettings}
           />

@@ -32,13 +32,19 @@ export function setUnStarred(order_id) {
   return httpService.post(url, data);
 }
 
-export function resetUnread(order_id) {
-  const url = `${api_url}/reset-unread`;
+export function markMessageRead(order_id) {
+  const url = `${api_url}/set-read`;
   const user_type = context === "myaccount" ? "customer" : "vendor";
   const data = { order_id, user_type };
   return httpService.post(url, data);
 }
 
+export function markMessageUnRead(order_id) {
+  const url = `${api_url}/set-unread`;
+  const user_type = context === "myaccount" ? "customer" : "vendor";
+  const data = { order_id, user_type };
+  return httpService.post(url, data);
+}
 // add message in order
 export function addMessage(order_id, message, attachments = []) {
   const { api_url, user_id } = pluginData;

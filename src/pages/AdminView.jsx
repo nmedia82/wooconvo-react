@@ -10,6 +10,8 @@ function AdminView({
   Meta,
   pluginSettings,
   onStarred,
+  onRead,
+  onUnRead,
   onSettingSave,
   showAlert,
   onCloseAlert,
@@ -31,7 +33,12 @@ function AdminView({
 
         {/* Orders ==> Orders*/}
         {MenuChecked === "orders" && (
-          <AllOrders Orders={Orders} onStarred={onStarred} />
+          <AllOrders
+            Orders={Orders}
+            onStarred={onStarred}
+            onRead={onRead}
+            onUnRead={onUnRead}
+          />
         )}
 
         {/* Starred ==> StarredOrders */}

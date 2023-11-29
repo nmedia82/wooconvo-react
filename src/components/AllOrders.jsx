@@ -16,9 +16,10 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import { pink } from "@mui/material/colors";
 import pluginData from "../services/pluginData";
 import { orderconvo_date } from "../services/helper";
+import { MarkEmailRead, Markunread } from "@mui/icons-material";
 const { context } = pluginData;
 
-function AllOrders({ Orders, onStarred }) {
+function AllOrders({ Orders, onStarred, onRead, onUnRead }) {
   const [selectedOrder, setselectedOrder] = useState(null);
 
   function stringAvatar(name) {
@@ -26,30 +27,28 @@ function AllOrders({ Orders, onStarred }) {
     return { children: firstInitial };
   }
 
-  console.log(Orders);
-
+  const getUnreadCount = (order) => {
+    const { unread_customer, unread_vendor } = order;
+    console.log(order);
+    return context === "myaccount" ? unread_customer : unread_vendor;
+  };
   return (
     <div>
       {!selectedOrder &&
-        Orders.map(
-          ({
+        Orders.map((order) => {
+          const {
             order_id,
-            unread_vendor,
-            unread_customer,
+            order_number,
             first_name,
             last_name,
             order_date,
             is_starred,
-          }) => (
+          } = order;
+          return (
             <div key={order_id}>
               <ListItem>
                 <ListItemAvatar>
-                  <Badge
-                    badgeContent={
-                      context === "myaccount" ? unread_customer : unread_vendor
-                    }
-                    color="primary"
-                  >
+                  <Badge badgeContent={getUnreadCount(order)} color="primary">
                     <Avatar
                       sx={{ bgcolor: pink[500] }}
                       {...stringAvatar(first_name)}
@@ -64,7 +63,7 @@ function AllOrders({ Orders, onStarred }) {
                         variant="h6"
                         color="text.primary"
                       >
-                        {`#${order_id} ${first_name} ${last_name}`}
+                        {`#${order_number} ${first_name} ${last_name}`}
                       </Typography>
                     </>
                   }
@@ -79,6 +78,17 @@ function AllOrders({ Orders, onStarred }) {
                       max={1}
                     />
                   </IconButton>
+                  {/* Add "Mark as Read" button */}
+
+                  {getUnreadCount(order) > 0 ? (
+                    <IconButton onClick={() => onRead(order_id)}>
+                      <Markunread />
+                    </IconButton>
+                  ) : (
+                    <IconButton onClick={() => onUnRead(order_id)}>
+                      <MarkEmailRead />
+                    </IconButton>
+                  )}
                 </Box>
                 <IconButton
                   onClick={() =>
@@ -92,8 +102,8 @@ function AllOrders({ Orders, onStarred }) {
               </ListItem>
               <Divider />
             </div>
-          )
-        )}
+          );
+        })}
       {selectedOrder && (
         <OrderThread
           Order={selectedOrder}

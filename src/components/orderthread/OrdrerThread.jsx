@@ -37,7 +37,7 @@ export default function WooConvoThread({ Order, onBack }) {
   const [FilterThread, setFilterThread] = useState([]);
   const [RevisionLimit, setRevisionLimit] = useState(0);
 
-  const { order_id, order_date } = Order;
+  const { order_id, order_date, order_number } = Order;
 
   useEffect(() => {
     const thread = [...Order.thread];
@@ -52,15 +52,6 @@ export default function WooConvoThread({ Order, onBack }) {
       setRevisionLimit(revisions_limit_global);
     }
 
-    const markOrderAsRead = async () => {
-      const unread_count =
-        context === "myaccount" ? Order.unread_customer : Order.unread_vendor;
-      if (unread_count > 0) {
-        await resetUnread(Order.order_id);
-      }
-    };
-
-    markOrderAsRead();
     isLiveChatReady !== false && OnLiveChatReceived(Order);
   }, [Order]);
 
@@ -252,7 +243,7 @@ export default function WooConvoThread({ Order, onBack }) {
         TotalCount={
           FilterThread.filter((thread) => thread.type === "message").length
         }
-        OrderID={order_id}
+        OrderID={order_number}
         OrderDate={order_date}
         Context={context}
         onCollapsed={() => setshowMore(!showMore)}
