@@ -29,7 +29,7 @@ function AllOrders({ Orders, onStarred, onRead, onUnRead }) {
 
   const getUnreadCount = (order) => {
     const { unread_customer, unread_vendor } = order;
-    console.log(order);
+    // console.log(order);
     return context === "myaccount" ? unread_customer : unread_vendor;
   };
   return (

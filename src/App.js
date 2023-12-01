@@ -114,7 +114,12 @@ function App() {
 
       <Box sx={{ flexGrow: 1 }} className="wooconvo-admin-wrapper">
         {!IsAdminView && (
-          <FrontendView Orders={Orders} onStarred={handleStarred} />
+          <FrontendView
+            Orders={Orders}
+            onStarred={handleStarred}
+            onRead={handleRead}
+            onUnRead={handleUnRead}
+          />
         )}
         {IsAdminView && (
           <AdminView

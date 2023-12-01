@@ -35,7 +35,7 @@ function a11yProps(index) {
     "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
-function FrontendView({ Orders, onStarred }) {
+function FrontendView({ Orders, onStarred, onRead, onUnRead }) {
   const [TabData, setTabData] = useState(0);
 
   const handleTabChange = (e, newTabData) => {
@@ -109,7 +109,12 @@ function FrontendView({ Orders, onStarred }) {
       </AppBar>
 
       <TabPanel value={TabData} index={0}>
-        <AllOrders Orders={Orders} onStarred={onStarred} />
+        <AllOrders
+          Orders={Orders}
+          onStarred={onStarred}
+          onRead={onRead}
+          onUnRead={onUnRead}
+        />
       </TabPanel>
       <TabPanel value={TabData} index={1}>
         <UnreadOrders Orders={Orders} onStarred={onStarred} />
