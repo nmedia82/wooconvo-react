@@ -126,11 +126,16 @@ export default function ReplyMsg({ onReplySend, context }) {
   };
 
   return (
-    <Box>
+    <Box sx={{ width: "100%", mt: 2, padding: 3 }}>
       <Paper
-        className="reply"
-        component="div"
-        sx={{ p: "2px 4px", display: "flex", bgcolor: common }}
+        component="form"
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          alignItems: "center",
+          p: "8px",
+          bgcolor: common.white,
+        }}
       >
         {get_setting("enable_file_attachments") && (
           <Attachments onFileSelected={handleFileSelected} />
@@ -141,16 +146,17 @@ export default function ReplyMsg({ onReplySend, context }) {
           onChange={(e) => setReplyText(e.target.value)}
           fullWidth
           id="standard-basic"
-          variant="standard"
+          variant="outlined"
           onKeyPress={handleEnterKey}
           multiline={get_setting("show_textarea_reply", false)} // Add this prop to enable multiline
           rows={4} // Set the number of rows to show
         />
 
-        <Divider sx={{ height: "auto" }} orientation="vertical" />
-
         {get_setting("enable_quickreply") && context !== "myaccount" && (
-          <QuickReplyPopup onQuickReplySend={handleQuickReplySend} />
+          <>
+            <Divider sx={{ height: "auto" }} orientation="vertical" />
+            <QuickReplyPopup onQuickReplySend={handleQuickReplySend} />
+          </>
         )}
 
         <IconButton

@@ -34,50 +34,53 @@ function NavBar({
   return (
     <ThemeProvider theme={darkTheme}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", sm: "block" },
-            }}
-          >
+        <Toolbar sx={{ alignItems: "center", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
               size="large"
               edge="start"
-              aria-label="open drawer"
-              sx={{ mr: 2, color: "#fff" }}
+              aria-label="back"
               onClick={onBack}
+              sx={{ color: "#fff", mr: 2 }}
             >
               <ArrowBack />
             </IconButton>
-            <Chip
-              label={`Order #${OrderID}`}
-              variant="outlined"
-              sx={{ mr: 5, color: "#fff" }}
-            />
-
-            {get_setting("enable_msg_count_display") && (
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                display: { xs: "none", sm: "block" },
+                flexGrow: 1,
+                alignItems: "center",
+              }}
+            >
               <Chip
-                label={`Total Messages: ${TotalCount}`}
+                label={`Order #${OrderID}`}
                 variant="outlined"
-                sx={{ color: "white" }}
+                sx={{ mr: 5, color: "#fff" }}
               />
-            )}
 
-            {enable_revisions && (
-              <Chip
-                label={`Revisions Left: ${
-                  RevisionLimit - TotalCount
-                }/${RevisionLimit}`}
-                variant="outlined"
-                sx={{ color: "white", marginLeft: "5px" }}
-              />
-            )}
-          </Typography>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              {get_setting("enable_msg_count_display") && (
+                <Chip
+                  label={`Total Messages: ${TotalCount}`}
+                  variant="outlined"
+                  sx={{ color: "white" }}
+                />
+              )}
+
+              {enable_revisions && (
+                <Chip
+                  label={`Revisions Left: ${
+                    RevisionLimit - TotalCount
+                  }/${RevisionLimit}`}
+                  variant="outlined"
+                  sx={{ color: "white", marginLeft: "5px" }}
+                />
+              )}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             {get_setting("enable_msg_search") && (
               <TextField
                 sx={{ bgcolor: "white" }}
@@ -86,6 +89,7 @@ function NavBar({
                 variant="filled"
                 id="margin-none"
                 onChange={(e) => onSearchThread(e.target.value)}
+                InputProps={{ disableUnderline: true }}
               />
             )}
             <IconButton
@@ -93,8 +97,8 @@ function NavBar({
               size="small"
               edge="end"
               color="inherit"
-              aria-label="open drawer"
-              sx={{ ml: 3 }}
+              aria-label="toggle view"
+              sx={{ ml: 2 }}
             >
               {showMore ? <UnfoldLess /> : <UnfoldMoreIcon />}
             </IconButton>

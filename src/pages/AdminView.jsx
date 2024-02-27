@@ -3,8 +3,10 @@ import AllOrders from "../components/AllOrders";
 import StarredOrders from "../components/StarredOrders";
 import LeftMenu from "../components/LeftMenu";
 import Admin from "../components/Admin";
-import { Grid, Divider } from "@mui/material";
+import { Grid } from "@mui/material";
 import AddonSettings from "../components/AddonSettings";
+import TopMenu from "../components/TopMenu";
+import MenuContainer from "../components/MenuContainer";
 function AdminView({
   Orders,
   Meta,
@@ -20,13 +22,14 @@ function AdminView({
 }) {
   return (
     <Grid container spacing={2}>
-      <Grid item xs={3}>
-        {/* Add Left list Items */}
-        <LeftMenu onMenuChange={onMenuChange} Orders={Orders} />
+      {/* MenuContainer for small screens */}
+      <Grid item xs={12} md={3}>
+        <MenuContainer onMenuChange={onMenuChange} Orders={Orders} />
       </Grid>
-      <Grid item xs={9}>
-        {/* Unread ==> UnreadMessages */}
 
+      {/* Main content for medium and larger screens */}
+      <Grid item xs={12} md={9}>
+        {/* Unread ==> UnreadMessages */}
         {MenuChecked === "unread" && (
           <UnreadOrders Orders={Orders} onStarred={onStarred} />
         )}
@@ -46,7 +49,7 @@ function AdminView({
           <StarredOrders Orders={Orders} onStarred={onStarred} />
         )}
 
-        {/*  Main Settings hardcode */}
+        {/* Main Settings hardcode */}
         {MenuChecked === "settings" && (
           <Admin
             Meta={Meta}
@@ -57,7 +60,7 @@ function AdminView({
           />
         )}
 
-        {/*  Addon Settings hardcode */}
+        {/* Addon Settings hardcode */}
         {MenuChecked === "addons" && (
           <AddonSettings
             Meta={Meta}

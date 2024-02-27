@@ -10,6 +10,7 @@ import {
   Badge,
   IconButton,
   Divider,
+  Grid,
 } from "@mui/material";
 import OrderThread from "./orderthread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
@@ -32,8 +33,14 @@ function AllOrders({ Orders, onStarred, onRead, onUnRead }) {
     // console.log(order);
     return context === "myaccount" ? unread_customer : unread_vendor;
   };
+
+  const handleOrderSelected = (order_id) => {
+    onRead(order_id);
+    const selected_order = Orders.find((o) => o.order_id === order_id);
+    setselectedOrder(selected_order);
+  };
   return (
-    <div>
+    <Grid container spacing={2}>
       {!selectedOrder &&
         Orders.map((order) => {
           const {
@@ -45,7 +52,7 @@ function AllOrders({ Orders, onStarred, onRead, onUnRead }) {
             is_starred,
           } = order;
           return (
-            <div key={order_id}>
+            <Grid item xs={12} key={order.order_id}>
               <ListItem>
                 <ListItemAvatar>
                   <Badge badgeContent={getUnreadCount(order)} color="primary">
@@ -90,18 +97,12 @@ function AllOrders({ Orders, onStarred, onRead, onUnRead }) {
                     </IconButton>
                   )}
                 </Box>
-                <IconButton
-                  onClick={() =>
-                    setselectedOrder(
-                      Orders.find((o) => o.order_id === order_id)
-                    )
-                  }
-                >
+                <IconButton onClick={() => handleOrderSelected(order_id)}>
                   <ArrowForwardIosOutlinedIcon color="primary" />
                 </IconButton>
               </ListItem>
               <Divider />
-            </div>
+            </Grid>
           );
         })}
       {selectedOrder && (
@@ -124,7 +125,7 @@ function AllOrders({ Orders, onStarred, onRead, onUnRead }) {
           </Typography>
         </Box>
       )}
-    </div>
+    </Grid>
   );
 }
 

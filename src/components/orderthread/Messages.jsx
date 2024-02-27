@@ -1,4 +1,4 @@
-import { Divider } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import NoticeMsg from "./NoticeMsg";
 import CustomerMsg from "./CustomerMsg";
 import { get_setting } from "../../services/helper";
@@ -14,7 +14,7 @@ function MessagesBody({ Thread, showMore, onDownload }) {
   thread = thread.filter((t) => t.user_id);
 
   return (
-    <div>
+    <Box sx={{ width: "100%", margin: 2 }}>
       {thread.map((msg, index) => (
         <div key={index}>
           {/* Notice Message */}
@@ -38,7 +38,7 @@ function MessagesBody({ Thread, showMore, onDownload }) {
           )}
         </div>
       ))}
-    </div>
+    </Box>
   );
 }
 

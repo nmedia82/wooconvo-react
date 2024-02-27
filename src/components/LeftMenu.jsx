@@ -1,5 +1,14 @@
 import React from "react";
-import DraftsIcon from "@mui/icons-material/Drafts";
+import {
+  Avatar,
+  Badge,
+  Divider,
+  Grid,
+  ListItemButton,
+  ListItemText,
+  ListItemAvatar,
+  Typography,
+} from "@mui/material";
 import {
   InboxOutlined,
   MarkEmailUnreadOutlined,
@@ -7,15 +16,6 @@ import {
 } from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ExtensionIcon from "@mui/icons-material/Extension";
-import {
-  Avatar,
-  ListItemButton,
-  ListItemText,
-  ListItemAvatar,
-  Typography,
-  Divider,
-  Badge,
-} from "@mui/material";
 import { pink, blue, lime, red } from "@mui/material/colors";
 import pluginData from "../services/pluginData";
 
@@ -27,8 +27,7 @@ function LeftMenu({ onMenuChange, Orders }) {
   };
 
   const TotalOrders = Orders.length;
-  // total undread
-  var TotalUnread = 0;
+  let TotalUnread;
   if (context === "myaccount") {
     TotalUnread = Orders.reduce(
       (accum, item) => accum + item.unread_customer,
@@ -37,141 +36,127 @@ function LeftMenu({ onMenuChange, Orders }) {
   } else {
     TotalUnread = Orders.reduce((accum, item) => accum + item.unread_vendor, 0);
   }
-  // total starrted
   const TotalStarred = Orders.reduce(
     (accum, item) => accum + item.is_starred,
     0
   );
 
   return (
-    <div>
-      {/* Orders */}
-      <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("orders")}>
-        <ListItemAvatar>
-          <Badge badgeContent={TotalOrders} color="secondary">
-            <Avatar sx={{ bgcolor: blue[500] }}>
-              <InboxOutlined />
-            </Avatar>
-          </Badge>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                variant="h6"
-                color="text.primary"
-              >
-                All
-              </Typography>
-            </React.Fragment>
-          }
-        />
-      </ListItemButton>
-
-      {/* Unread */}
-      <ListItemButton
-        sx={{ pb: 3, mt: 2 }}
-        onClick={() => onMenuChange("unread")}
-      >
-        <ListItemAvatar>
-          <Badge badgeContent={TotalUnread} color="secondary">
-            <Avatar sx={{ bgcolor: pink[500] }}>
-              <MarkEmailUnreadOutlined />
-            </Avatar>
-          </Badge>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                variant="h6"
-                color="text.primary"
-              >
-                Unread
-              </Typography>
-            </React.Fragment>
-          }
-        />
-      </ListItemButton>
-
-      {/* Starred */}
-      <ListItemButton
-        sx={{ pb: 3, mt: 2 }}
-        onClick={() => onMenuChange("starred")}
-      >
-        <ListItemAvatar>
-          <Badge badgeContent={TotalStarred} color="secondary">
-            <Avatar sx={{ bgcolor: lime[500] }}>
-              <StarRateOutlined />
-            </Avatar>
-          </Badge>
-        </ListItemAvatar>
-        <ListItemText
-          primary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                variant="h6"
-                color="text.primary"
-              >
-                Starred
-              </Typography>
-            </React.Fragment>
-          }
-        />
-      </ListItemButton>
-      <Divider />
-
-      {/* Settings */}
-      {canSeeSettings() && (
-        <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("settings")}>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("orders")}>
           <ListItemAvatar>
-            <Avatar sx={{ bgcolor: red[500] }}>
-              <SettingsIcon />
-            </Avatar>
+            <Badge badgeContent={TotalOrders} color="secondary">
+              <Avatar sx={{ bgcolor: blue[500] }}>
+                <InboxOutlined />
+              </Avatar>
+            </Badge>
           </ListItemAvatar>
           <ListItemText
             primary={
               <React.Fragment>
-                <Typography
-                  sx={{ display: "inline" }}
-                  variant="h6"
-                  color="text.primary"
-                >
-                  Settings
+                <Typography variant="h6" color="text.primary">
+                  All
                 </Typography>
               </React.Fragment>
             }
           />
         </ListItemButton>
-      )}
+      </Grid>
 
-      {/* Add-ons Settings */}
-      {canSeeSettings() && (
-        <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("addons")}>
+      <Grid item xs={12}>
+        <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("unread")}>
           <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[500] }}>
-              <ExtensionIcon />
-            </Avatar>
+            <Badge badgeContent={TotalUnread} color="secondary">
+              <Avatar sx={{ bgcolor: pink[500] }}>
+                <MarkEmailUnreadOutlined />
+              </Avatar>
+            </Badge>
           </ListItemAvatar>
           <ListItemText
             primary={
               <React.Fragment>
-                <Typography
-                  sx={{ display: "inline" }}
-                  variant="h6"
-                  color="text.primary"
-                >
-                  Addons Settings
+                <Typography variant="h6" color="text.primary">
+                  Unread
                 </Typography>
               </React.Fragment>
             }
           />
         </ListItemButton>
+      </Grid>
+
+      <Grid item xs={12}>
+        <ListItemButton sx={{ pb: 2 }} onClick={() => onMenuChange("starred")}>
+          <ListItemAvatar>
+            <Badge badgeContent={TotalStarred} color="secondary">
+              <Avatar sx={{ bgcolor: lime[500] }}>
+                <StarRateOutlined />
+              </Avatar>
+            </Badge>
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <React.Fragment>
+                <Typography variant="h6" color="text.primary">
+                  Starred
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </ListItemButton>
+      </Grid>
+
+      {canSeeSettings() && (
+        <>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            <ListItemButton
+              sx={{ pb: 2 }}
+              onClick={() => onMenuChange("settings")}
+            >
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: red[500] }}>
+                  <SettingsIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <React.Fragment>
+                    <Typography variant="h6" color="text.primary">
+                      Settings
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </ListItemButton>
+          </Grid>
+
+          <Grid item xs={12}>
+            <ListItemButton
+              sx={{ pb: 2 }}
+              onClick={() => onMenuChange("addons")}
+            >
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: blue[500] }}>
+                  <ExtensionIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <React.Fragment>
+                    <Typography variant="h6" color="text.primary">
+                      Addons
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </ListItemButton>
+          </Grid>
+        </>
       )}
-    </div>
+    </Grid>
   );
 }
 

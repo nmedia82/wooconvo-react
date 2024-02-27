@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Backdrop, CircularProgress, Divider } from "@mui/material";
+import {
+  Backdrop,
+  CircularProgress,
+  Divider,
+  Grid,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import ReplyMsg from "./ReplyMsg";
 import MessagesBody from "./Messages";
 import "./thread.css";
@@ -54,6 +61,9 @@ export default function WooConvoThread({ Order, onBack }) {
 
     isLiveChatReady !== false && OnLiveChatReceived(Order);
   }, [Order]);
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   // when message sent successfully
   const OnLiveChatReceived = async (order) => {
@@ -239,40 +249,42 @@ export default function WooConvoThread({ Order, onBack }) {
 
   return (
     <>
-      <NavBar
-        TotalCount={
-          FilterThread.filter((thread) => thread.type === "message").length
-        }
-        OrderID={order_number}
-        OrderDate={order_date}
-        Context={context}
-        onCollapsed={() => setshowMore(!showMore)}
-        showMore={showMore}
-        onSearchThread={handleSearch}
-        onBack={onBack}
-        RevisionLimit={RevisionLimit}
-      />
-      <MessagesBody
-        Thread={FilterThread}
-        showMore={showMore}
-        onDownload={handleDownload}
-      />
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <NavBar
+            TotalCount={
+              FilterThread.filter((thread) => thread.type === "message").length
+            }
+            OrderID={order_number}
+            OrderDate={order_date}
+            Context={context}
+            onCollapsed={() => setshowMore(!showMore)}
+            showMore={showMore}
+            onSearchThread={handleSearch}
+            onBack={onBack}
+            RevisionLimit={RevisionLimit}
+          />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <MessagesBody
+            Thread={FilterThread}
+            showMore={showMore}
+            onDownload={handleDownload}
+          />
+        </Grid>
+      </Grid>
 
-      <Divider variant="inset" component="h2" sx={{ height: 10 }} />
+      <Divider orientation="vertical" />
 
-      {/* Reply to --- */}
       {canReply() && (
         <ReplyMsg onReplySend={handleReplySend} context={context} />
       )}
-
-      {/* Revision Addons */}
       {canRevise() && (
         <RevisionsAddon
           RevisionsLimit={RevisionLimit}
           totalCustomerMessages={totalCustomerMessages}
         />
       )}
-
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isWorking}

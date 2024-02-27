@@ -95,6 +95,7 @@ function App() {
   };
 
   const handleMenuChange = (menu) => {
+    console.log(menu);
     setShowAlert(false);
     setMenuChecked(menu);
   };
