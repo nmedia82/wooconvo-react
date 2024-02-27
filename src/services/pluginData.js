@@ -37,6 +37,15 @@
 //     aws_region: "us-east-1",
 //     aws_bucket: "nmedia-public",
 //   },
+// wooconvo_strings: {
+//   __wc_orders: "Orders",
+//   __wc_unread: "Unread",
+//   __wc_starred: "Starred",
+//   __wc_settings: "Settings",
+//   __wc_addons_settings: "Addons",
+//   __wc_search: "Search",
+//   __wc_chip: "Chip",
+// },
 // });
 
 // window.WOOCONVO_Data = JSON.stringify({
@@ -67,10 +76,23 @@
 //     quick_replies: ["Hi", "Well done man."],
 //     enable_revisions: false,
 //     revisions_note: "Please request max 5 revisions",
-//     revisions_limit: 5,
+//     revisions_limit: 50,
 //     revisions_orderchange: "wc-completed",
-//     disable_on_completed: true,
-//     show_textarea_reply: false,
+//     disable_on_completed: false,
+//     show_textarea_reply: true,
+//   },
+//   wooconvo_strings: {
+//     __wc_all: "Alle",
+//     __wc_orders: "Orders",
+//     __wc_order: "Order",
+//     __wc_total_messages: "Total Msgs",
+//     __wc_unread: "Unread",
+//     __wc_starred: "Starred",
+//     __wc_settings: "Settings",
+//     __wc_addons_settings: "Addons",
+//     __wc_search: "Search",
+//     __wc_revisions_left: "Revisions left",
+//     __wc_chip: "Chip",
 //   },
 // });
 
@@ -83,6 +105,7 @@ const {
   context,
   settings,
   wooconvo_rest_nonce,
+  wooconvo_strings,
 } = JSON.parse(window.WOOCONVO_Data);
 
 export default {
@@ -94,4 +117,5 @@ export default {
   context,
   settings,
   wooconvo_rest_nonce,
+  wooconvo_strings,
 };

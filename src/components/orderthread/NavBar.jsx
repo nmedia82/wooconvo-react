@@ -10,7 +10,7 @@ import {
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import { ArrowBack, UnfoldLess } from "@mui/icons-material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { get_setting } from "../../services/helper";
+import { get_setting, get_translation } from "../../services/helper";
 
 const darkTheme = createTheme({
   palette: {
@@ -56,14 +56,17 @@ function NavBar({
               }}
             >
               <Chip
-                label={`Order #${OrderID}`}
+                label={`${get_translation("__wc_order", "Order")} #${OrderID}`}
                 variant="outlined"
                 sx={{ mr: 5, color: "#fff" }}
               />
 
               {get_setting("enable_msg_count_display") && (
                 <Chip
-                  label={`Total Messages: ${TotalCount}`}
+                  label={`${get_translation(
+                    "__wc_total_messages",
+                    "Total Messages"
+                  )}: ${TotalCount}`}
                   variant="outlined"
                   sx={{ color: "white" }}
                 />
@@ -71,9 +74,10 @@ function NavBar({
 
               {enable_revisions && (
                 <Chip
-                  label={`Revisions Left: ${
-                    RevisionLimit - TotalCount
-                  }/${RevisionLimit}`}
+                  label={`${get_translation(
+                    "__wc_revisions_left",
+                    "Revisions Left"
+                  )}: ${RevisionLimit - TotalCount}/${RevisionLimit}`}
                   variant="outlined"
                   sx={{ color: "white", marginLeft: "5px" }}
                 />
@@ -84,7 +88,7 @@ function NavBar({
             {get_setting("enable_msg_search") && (
               <TextField
                 sx={{ bgcolor: "white" }}
-                label="Search"
+                label={get_translation("__wc_search", "Search")}
                 size="small"
                 variant="filled"
                 id="margin-none"

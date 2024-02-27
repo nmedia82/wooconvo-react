@@ -1,3 +1,6 @@
+import pluginData from "./pluginData";
+let { wooconvo_strings } = pluginData;
+
 export const _to_options = (options) => {
   return Object.keys(options).map((b) => ({
     key: b,
@@ -22,6 +25,13 @@ export const get_setting = (key, defaultValue = "") => {
   settings = JSON.parse(settings);
   if (!settings[key]) return defaultValue;
   return settings[key];
+};
+
+export const get_translation = (key, defaultValue = "") => {
+  if (!wooconvo_strings) return defaultValue;
+  // wooconvo_strings = JSON.parse(wooconvo_strings);
+  if (!wooconvo_strings[key]) return defaultValue;
+  return wooconvo_strings[key];
 };
 
 export const is_aws_ready = () => {

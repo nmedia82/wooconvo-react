@@ -3,7 +3,7 @@ import UnreadOrders from "../components/UnreadOrders";
 import AllOrders from "../components/AllOrders";
 import StarredOrders from "../components/StarredOrders";
 import { Box, Tabs, Tab, AppBar, Toolbar, Badge } from "@mui/material";
-import { get_setting } from "../services/helper";
+import { get_setting, get_translation } from "../services/helper";
 import {
   InboxOutlined,
   MarkEmailUnreadOutlined,
@@ -74,7 +74,7 @@ function FrontendView({ Orders, onStarred, onRead, onUnRead }) {
             textColor="inherit"
           >
             <Tab
-              label="All"
+              label={get_translation("__wc_all", "All")}
               {...a11yProps(0)}
               icon={
                 <Badge badgeContent={TotalOrders} color="secondary">
@@ -85,7 +85,7 @@ function FrontendView({ Orders, onStarred, onRead, onUnRead }) {
             />
 
             <Tab
-              label="Unread"
+              label={get_translation("__wc_unread", "Unread")}
               {...a11yProps(1)}
               icon={
                 <Badge badgeContent={TotalUnread} color="secondary">
@@ -95,7 +95,7 @@ function FrontendView({ Orders, onStarred, onRead, onUnRead }) {
               iconPosition="start"
             />
             <Tab
-              label="Starred"
+              label={get_translation("__wc_starred", "Starred")}
               {...a11yProps(2)}
               icon={
                 <Badge badgeContent={TotalStarred} color="secondary">

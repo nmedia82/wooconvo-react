@@ -48,11 +48,6 @@ function App() {
       setOrders(orders);
       setMenuChecked("orders");
 
-      // plugin settings
-      // const { data: settings } = await getSettings();
-      // setPluginSettings(settings.data);
-      // console.log(JSON.parse(data));
-
       setPluginSettings(settings);
       setIsWorking(false);
     };
