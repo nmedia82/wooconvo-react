@@ -104,7 +104,7 @@ const {
   api_url,
   context,
   settings,
-  wooconvo_rest_nonce,
+  wp_nonce,
   wooconvo_strings,
 } = JSON.parse(window.WOOCONVO_Data);
 
@@ -116,6 +116,6 @@ export default {
   api_url,
   context,
   settings,
-  wooconvo_rest_nonce,
+  wp_nonce,
   wooconvo_strings,
 };

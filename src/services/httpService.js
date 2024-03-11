@@ -1,14 +1,14 @@
 import axios from "axios";
 import pluginData from "./pluginData";
-const { wooconvo_rest_nonce } = pluginData;
+const { wp_nonce } = pluginData;
 
 // New axio interceptor syntax from
 // source: https://stackoverflow.com/questions/68714143/how-can-i-use-axios-interceptors-to-add-some-headers-to-responses
 axios.interceptors.request.use(
   (config) => {
-    // console.log(wooconvo_rest_nonce);
-    if (wooconvo_rest_nonce) {
-      config.headers["X-WP-Nonce"] = wooconvo_rest_nonce;
+    // console.log(wp_nonce);
+    if (wp_nonce) {
+      config.headers["X-WP-Nonce"] = wp_nonce;
     }
     config.headers["Content-Type"] = "application/json";
     return config;
