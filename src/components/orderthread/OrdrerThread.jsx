@@ -31,7 +31,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import Pusher from "pusher-js";
-const { api_url, context } = pluginData;
+const { api_url, context, wp_nonce } = pluginData;
 // check is AWS Addon is ready to use
 const IsAWSReady = is_aws_ready();
 // check LiveChat Addon is ready
@@ -93,13 +93,13 @@ export default function WooConvoThread({ Order, onBack }) {
     setIsWorking(true);
     var attachments = [];
     // console.log(IsAWSReady);
-    if (IsAWSReady === false) {
-      attachments = await handleFileUpload(files);
-    } else {
-      attachments = await handleFileUploadAWS(files);
-    }
 
     try {
+      if (IsAWSReady === false) {
+        attachments = await handleFileUpload(files);
+      } else {
+        attachments = await handleFileUploadAWS(files);
+      }
       const { data: response } = await addMessage(
         order_id,
         reply_text,
@@ -114,6 +114,8 @@ export default function WooConvoThread({ Order, onBack }) {
         setFilterThread(thread);
       }
     } catch (error) {
+      alert(`Error : ${error.message}`);
+      setIsWorking(false);
       console.log(error);
     }
   };
@@ -152,17 +154,20 @@ export default function WooConvoThread({ Order, onBack }) {
   };
 
   // upload to server
-  const handleFileUpload = (files) => {
-    var promises = [];
-    files.forEach(async (file) => {
-      const p = new Promise(async (resolve, reject) => {
+  const handleFileUpload = async (files) => {
+    try {
+      const promises = files.map(async (file) => {
         const resp = await uploadFile(file);
-        const { data: attachment } = await resp.json();
-        resolve(attachment);
+        const { data } = await resp.json();
+        if (data.status && data.status === 403) {
+          throw new Error("Error while uploading the file");
+        }
+        return data;
       });
-      promises.push(p);
-    });
-    return Promise.all(promises);
+      return Promise.all(promises);
+    } catch (error) {
+      throw error; // Re-throw the error to be caught by the caller
+    }
   };
 
   // upload to local server
@@ -172,7 +177,11 @@ export default function WooConvoThread({ Order, onBack }) {
     const data = new FormData();
     data.append("file", file);
     data.append("order_id", order_id);
-    return fetch(url, { method: "POST", body: data });
+    // Create headers object with the nonce included
+    const headers = new Headers();
+    headers.append("X-WP-Nonce", wp_nonce);
+
+    return fetch(url, { method: "POST", body: data, headers });
   };
 
   // upload to aws server

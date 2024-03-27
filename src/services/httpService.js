@@ -7,7 +7,7 @@ const { wp_nonce } = pluginData;
 axios.interceptors.request.use(
   (config) => {
     // console.log(wp_nonce);
-    if (wp_nonce) {
+    if (wp_nonce & (wp_nonce !== "debugin1122")) {
       config.headers["X-WP-Nonce"] = wp_nonce;
     }
     config.headers["Content-Type"] = "application/json";
