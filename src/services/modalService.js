@@ -2,7 +2,7 @@
 import httpService from "./httpService";
 import pluginData from "./pluginData";
 
-const { is_pro, plugin_url, api_url, user_id, context } = pluginData;
+const { is_pro, plugin_url, api_url, user_id, context, wp_nonce } = pluginData;
 
 export function getAdminMeta() {
   const url = `${api_url}/get-admin-meta`;
@@ -12,7 +12,8 @@ export function getAdminMeta() {
 
 export function saveSettings(data) {
   const url = `${api_url}/save-settings`;
-  return httpService.post(url, data);
+  const headers = { "X-WP-Nonce": wp_nonce };
+  return httpService.post(url, data, { headers });
 }
 
 export function getSettings(data) {
