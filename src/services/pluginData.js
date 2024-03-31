@@ -13,7 +13,7 @@
 //   user_id: 1,
 //   context: "wp_admin",
 //   is_pro: false,
-//   wooconvo_rest_nonce: null,
+//   wp_nonce: "2c50a717b3",
 //   settings: {
 //     message_vs_order_status: "wc-pending",
 //     enable_msg_count_display: true,
@@ -37,15 +37,15 @@
 //     aws_region: "us-east-1",
 //     aws_bucket: "nmedia-public",
 //   },
-// wooconvo_strings: {
-//   __wc_orders: "Orders",
-//   __wc_unread: "Unread",
-//   __wc_starred: "Starred",
-//   __wc_settings: "Settings",
-//   __wc_addons_settings: "Addons",
-//   __wc_search: "Search",
-//   __wc_chip: "Chip",
-// },
+//   wooconvo_strings: {
+//     __wc_orders: "Orders",
+//     __wc_unread: "Unread",
+//     __wc_starred: "Starred",
+//     __wc_settings: "Settings",
+//     __wc_addons_settings: "Addons",
+//     __wc_search: "Search",
+//     __wc_chip: "Chip",
+//   },
 // });
 
 // window.WOOCONVO_Data = JSON.stringify({
