@@ -6,6 +6,7 @@ import { Box, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { common } from "@mui/material/colors";
 import Attachments from "./Attachments";
+import AudioAttachment from "./AudioAttachment";
 import { DeleteOutline, SendOutlined } from "@mui/icons-material";
 import QuickReplyPopup from "./QuickReply";
 import {
@@ -19,6 +20,7 @@ export default function ReplyMsg({ onReplySend, context }) {
   //Emoji
   const [ReplyText, setReplyText] = useState("");
   const [Files, setFiles] = useState([]);
+  const [selectedAudio, setSelectedAudio] = useState(null);
 
   const validateSelectedFiles = (files_selected) => {
     // max_files_allowed
@@ -112,11 +114,19 @@ export default function ReplyMsg({ onReplySend, context }) {
     return thum_size;
   };
 
+  const handleAudioSelected = (file) => {
+    setSelectedAudio(file);
+  };
+
+  const removeAudioAttachment = () => {
+    setSelectedAudio(null);
+  };
+
   const handleReplySend = () => {
-    onReplySend(ReplyText, Files);
+    onReplySend(ReplyText, Files, selectedAudio);
     setReplyText("");
-    previewFile([]);
     setFiles([]);
+    setSelectedAudio(null);
   };
 
   const handleQuickReplySend = (reply) => {
@@ -137,6 +147,9 @@ export default function ReplyMsg({ onReplySend, context }) {
           bgcolor: common.white,
         }}
       >
+        {get_setting("enable_audio_recording") && (
+          <AudioAttachment onAudioSelected={handleAudioSelected} />
+        )}
         {get_setting("enable_file_attachments") && (
           <Attachments onFileSelected={handleFileSelected} />
         )}
@@ -207,6 +220,19 @@ export default function ReplyMsg({ onReplySend, context }) {
             </p>
           </Box>
         ))}
+
+        {selectedAudio && (
+          <Box
+            className="audio-preview"
+            sx={{ display: "flex", alignItems: "center", gap: 2 }}
+          >
+            <audio controls src={URL.createObjectURL(selectedAudio)} />
+            <IconButton color="error" onClick={removeAudioAttachment}>
+              <DeleteOutline />
+            </IconButton>
+            <Typography variant="body2">{selectedAudio.name}</Typography>
+          </Box>
+        )}
       </Box>
     </Box>
   );

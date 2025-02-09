@@ -15,6 +15,7 @@ import {
   addMessage,
   getOrderById,
   resetUnread,
+  revisionAccepted,
 } from "../../services/modalService";
 import pluginData from "../../services/pluginData";
 import {
@@ -43,6 +44,7 @@ export default function WooConvoThread({ Order, onBack }) {
   const [isWorking, setIsWorking] = useState(false);
   const [FilterThread, setFilterThread] = useState([]);
   const [RevisionLimit, setRevisionLimit] = useState(0);
+  const [RevisionAccepted, setRevisionAccepted] = useState(false);
 
   const { order_id, order_date, order_number } = Order;
 
@@ -52,12 +54,15 @@ export default function WooConvoThread({ Order, onBack }) {
     setThread(thread);
 
     const revisions_limit_order = Order.revisions_limit;
+    const revision_accepted = Order.revision_accepted || false;
     const revisions_limit_global = get_setting("revisions_limit");
     if (revisions_limit_order > 0) {
       setRevisionLimit(revisions_limit_order);
     } else if (revisions_limit_global > 0) {
       setRevisionLimit(revisions_limit_global);
     }
+
+    setRevisionAccepted(revision_accepted);
 
     isLiveChatReady !== false && OnLiveChatReceived(Order);
   }, [Order]);
@@ -89,32 +94,41 @@ export default function WooConvoThread({ Order, onBack }) {
     });
   };
 
-  const handleReplySend = async (reply_text, files = []) => {
+  const handleReplySend = async (reply_text, files = [], audioFile = null) => {
     setIsWorking(true);
-    var attachments = [];
-    // console.log(IsAWSReady);
+    let attachments = [];
 
     try {
-      if (IsAWSReady === false) {
-        attachments = await handleFileUpload(files);
-      } else {
-        attachments = await handleFileUploadAWS(files);
+      // Combine files and audioFile into a single array if audioFile exists
+      let allFiles = [...files];
+      if (audioFile) {
+        allFiles.push(audioFile);
       }
+
+      // Handle file upload based on AWS readiness
+      if (IsAWSReady === false) {
+        attachments = await handleFileUpload(allFiles);
+      } else {
+        attachments = await handleFileUploadAWS(allFiles);
+      }
+
+      // Send the message with the uploaded attachments
       const { data: response } = await addMessage(
         order_id,
         reply_text,
         attachments
       );
       const { success, data: order } = response;
-      // console.log(isLiveChatReady);
       const { thread } = order;
+
       setIsWorking(false);
+
       if (success && isLiveChatReady === false) {
         setThread(thread);
         setFilterThread(thread);
       }
     } catch (error) {
-      alert(`Error : ${error.message}`);
+      alert(`Error: ${error.message}`);
       setIsWorking(false);
       console.log(error);
     }
@@ -248,12 +262,29 @@ export default function WooConvoThread({ Order, onBack }) {
     if (enable_revisions) {
       can_reply = RevisionLimit > totalCustomerMessages;
     }
+    can_reply = !RevisionAccepted;
     return can_reply;
   };
 
   const canRevise = () => {
     const enable_revisions = get_setting("enable_revisions");
     return canReply() && enable_revisions;
+  };
+
+  const handleRevisionAccepted = async () => {
+    try {
+      setIsWorking(true);
+      const { data: response } = await revisionAccepted(order_id);
+      setIsWorking(false);
+
+      const { success } = response;
+      if (success) {
+        return setRevisionAccepted(true);
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+      setIsWorking(false);
+    }
   };
 
   return (
@@ -292,6 +323,7 @@ export default function WooConvoThread({ Order, onBack }) {
         <RevisionsAddon
           RevisionsLimit={RevisionLimit}
           totalCustomerMessages={totalCustomerMessages}
+          onRevisionAccepted={handleRevisionAccepted}
         />
       )}
       <Backdrop

@@ -15,6 +15,7 @@ import OrderThread from "./orderthread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";
 import pluginData from "../services/pluginData";
+import { get_setting } from "../services/helper";
 const { context } = pluginData;
 
 function UnreadOrders({ Orders, onStarred }) {
@@ -119,7 +120,7 @@ function UnreadOrders({ Orders, onStarred }) {
           }}
         >
           <Typography variant="h4" component="h3">
-            No orders found
+            {get_setting("no_orders_found", "No Order Found")}
           </Typography>
         </Box>
       )}

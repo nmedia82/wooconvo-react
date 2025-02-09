@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   Typography,
-  Grid,
   ListItemAvatar,
   ListItemText,
   Avatar,
@@ -10,7 +9,6 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
-//import InfoIcon from "@mui/icons-material/Info";
 import { blue, green } from "@mui/material/colors";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -23,7 +21,9 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
       children: `${name.split(" ")[0][0]}`,
     };
   }
+
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
     setOpen(showMore);
   }, [showMore]);
@@ -38,6 +38,7 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
     if (firstname_only && first_name) return first_name;
     return user_name;
   };
+
   return (
     <div>
       <ListItemButton onClick={handleClick}>
@@ -70,7 +71,6 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
             </>
           }
         />
-
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
@@ -85,27 +85,42 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
             />
           </Typography>
 
-          <Box
-            sx={{
-              flexDirection: "row",
-              display: "flex",
-            }}
-          >
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
             {message.attachments &&
               message.attachments.map((att, index) => (
-                <Box className="preview-thumb-upload" key={index}>
-                  <img
-                    src={att.thumbnail}
-                    className="preview-thumb-img-upload"
-                    height="50"
-                    width="100"
-                    alt={att.filename}
-                  />
-                  <p className="preview-thumb-tool-upload">
-                    <IconButton onClick={() => onDownload(att)}>
-                      <DownloadOutlined />
-                    </IconButton>
-                  </p>
+                <Box key={index} className="preview-thumb-upload">
+                  {/* Render image preview if the attachment is an image */}
+                  {att.is_image && (
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                    >
+                      <img
+                        src={att.thumbnail}
+                        className="preview-thumb-img-upload"
+                        height="50"
+                        width="100"
+                        alt={att.filename}
+                      />
+                      <IconButton onClick={() => onDownload(att)}>
+                        <DownloadOutlined />
+                      </IconButton>
+                    </Box>
+                  )}
+
+                  {/* Render audio player if the attachment is an audio file */}
+                  {att.is_audio && (
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <audio
+                        controls
+                        src={att.audio_url}
+                        style={{ width: "200px" }}
+                      >
+                        Your browser does not support the audio element.
+                      </audio>
+                    </Box>
+                  )}
                 </Box>
               ))}
           </Box>

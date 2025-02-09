@@ -14,6 +14,7 @@ import {
 import { pink } from "@mui/material/colors";
 import OrderThread from "./orderthread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
+import { get_setting } from "../services/helper";
 function Starred({ Orders, onStarred }) {
   const [selectedOrder, setselectedOrder] = useState(null);
   const [Starred, setStarred] = useState([]);
@@ -104,7 +105,7 @@ function Starred({ Orders, onStarred }) {
           }}
         >
           <Typography variant="h4" component="h3">
-            No orders found
+            {get_setting("no_orders_found", "No Order Found")}
           </Typography>
         </Box>
       )}

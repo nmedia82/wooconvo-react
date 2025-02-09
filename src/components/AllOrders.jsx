@@ -16,7 +16,7 @@ import OrderThread from "./orderthread/OrdrerThread";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import { pink } from "@mui/material/colors";
 import pluginData from "../services/pluginData";
-import { orderconvo_date } from "../services/helper";
+import { get_setting, orderconvo_date } from "../services/helper";
 import { MarkEmailRead, Markunread } from "@mui/icons-material";
 const { context } = pluginData;
 
@@ -121,7 +121,7 @@ function AllOrders({ Orders, onStarred, onRead, onUnRead }) {
           }}
         >
           <Typography variant="h4" component="h3">
-            No orders found
+            {get_setting("no_orders_found", "No Order Found")}
           </Typography>
         </Box>
       )}
