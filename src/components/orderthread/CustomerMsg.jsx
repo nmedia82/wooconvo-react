@@ -90,7 +90,7 @@ export default function CustomerMsg({ message, showMore, onDownload }) {
               message.attachments.map((att, index) => (
                 <Box key={index} className="preview-thumb-upload">
                   {/* Render image preview if the attachment is an image */}
-                  {att.is_image && (
+                  {!att.is_audio && (
                     <Box
                       display="flex"
                       flexDirection="column"
